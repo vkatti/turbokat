@@ -1,19 +1,33 @@
 ---
-title: "About"
-image: profile.jpg
+title: "Vishal Katti"
+image: profile-pic.png
 about:
-  template: jolla
+  template: trestles
   links:
     - icon: twitter
       text: Twitter
-      href: https://twitter.com
+      href: https://twitter.com/vishal_katti
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/vishalkatti
     - icon: github
       text: Github
-      href: https://github.com
-
+      href: https://github.com/vkatti
 ---
 
-About this blog
+## Bio
+
+Vishal Katti resides in Bengaluru, India with his wife and 4yo daughter, but constantly longs for the sun and sands of Goa where he spent most of his childhood.
+
+## Education
+
+**Dr. B. R. Ambedkar National Institute of Technology (NIT)** Jalandhar, Punjab, India\
+Bachelor of Technology in Instrumentation & Control Engineering \| Aug 2005 - Apr 2010\
+**Smt. Parvatibai Chowgule College of Arts & Science** Margao, Goa, India\
+H.S.S.C. in Physics, Chemistry and Mathematics \| Jun 2003 - Apr 2005
+
+## Experience
+
+**Mindtree Ltd.** \| Business Data Analyst \| Sep 2021 to Present\
+**ExxonMobil Services & Technology Pvt. Ltd.** \| Business Analytics Advisor \| Jun 2018 - Aug 2021\
+**Tata Consultancy Services** \| Functional Consultant/Data Analyst \| Sep 2010 - Jun 2018

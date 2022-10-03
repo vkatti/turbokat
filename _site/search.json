@@ -2,16 +2,30 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "quarto-blog",
+    "title": "Blog",
     "section": "",
     "text": "news\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nOct 3, 2022\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nSep 30, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "Vishal Katti",
     "section": "",
-    "text": "About this blog"
+    "text": "Vishal Katti resides in Bengaluru, India with his wife and 4yo daughter, but constantly longs for the sun and sands of Goa where he spent most of his childhood."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "Vishal Katti",
+    "section": "Education",
+    "text": "Education\nDr. B. R. Ambedkar National Institute of Technology (NIT) Jalandhar, Punjab, India\nBachelor of Technology in Instrumentation & Control Engineering | Aug 2005 - Apr 2010\nSmt. Parvatibai Chowgule College of Arts & Science Margao, Goa, India\nH.S.S.C. in Physics, Chemistry and Mathematics | Jun 2003 - Apr 2005"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "Vishal Katti",
+    "section": "Experience",
+    "text": "Experience\nMindtree Ltd. | Business Data Analyst | Sep 2021 to Present\nExxonMobil Services & Technology Pvt. Ltd. | Business Analytics Advisor | Jun 2018 - Aug 2021\nTata Consultancy Services | Functional Consultant/Data Analyst | Sep 2010 - Jun 2018"
   },
   {
     "objectID": "posts/post-with-code/index.html",
