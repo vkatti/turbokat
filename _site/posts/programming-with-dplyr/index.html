@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.649">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Vishal Katti">
+<meta name="dcterms.date" content="2021-07-17">
+<title>Vishal Katti - Programming with R {dplyr} - As I Understand It!!</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<meta property="og:title" content="Vishal Katti - Programming with R {dplyr} - As I Understand It!!">
+<meta property="og:description" content="How to create your own functions using {dplyr}">
+<meta property="og:image" content="https://i.imgur.com/H9jo8OB.gif">
+<meta property="og:site-name" content="Vishal Katti">
+<meta name="twitter:title" content="Vishal Katti - Programming with R {dplyr} - As I Understand It!!">
+<meta name="twitter:description" content="How to create your own functions using {dplyr}">
+<meta name="twitter:image" content="https://i.imgur.com/H9jo8OB.gif">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vishal Katti</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+<div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Programming with R {dplyr} - As I Understand It!!</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+            <p class="subtitle lead">How to create your own functions using {dplyr}</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">dplyr</div>
+                <div class="quarto-category">functions</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vishal Katti </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 17, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+<li><a href="#inspiration" id="toc-inspiration" class="nav-link" data-scroll-target="#inspiration">Inspiration</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><code>select()</code></a>
+  <ul class="collapse">
+<li><a href="#passing-raw-column-names" id="toc-passing-raw-column-names" class="nav-link" data-scroll-target="#passing-raw-column-names">Passing raw column names</a></li>
+  <li><a href="#passing-multiple-raw-column-names-using-argument" id="toc-passing-multiple-raw-column-names-using-argument" class="nav-link" data-scroll-target="#passing-multiple-raw-column-names-using-argument">Passing multiple raw column names using … argument</a></li>
+  <li><a href="#passing-a-character-vector-of-column-names" id="toc-passing-a-character-vector-of-column-names" class="nav-link" data-scroll-target="#passing-a-character-vector-of-column-names">Passing a character vector of column names</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter"><code>filter()</code></a>
+  <ul class="collapse">
+<li><a href="#passing-single-raw-criteria" id="toc-passing-single-raw-criteria" class="nav-link" data-scroll-target="#passing-single-raw-criteria">Passing single raw criteria</a></li>
+  <li><a href="#passing-multiple-raw-criteria-using-argument" id="toc-passing-multiple-raw-criteria-using-argument" class="nav-link" data-scroll-target="#passing-multiple-raw-criteria-using-argument">Passing multiple raw criteria using … argument</a></li>
+  <li><a href="#passing-single-criteria-as-a-character-string" id="toc-passing-single-criteria-as-a-character-string" class="nav-link" data-scroll-target="#passing-single-criteria-as-a-character-string">Passing single criteria as a character string</a></li>
+  <li><a href="#passing-multiple-criteria-as-character-vector" id="toc-passing-multiple-criteria-as-character-vector" class="nav-link" data-scroll-target="#passing-multiple-criteria-as-character-vector">Passing multiple criteria as character vector</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#mutate" id="toc-mutate" class="nav-link" data-scroll-target="#mutate"><code>mutate()</code></a>
+  <ul class="collapse">
+<li><a href="#passing-the-column-name-as-raw-name" id="toc-passing-the-column-name-as-raw-name" class="nav-link" data-scroll-target="#passing-the-column-name-as-raw-name">Passing the column name as raw name</a></li>
+  <li><a href="#passing-the-new-variable-name-as-character-string-direct" id="toc-passing-the-new-variable-name-as-character-string-direct" class="nav-link" data-scroll-target="#passing-the-new-variable-name-as-character-string-direct">Passing the new variable name as character string (direct)</a></li>
+  <li><a href="#passing-the-new-variable-name-as-character-string-indirect" id="toc-passing-the-new-variable-name-as-character-string-indirect" class="nav-link" data-scroll-target="#passing-the-new-variable-name-as-character-string-indirect">Passing the new variable name as character string (indirect)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#arrange" id="toc-arrange" class="nav-link" data-scroll-target="#arrange"><code>arrange()</code></a>
+  <ul class="collapse">
+<li><a href="#passing-single-raw-name" id="toc-passing-single-raw-name" class="nav-link" data-scroll-target="#passing-single-raw-name">Passing single raw name</a></li>
+  <li><a href="#passing-multiple-raw-names-using-...-argument" id="toc-passing-multiple-raw-names-using-...-argument" class="nav-link" data-scroll-target="#passing-multiple-raw-names-using-...-argument">Passing multiple raw names using <code>...</code> argument</a></li>
+  <li><a href="#pass-single-column-name-as-string" id="toc-pass-single-column-name-as-string" class="nav-link" data-scroll-target="#pass-single-column-name-as-string">Pass single column name as string</a></li>
+  <li><a href="#pass-multiple-column-name-as-string" id="toc-pass-multiple-column-name-as-string" class="nav-link" data-scroll-target="#pass-multiple-column-name-as-string">Pass multiple column name as string</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#group_by" id="toc-group_by" class="nav-link" data-scroll-target="#group_by"><code>group_by()</code></a>
+  <ul class="collapse">
+<li><a href="#passing-single-raw-name-1" id="toc-passing-single-raw-name-1" class="nav-link" data-scroll-target="#passing-single-raw-name-1">Passing single raw name</a></li>
+  <li><a href="#passing-multiple-raw-names-using-the-...-operator" id="toc-passing-multiple-raw-names-using-the-...-operator" class="nav-link" data-scroll-target="#passing-multiple-raw-names-using-the-...-operator">Passing multiple raw names using the <code>...</code> operator</a></li>
+  <li><a href="#passing-single-or-multiple-column-names-as-character-string" id="toc-passing-single-or-multiple-column-names-as-character-string" class="nav-link" data-scroll-target="#passing-single-or-multiple-column-names-as-character-string">Passing single or multiple column names as character string</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#slightly-better-examples" id="toc-slightly-better-examples" class="nav-link" data-scroll-target="#slightly-better-examples">(Slightly Better) Examples</a>
+  <ul class="collapse">
+<li><a href="#mutate-example" id="toc-mutate-example" class="nav-link" data-scroll-target="#mutate-example"><code>mutate()</code> example</a></li>
+  <li><a href="#group_by-example" id="toc-group_by-example" class="nav-link" data-scroll-target="#group_by-example"><code>group_by()</code> example</a></li>
+  <li><a href="#more-ideas" id="toc-more-ideas" class="nav-link" data-scroll-target="#more-ideas">More ideas</a></li>
+  </ul>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="introduction" class="level1"><h1>Introduction</h1>
+<p>The purpose of this article is to act as a quick guide for myself and others to understand how to use <code>dplyr</code> effectively to create dynamic functions. The general assumption is that the reader is familiar with the <a href="https://dplyr.tidyverse.org">dplyr</a> package and how to use it for data wrangling.</p>
+<p>In this article, we will explore how to create functions using the popular <code>dplyr</code> verbs like <code>select</code>, <code>filter</code>, <code>mutate</code>, <code>arrange</code> and finally <code>group_by</code> with <code>summarise</code>.</p>
+<section id="inspiration" class="level3"><h3 class="anchored" data-anchor-id="inspiration">Inspiration</h3>
+<p>I regularly deal with event-related information with event date and few other columns like event type, root cause etc. Most reports usually involve calculating number of events that took place on a monthly, quarterly or annual basis, sometimes split by event type, root cause and other columns. After a few reports I realized that I am basically writing the same code over and over again to calculate these KPIs. Keeping the <code>DRY (Don't Repeat Yourself)</code> principle in mind, I managed to write a few functions to calculate these KPIs with a few dynamic variables. Following is an attempt to articulate what I learnt while creating those functions.</p>
+</section><section id="data" class="level3"><h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>We shall use the Texas Housing Sales data, available as a tibble in the popular <code>ggplot2</code> package as reference data. It contains monthly information about the housing market in Texas provided by the TAMU real estate center, <a href="https://www.recenter.tamu.edu/" class="uri">https://www.recenter.tamu.edu/</a>. It has 8602 observations and 9 variables.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>txhousing <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span>txhousing</span>
+<span id="cb1-2"><a href="#cb1-2"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(txhousing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8,602
+Columns: 9
+$ city      &lt;chr&gt; "Abilene", "Abilene", "Abilene", "Abilene", "Abilene", "Abil~
+$ year      &lt;int&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, ~
+$ month     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, ~
+$ sales     &lt;dbl&gt; 72, 98, 130, 98, 141, 156, 152, 131, 104, 101, 100, 92, 75, ~
+$ volume    &lt;dbl&gt; 5380000, 6505000, 9285000, 9730000, 10590000, 13910000, 1263~
+$ median    &lt;dbl&gt; 71400, 58700, 58100, 68600, 67300, 66900, 73500, 75000, 6450~
+$ listings  &lt;dbl&gt; 701, 746, 784, 785, 794, 780, 742, 765, 771, 764, 721, 658, ~
+$ inventory &lt;dbl&gt; 6.3, 6.6, 6.8, 6.9, 6.8, 6.6, 6.2, 6.4, 6.5, 6.6, 6.2, 5.7, ~
+$ date      &lt;dbl&gt; 2000.000, 2000.083, 2000.167, 2000.250, 2000.333, 2000.417, ~</code></pre>
+</div>
+</div>
+<p>We shall refer the above data in all the following sections.</p>
+</section></section><section id="select" class="level1 page-columns page-full"><h1><code>select()</code></h1>
+<p>When using <code>dplyr</code> functions, the two most popular ways to pass column names is either as bare names i.e.&nbsp;column names without enclosing them in quotes like <code>sales</code> or <code>volume</code> OR pass them as a character string like “sales” or ‘volume’. You could also pass a character vector like <code>c("sales", "volume")</code>. In this section we will explore the 3 ways to dynamically select the columns we want.</p>
+<section id="passing-raw-column-names" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-raw-column-names">Passing raw column names</h3>
+<p>In this method, we pass the raw name of the column we want to select and use the <code>embrace</code> of curly-curly brackets to pass the raw name. For multiple columns, we can pass the raw names as a single vector.</p>
+<div class="cell column-body-outset-right" data-label="select_raw">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>select_raw <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">.data =</span> df, {{var}}) <span class="sc">%&gt;%</span>     <span class="co"># embrace of curly-curly {{}} brackets</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb3-4"><a href="#cb3-4"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">select_raw</span>(txhousing, sales)                 <span class="co"># pass single raw name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 1
+  sales
+  &lt;dbl&gt;
+1    72
+2    98
+3   130
+4    98
+5   141
+6   156</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">select_raw</span>(txhousing, <span class="fu">c</span>(sales, volume))      <span class="co"># pass a vector of raw names for multiple columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  sales   volume
+  &lt;dbl&gt;    &lt;dbl&gt;
+1    72  5380000
+2    98  6505000
+3   130  9285000
+4    98  9730000
+5   141 10590000
+6   156 13910000</code></pre>
+</div>
+</div>
+<p>If passing multiple raw names as vector as in the <code>select_raw()</code> feels like an unnecessary complication, try the next method.</p>
+</section><section id="passing-multiple-raw-column-names-using-argument" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-multiple-raw-column-names-using-argument">Passing multiple raw column names using … argument</h3>
+<p>In this method, we use the <code>.</code> argument to pass the raw names of the columns we want to select.</p>
+<div class="cell column-body-outset-right" data-label="my_select">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>my_select <span class="ot">&lt;-</span> <span class="cf">function</span>(df, ...) {</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">.data =</span> df, ...) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb7-4"><a href="#cb7-4"></a>}</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="fu">my_select</span>(txhousing, sales, volume)          <span class="co"># pass multiple raw names directly</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  sales   volume
+  &lt;dbl&gt;    &lt;dbl&gt;
+1    72  5380000
+2    98  6505000
+3   130  9285000
+4    98  9730000
+5   141 10590000
+6   156 13910000</code></pre>
+</div>
+</div>
+</section><section id="passing-a-character-vector-of-column-names" class="level3"><h3 class="anchored" data-anchor-id="passing-a-character-vector-of-column-names">Passing a character vector of column names</h3>
+<p>If we have the column names as a character vector, we use the <code>all_of</code> function to pass the character vector to the internal <code>select</code> function.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>my_select_char <span class="ot">&lt;-</span> <span class="cf">function</span>(df, cols) {</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">.data =</span> df, dplyr<span class="sc">::</span><span class="fu">all_of</span>(cols)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb9-4"><a href="#cb9-4"></a>}</span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a>my_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sales"</span>,<span class="st">"volume"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="fu">my_select_char</span>(txhousing, my_cols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  sales   volume
+  &lt;dbl&gt;    &lt;dbl&gt;
+1    72  5380000
+2    98  6505000
+3   130  9285000
+4    98  9730000
+5   141 10590000
+6   156 13910000</code></pre>
+</div>
+</div>
+</section></section><section id="filter" class="level1 page-columns page-full"><h1><code>filter()</code></h1>
+<p>In the previous section, we passed column names either as bare names or character strings. <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> takes one or more expressions/conditions that result in a logical vector, with same length as number of rows in the data.frame/tibble and returns only those rows for which the expression/condition returns <code>TRUE</code>. Following are 2 ways to pass these logical expressions/conditions. I’m using expression and condition interchangeably here. In this context, a condition is an expression that results in a boolean <code>TRUE/FALSE</code> result.</p>
+<section id="passing-single-raw-criteria" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-single-raw-criteria">Passing single raw criteria</h3>
+<p>In this method, we pass the condition <code>sales &gt; 8000</code> as a raw/bare expression.</p>
+<div class="cell column-body-outset-right" data-label="filter_raw">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>filter_raw <span class="ot">&lt;-</span> <span class="cf">function</span>(df, cond) {</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="at">.data =</span> df, {{cond}})        <span class="co"># embrace of curly-curly {{}} brackets</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>}</span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="fu">filter_raw</span>(txhousing, sales <span class="sc">&gt;</span> <span class="dv">8000</span>)          <span class="co"># Pass a single raw criterion</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 9
+   city     year month sales     volume median listings inventory  date
+   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 Houston  2006     5  8040 1602621368 151200    35398       5.5 2006.
+ 2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+ 3 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+ 4 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+ 5 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+ 6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+ 7 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+ 8 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+ 9 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+10 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+<p>Do you think we can pass multiple bare conditions as a vector, like we did for <code>select_raw()</code> in the previous section? Let us try passing multiple raw criteria as a vector.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">filter_raw</span>(txhousing, <span class="fu">c</span>(sales <span class="sc">&gt;</span> <span class="dv">8000</span>, year <span class="sc">&gt;</span> <span class="dv">2010</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in `dplyr::filter()`:
+! Problem while computing `..1 = c(sales &gt; 8000, year &gt; 2010)`.
+x Input `..1` must be of size 8602 or 1, not size 17204.
+</code></pre>
+</div>
+<p>Passing multiple raw criteria as a vector doesn’t work like it works for <code>select_raw()</code> function. Let us understand why. Consider the following code:</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>)                           <span class="co"># boolean vector of length = 2</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">FALSE</span>)                         <span class="co"># boolean vector of length = 2</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>X <span class="ot">&lt;-</span> <span class="fu">c</span>(A, B)</span>
+<span id="cb14-4"><a href="#cb14-4"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE  TRUE FALSE FALSE</code></pre>
+</div>
+</div>
+<p>Notice that length of X is 4. Similarly, <code>sales &gt; 8000</code> evaluates to a TRUE/FALSE boolean vector of length 8602 (equal to number of rows in <code>txhousing</code>) and so does <code>year &gt; 2010</code>. So the vector <code>c(sales &gt; 8000, year &gt; 2010)</code> becomes a TRUE/FALSE boolean vector of length 17204, which results in an error.</p>
+</section><section id="passing-multiple-raw-criteria-using-argument" class="level3"><h3 class="anchored" data-anchor-id="passing-multiple-raw-criteria-using-argument">Passing multiple raw criteria using … argument</h3>
+<p>To pass multiple raw criteria, we can use the <code>...</code> argument.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>my_filter <span class="ot">&lt;-</span> <span class="cf">function</span>(df, ...) { </span>
+<span id="cb16-2"><a href="#cb16-2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="at">.data =</span> df, ...)                <span class="co"># pass the dots argument</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  }</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="fu">my_filter</span>(txhousing, sales <span class="sc">&gt;</span> <span class="dv">8000</span>, year <span class="sc">&gt;</span> <span class="dv">2010</span>) <span class="co"># pass multiple raw criteria</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+2 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+3 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+4 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+5 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+6 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+7 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+8 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+</section><section id="passing-single-criteria-as-a-character-string" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-single-criteria-as-a-character-string">Passing single criteria as a character string</h3>
+<p>By default, <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> does not accept conditions as character strings. Following is an example which results in error</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(txhousing, <span class="st">"sales &gt; 8000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in `dplyr::filter()`:
+! Problem while computing `..1 = "sales &gt; 8000"`.
+x Input `..1` must be a logical vector, not a character.
+</code></pre>
+</div>
+<p>We need to convert the character condition into a raw expression.</p>
+<div class="cell column-body-outset-right" data-label="my_filter_string">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>my_filter_string <span class="ot">&lt;-</span> <span class="cf">function</span>(df, cond) {</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="at">.data =</span> df, <span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> cond))) <span class="co"># convert text to raw criterion</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>}</span>
+<span id="cb19-4"><a href="#cb19-4"></a></span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="fu">my_filter_string</span>(txhousing, <span class="st">"sales &gt; 8000"</span>)  <span class="co"># pass single text string as criteria</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 9
+   city     year month sales     volume median listings inventory  date
+   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 Houston  2006     5  8040 1602621368 151200    35398       5.5 2006.
+ 2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+ 3 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+ 4 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+ 5 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+ 6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+ 7 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+ 8 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+ 9 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+10 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+<p>The special sauce here is the <code>eval(parse(text = ...))</code> combo that converts the long text criteria into a single raw criteria and passes it to the internal <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function.</p>
+</section><section id="passing-multiple-criteria-as-character-vector" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-multiple-criteria-as-character-vector">Passing multiple criteria as character vector</h3>
+<p>What if want to pass multiple criteria as a string vector? In such a situation, we must combine all the string conditions into a single long string condition using <code>paste0(..., collapse = " &amp; ")</code>. The <code>paste0("(", cond, ")", collapse = " &amp; ")</code> combines all the criteria into a single long criteria, but still a text string.</p>
+<div class="cell column-body-outset-right" data-label="my_filter_strings">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>my_filter_strings <span class="ot">&lt;-</span> <span class="cf">function</span>(df, cond) { </span>
+<span id="cb21-2"><a href="#cb21-2"></a>  filter_text <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"("</span>, cond, <span class="st">")"</span>, <span class="at">collapse =</span> <span class="st">" &amp; "</span>)   <span class="co"># combine all criteria</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">message</span>(<span class="st">"Filter Condition: "</span>, filter_text)                <span class="co"># (OPTIONAL) show the combined filter string</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="at">.data =</span> df, <span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> filter_text)))<span class="co"># convert text to raw criterion</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>  }</span>
+<span id="cb21-6"><a href="#cb21-6"></a></span>
+<span id="cb21-7"><a href="#cb21-7"></a>my_filter_criteria <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sales &gt; 8000"</span>, <span class="st">"year &gt; 2010"</span>)</span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="fu">my_filter_strings</span>(txhousing, my_filter_criteria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Filter Condition: (sales &gt; 8000) &amp; (year &gt; 2010)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+2 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+3 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+4 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+5 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+6 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+7 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+8 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+<div class="cell column-body-outset-right" data-label="filter_OR">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: OR criteria must be a single string separated by pipe '|' as in example below.</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>my_filter_criteria_with_OR <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sales &gt; 8000 | sales &lt; 50"</span>, <span class="st">"year &gt; 2010"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="fu">my_filter_strings</span>(txhousing, my_filter_criteria_with_OR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Filter Condition: (sales &gt; 8000 | sales &lt; 50) &amp; (year &gt; 2010)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 315 x 9
+   city         year month sales  volume median listings inventory  date
+   &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 Brownsville  2011     1    48 4974408  83300      784      12.6 2011 
+ 2 Brownsville  2011     2    47 5558575 101400      776      12.7 2011.
+ 3 Brownsville  2011     7    47 4807019  91200      749      13.1 2012.
+ 4 Brownsville  2011    12    39 4203440  86800      726      12.4 2012.
+ 5 Brownsville  2012     1    43 3892348  85000      791      13.6 2012 
+ 6 Brownsville  2012     3    27 2976148  93800      734      13.3 2012.
+ 7 Brownsville  2012    11    41 5115393  99000      807      14   2013.
+ 8 Brownsville  2013    11    38 4824930 108000      859      13.4 2014.
+ 9 Brownsville  2015     1    41 5400796  97000      733      10.7 2015 
+10 Galveston    2011     1    43 8882961 170000     1015      13.7 2011 
+# ... with 305 more rows</code></pre>
+</div>
+</div>
+</section></section><section id="mutate" class="level1"><h1><code>mutate()</code></h1>
+<p><code>mutate()</code> allows you to add new columns or modify existing columns. In the example below, we will create a new column <code>volume_in_millions</code> from the existing column <code>volume</code>. The names of both the columns can be passed to the function either as raw names or character strings.</p>
+<section id="passing-the-column-name-as-raw-name" class="level3"><h3 class="anchored" data-anchor-id="passing-the-column-name-as-raw-name">Passing the column name as raw name</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>mutate_raw <span class="ot">&lt;-</span> <span class="cf">function</span>(df, new_col_raw, old_col_raw, <span class="at">num =</span> <span class="dv">1</span>) { </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">.data =</span> df, {{new_col_raw}} <span class="sc">:</span><span class="er">=</span> {{old_col_raw}}<span class="sc">/</span>num) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb27-4"><a href="#cb27-4"></a>}</span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a>txhousing <span class="sc">%&gt;%</span> </span>
+<span id="cb27-7"><a href="#cb27-7"></a>  <span class="fu">select</span>(city, year, month, volume) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-8"><a href="#cb27-8"></a>  <span class="fu">mutate_raw</span>(vol_in_millions, volume, <span class="fl">1E6</span>) <span class="co"># pass raw column names w/o quotes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 5
+  city     year month   volume vol_in_millions
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;           &lt;dbl&gt;
+1 Abilene  2000     1  5380000            5.38
+2 Abilene  2000     2  6505000            6.50
+3 Abilene  2000     3  9285000            9.28
+4 Abilene  2000     4  9730000            9.73
+5 Abilene  2000     5 10590000           10.6 
+6 Abilene  2000     6 13910000           13.9 </code></pre>
+</div>
+</div>
+</section><section id="passing-the-new-variable-name-as-character-string-direct" class="level3"><h3 class="anchored" data-anchor-id="passing-the-new-variable-name-as-character-string-direct">Passing the new variable name as character string (direct)</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>mutate_text <span class="ot">&lt;-</span> <span class="cf">function</span>(df, new_col_str, old_col_str, <span class="at">num =</span> <span class="dv">1</span>) { </span>
+<span id="cb29-2"><a href="#cb29-2"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">.data =</span> df, {{new_col_str}} <span class="sc">:</span><span class="er">=</span> df[[old_col_str]]<span class="sc">/</span>num) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb29-4"><a href="#cb29-4"></a>}</span>
+<span id="cb29-5"><a href="#cb29-5"></a></span>
+<span id="cb29-6"><a href="#cb29-6"></a>txhousing <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">select</span>(city, year, month, volume) <span class="sc">%&gt;%</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">mutate_text</span>(<span class="st">"vol_in_millions"</span>, <span class="st">"volume"</span>, <span class="fl">1E6</span>) <span class="co"># pass column names as strings</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 5
+  city     year month   volume vol_in_millions
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;           &lt;dbl&gt;
+1 Abilene  2000     1  5380000            5.38
+2 Abilene  2000     2  6505000            6.50
+3 Abilene  2000     3  9285000            9.28
+4 Abilene  2000     4  9730000            9.73
+5 Abilene  2000     5 10590000           10.6 
+6 Abilene  2000     6 13910000           13.9 </code></pre>
+</div>
+</div>
+</section><section id="passing-the-new-variable-name-as-character-string-indirect" class="level3"><h3 class="anchored" data-anchor-id="passing-the-new-variable-name-as-character-string-indirect">Passing the new variable name as character string (indirect)</h3>
+<p>Instead of passing the name of the variable as a character string as an argument, we can pass a variable containing the name of the variable. In the below example, the name of the new variable is stored in <code>new_var</code>. Using the new <a href="https://github.com/tidyverse/glue">glue</a> syntax, enabled by the walrus operator <code>:=</code>, we substitute the <code>new_var</code> variable with its value.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>mutate_var <span class="ot">&lt;-</span> <span class="cf">function</span>(df, new_col_var, old_col_var, <span class="at">num =</span> <span class="dv">1</span>) {</span>
+<span id="cb31-2"><a href="#cb31-2"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">.data =</span> df, <span class="st">"{new_col_var}"</span> <span class="sc">:</span><span class="er">=</span> df[[old_col_var]]<span class="sc">/</span>num) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb31-4"><a href="#cb31-4"></a>}</span>
+<span id="cb31-5"><a href="#cb31-5"></a></span>
+<span id="cb31-6"><a href="#cb31-6"></a>new_var <span class="ot">&lt;-</span> <span class="st">"vol_in_millions"</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a>old_var <span class="ot">&lt;-</span> <span class="st">"volume"</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a></span>
+<span id="cb31-9"><a href="#cb31-9"></a>txhousing <span class="sc">%&gt;%</span> </span>
+<span id="cb31-10"><a href="#cb31-10"></a>  <span class="fu">select</span>(city, year, month, volume) <span class="sc">%&gt;%</span></span>
+<span id="cb31-11"><a href="#cb31-11"></a>  <span class="fu">mutate_var</span>(new_var, old_var, <span class="fl">1E6</span>)  <span class="co"># pass column names as variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 5
+  city     year month   volume vol_in_millions
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;           &lt;dbl&gt;
+1 Abilene  2000     1  5380000            5.38
+2 Abilene  2000     2  6505000            6.50
+3 Abilene  2000     3  9285000            9.28
+4 Abilene  2000     4  9730000            9.73
+5 Abilene  2000     5 10590000           10.6 
+6 Abilene  2000     6 13910000           13.9 </code></pre>
+</div>
+</div>
+</section></section><section id="arrange" class="level1"><h1><code>arrange()</code></h1>
+<p><code>arrange()</code> sorts the rows of a data frame by the values of selected columns. By default, it sorts in Ascending order. To force a column to sort in Descending order, we must use the <code>desc()</code> function.</p>
+<section id="passing-single-raw-name" class="level3"><h3 class="anchored" data-anchor-id="passing-single-raw-name">Passing single raw name</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>arrange_raw <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var) {</span>
+<span id="cb33-2"><a href="#cb33-2"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="at">.data =</span> df, {{var}}) <span class="sc">%&gt;%</span>    <span class="co"># embrace of curly-curly {{}} brackets</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb33-4"><a href="#cb33-4"></a>}</span>
+<span id="cb33-5"><a href="#cb33-5"></a></span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="fu">arrange_raw</span>(txhousing, sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city                year month sales  volume median listings inventory  date
+  &lt;chr&gt;              &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 San Marcos          2011    10     6 1156999 180000      163       8.3 2012.
+2 Harlingen           2000     7     9 1110000  87500      719      30.8 2000.
+3 South Padre Island  2011     1     9 2088500 225000     1258      55.7 2011 
+4 San Marcos          2011     1    10 1482310 140000      165       7.5 2011 
+5 San Marcos          2011    12    10 1561250 140000      148       8   2012.
+6 San Marcos          2014    11    10 1506878 146700       96       4   2015.</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">arrange_raw</span>(txhousing, <span class="fu">desc</span>(sales))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.
+2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+3 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+4 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+5 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.</code></pre>
+</div>
+</div>
+<p><code>arrange_raw()</code> fails when we pass multiple raw names as a vector.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">arrange_raw</span>(txhousing, <span class="fu">c</span>(sales, volume))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in `dplyr::arrange()`:
+! Problem with the implicit `transmute()` step.
+x Problem while computing `..1 = c(sales, volume)`.
+x `..1` must be size 8602 or 1, not 17204.
+</code></pre>
+</div>
+</section><section id="passing-multiple-raw-names-using-...-argument" class="level3"><h3 class="anchored" data-anchor-id="passing-multiple-raw-names-using-...-argument">Passing multiple raw names using <code>...</code> argument</h3>
+<p>To pass multiple raw names, we must use the <code>...</code> argument.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>arrange_raw_multiple <span class="ot">&lt;-</span> <span class="cf">function</span>(df, ...) {</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="at">.data =</span> df, ...) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href="#cb38-3"></a>    <span class="fu">head</span>()</span>
+<span id="cb38-4"><a href="#cb38-4"></a>}</span>
+<span id="cb38-5"><a href="#cb38-5"></a></span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="fu">arrange_raw_multiple</span>(txhousing, city, sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales  volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Abilene  2003     1    68 5385000  70000      668       5.4  2003
+2 Abilene  2011     1    68 8834493 123300      809       6.1  2011
+3 Abilene  2009     1    70 8414801  92900      861       6.3  2009
+4 Abilene  2000     1    72 5380000  71400      701       6.3  2000
+5 Abilene  2010     1    73 9130783 112200      868       6.4  2010
+6 Abilene  2001     1    75 5730000  64500      779       6.8  2001</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">arrange_raw_multiple</span>(txhousing, city, <span class="fu">desc</span>(sales))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales   volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Abilene  2015     7   268 45845730 148700      986       5   2016.
+2 Abilene  2015     6   260 41396230 141500      965       5   2015.
+3 Abilene  2007     7   239 29315000 114300      940       5.2 2008.
+4 Abilene  2013     8   236 30777727 120000      976       5.4 2014.
+5 Abilene  2014     7   231 35861350 145800     1033       5.8 2014.
+6 Abilene  2005     6   230 24050000  92500      664       4.1 2005.</code></pre>
+</div>
+</div>
+</section><section id="pass-single-column-name-as-string" class="level3"><h3 class="anchored" data-anchor-id="pass-single-column-name-as-string">Pass single column name as string</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>arrange_str <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, <span class="at">.desc =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="cf">if</span> (.desc) {</span>
+<span id="cb42-3"><a href="#cb42-3"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="at">.data =</span> df, <span class="fu">desc</span>(df[[var]])) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb42-4"><a href="#cb42-4"></a>  } <span class="cf">else</span> {</span>
+<span id="cb42-5"><a href="#cb42-5"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="at">.data =</span> df, df[[var]]) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb42-6"><a href="#cb42-6"></a>  }</span>
+<span id="cb42-7"><a href="#cb42-7"></a>}</span>
+<span id="cb42-8"><a href="#cb42-8"></a></span>
+<span id="cb42-9"><a href="#cb42-9"></a><span class="fu">arrange_str</span>(txhousing, <span class="st">"sales"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city                year month sales  volume median listings inventory  date
+  &lt;chr&gt;              &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 San Marcos          2011    10     6 1156999 180000      163       8.3 2012.
+2 Harlingen           2000     7     9 1110000  87500      719      30.8 2000.
+3 South Padre Island  2011     1     9 2088500 225000     1258      55.7 2011 
+4 San Marcos          2011     1    10 1482310 140000      165       7.5 2011 
+5 San Marcos          2011    12    10 1561250 140000      148       8   2012.
+6 San Marcos          2014    11    10 1506878 146700       96       4   2015.</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">arrange_str</span>(txhousing, <span class="st">"sales"</span>, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.
+2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+3 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+4 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+5 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.</code></pre>
+</div>
+</div>
+</section><section id="pass-multiple-column-name-as-string" class="level3"><h3 class="anchored" data-anchor-id="pass-multiple-column-name-as-string">Pass multiple column name as string</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>arrange_str_multiple <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, <span class="at">desc =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="cf">if</span> (desc) {</span>
+<span id="cb46-3"><a href="#cb46-3"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="at">.data =</span> df, <span class="fu">desc</span>(df[var])) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb46-4"><a href="#cb46-4"></a>  } <span class="cf">else</span> {</span>
+<span id="cb46-5"><a href="#cb46-5"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="at">.data =</span> df, df[var]) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb46-6"><a href="#cb46-6"></a>  }</span>
+<span id="cb46-7"><a href="#cb46-7"></a>}</span>
+<span id="cb46-8"><a href="#cb46-8"></a></span>
+<span id="cb46-9"><a href="#cb46-9"></a><span class="co"># This function arranges the dataframe either all ascending</span></span>
+<span id="cb46-10"><a href="#cb46-10"></a><span class="co"># or all descending. Definitely need a better example.</span></span>
+<span id="cb46-11"><a href="#cb46-11"></a></span>
+<span id="cb46-12"><a href="#cb46-12"></a><span class="fu">arrange_str_multiple</span>(txhousing, <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"sales"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city         year month sales  volume median listings inventory  date
+  &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Paris        2000     1    19 1440000  71700      286       7.5  2000
+2 San Marcos   2000     1    22 2380000 106700      190       6.3  2000
+3 Lufkin       2000     1    28 2280000  68000       NA      NA    2000
+4 Harlingen    2000     1    31 3910000  87500      644      24.9  2000
+5 Galveston    2000     1    37 4555000  95000      636       9.1  2000
+6 Port Arthur  2000     1    40 3090000  68300      314       5.6  2000</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">arrange_str_multiple</span>(txhousing, <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"sales"</span>), <span class="at">desc =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city           year month sales     volume median listings inventory  date
+  &lt;chr&gt;         &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston        2015     7  8945 2568156780 217600    23875       3.4 2016.
+2 Dallas         2015     7  7038 2021907410 233000    12292       2.4 2016.
+3 Austin         2015     7  3466 1150381553 264600     7913       3   2016.
+4 San Antonio    2015     7  2962  704891602 198100     9462       4.1 2016.
+5 Collin County  2015     7  1861  613669702 292600     2809       2.1 2016.
+6 Fort Bend      2015     7  1372  431875327 280400     3328       3.1 2016.</code></pre>
+</div>
+</div>
+</section></section><section id="group_by" class="level1"><h1><code>group_by()</code></h1>
+<p>In <code>group_by()</code>, we <em>select</em> which columns to, well, group by! (Damn these well-named functions!). So one can use the same techniques as <code>select()</code> to choose the columns.</p>
+<p>In the following examples, we will create only one summarised value <code>total_sales</code> for simplicity.</p>
+<section id="passing-single-raw-name-1" class="level3"><h3 class="anchored" data-anchor-id="passing-single-raw-name-1">Passing single raw name</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>group_raw <span class="ot">&lt;-</span> <span class="cf">function</span>(df, grp) {</span>
+<span id="cb50-2"><a href="#cb50-2"></a>  df <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href="#cb50-3"></a>    <span class="fu">group_by</span>({{grp}}) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-4"><a href="#cb50-4"></a>    <span class="fu">summarise</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(sales, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb50-5"><a href="#cb50-5"></a>              <span class="at">.groups =</span> <span class="st">'drop'</span>)  <span class="sc">%&gt;%</span> </span>
+<span id="cb50-6"><a href="#cb50-6"></a>    <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb50-7"><a href="#cb50-7"></a>}</span>
+<span id="cb50-8"><a href="#cb50-8"></a></span>
+<span id="cb50-9"><a href="#cb50-9"></a><span class="fu">group_raw</span>(txhousing, year)        <span class="co"># Sum of sales per year</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">group_raw</span>(txhousing, month)       <span class="co"># Sum of sales per month</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+  month total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1     1      245924
+2     2      296410
+3     3      386909
+4     4      397332
+5     5      448968</code></pre>
+</div>
+</div>
+</section><section id="passing-multiple-raw-names-using-the-...-operator" class="level3"><h3 class="anchored" data-anchor-id="passing-multiple-raw-names-using-the-...-operator">Passing multiple raw names using the <code>...</code> operator</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>group_raw_multiple <span class="ot">&lt;-</span> <span class="cf">function</span>(df, ...) {</span>
+<span id="cb54-2"><a href="#cb54-2"></a>  df <span class="sc">%&gt;%</span> </span>
+<span id="cb54-3"><a href="#cb54-3"></a>    <span class="fu">group_by</span>(...) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href="#cb54-4"></a>    <span class="fu">summarise</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(sales, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb54-5"><a href="#cb54-5"></a>              <span class="at">.groups =</span> <span class="st">'drop'</span>)  <span class="sc">%&gt;%</span> </span>
+<span id="cb54-6"><a href="#cb54-6"></a>    <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb54-7"><a href="#cb54-7"></a>}</span>
+<span id="cb54-8"><a href="#cb54-8"></a></span>
+<span id="cb54-9"><a href="#cb54-9"></a><span class="fu">group_raw_multiple</span>(txhousing, year)              <span class="co"># Sum of sales per year</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">group_raw_multiple</span>(txhousing, year, month)       <span class="co"># Sum of sales per month</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 3
+   year month total_sales
+  &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+1  2000     1       11411
+2  2000     2       15674
+3  2000     3       20202
+4  2000     4       18658
+5  2000     5       22388</code></pre>
+</div>
+</div>
+</section><section id="passing-single-or-multiple-column-names-as-character-string" class="level3"><h3 class="anchored" data-anchor-id="passing-single-or-multiple-column-names-as-character-string">Passing single or multiple column names as character string</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>group_str <span class="ot">&lt;-</span> <span class="cf">function</span>(df, grp) {</span>
+<span id="cb58-2"><a href="#cb58-2"></a>  df <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="#cb58-3"></a>    <span class="fu">group_by</span>(df[grp]) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-4"><a href="#cb58-4"></a>    <span class="fu">summarise</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(sales, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb58-5"><a href="#cb58-5"></a>              <span class="at">.groups =</span> <span class="st">'drop'</span>)  <span class="sc">%&gt;%</span> </span>
+<span id="cb58-6"><a href="#cb58-6"></a>    <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb58-7"><a href="#cb58-7"></a>}</span>
+<span id="cb58-8"><a href="#cb58-8"></a></span>
+<span id="cb58-9"><a href="#cb58-9"></a><span class="fu">group_str</span>(txhousing, <span class="st">"year"</span>)                   <span class="co"># Sum of sales per year</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">group_str</span>(txhousing, <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>))       <span class="co"># Sum of sales per month</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 3
+   year month total_sales
+  &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+1  2000     1       11411
+2  2000     2       15674
+3  2000     3       20202
+4  2000     4       18658
+5  2000     5       22388</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co"># The same column names can be passed as variables containing the character names</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>yr <span class="ot">&lt;-</span> <span class="st">"year"</span></span>
+<span id="cb62-3"><a href="#cb62-3"></a><span class="fu">group_str</span>(txhousing, yr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>yrmon <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>)</span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="fu">group_str</span>(txhousing, yrmon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 3
+   year month total_sales
+  &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+1  2000     1       11411
+2  2000     2       15674
+3  2000     3       20202
+4  2000     4       18658
+5  2000     5       22388</code></pre>
+</div>
+</div>
+<p>If you want the summarise column to have a custom name like <code>total_&lt;sumvar&gt;</code>, then you can wrap the value in quotes as below. This method uses the <code>glue</code> syntax enabled by the <code>:=</code> walrus operator. The walrus operator takes either a raw name or a character string on its LHS.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>group_raw2 <span class="ot">&lt;-</span> <span class="cf">function</span>(df, grp, sumvar) {</span>
+<span id="cb66-2"><a href="#cb66-2"></a>  df <span class="sc">%&gt;%</span> </span>
+<span id="cb66-3"><a href="#cb66-3"></a>    <span class="fu">group_by</span>({{grp}}) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-4"><a href="#cb66-4"></a>    <span class="fu">summarise</span>(<span class="st">"total_{{sumvar}}"</span> <span class="sc">:</span><span class="er">=</span> <span class="fu">sum</span>({{sumvar}}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-5"><a href="#cb66-5"></a>              <span class="at">.groups =</span> <span class="st">'drop'</span>)  <span class="sc">%&gt;%</span> </span>
+<span id="cb66-6"><a href="#cb66-6"></a>    <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb66-7"><a href="#cb66-7"></a>}</span>
+<span id="cb66-8"><a href="#cb66-8"></a></span>
+<span id="cb66-9"><a href="#cb66-9"></a><span class="fu">group_raw2</span>(txhousing, year, sales)            <span class="co"># Sum of sales per year</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">group_raw2</span>(txhousing, month, listings)        <span class="co"># Sum of listings per month</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+  month total_listings
+  &lt;int&gt;          &lt;dbl&gt;
+1     1        1854661
+2     2        1888104
+3     3        1949187
+4     4        1991278
+5     5        2038932</code></pre>
+</div>
+</div>
+<p>After writing so many examples, I see a pattern. <code>group_by()</code> works with techniques similar to <code>select()</code> while <code>summarise()</code> works with techniques similar to <code>mutate()</code>.</p>
+</section></section><section id="slightly-better-examples" class="level1 page-columns page-full"><h1>(Slightly Better) Examples</h1>
+<p>The <code>txhousing</code> is a city-wise monthly sales and volume dataset. It has a <code>year</code> and <code>month</code> column. Let us create a <code>date</code> column and keep only those columns relevant for our custom <code>tx_summary()</code> function.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>small_df <span class="ot">&lt;-</span> txhousing <span class="sc">%&gt;%</span> </span>
+<span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">as_date</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"{year}-{month}-01"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-3"><a href="#cb70-3"></a>  <span class="fu">select</span>(city, date, sales, volume)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="mutate-example" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="mutate-example">
+<code>mutate()</code> example</h3>
+<p>Now let us create the <code>create_ymq()</code> function. This function would take 2 arguments, a data frame <code>df</code> and a raw name of a date column.</p>
+<div class="cell column-body-outset-right" data-label="create_ymq">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>create_ymq <span class="ot">&lt;-</span> <span class="cf">function</span>(df, date_col) {</span>
+<span id="cb71-2"><a href="#cb71-2"></a>  <span class="fu">stopifnot</span>(<span class="fu">inherits</span>(df, <span class="st">"data.frame"</span>))</span>
+<span id="cb71-3"><a href="#cb71-3"></a>  <span class="fu">stopifnot</span>(<span class="fu">class</span>(df <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">pull</span>({{date_col}})) <span class="sc">==</span> <span class="st">'Date'</span>)</span>
+<span id="cb71-4"><a href="#cb71-4"></a>  <span class="fu">mutate</span>(df,</span>
+<span id="cb71-5"><a href="#cb71-5"></a>         <span class="at">Year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>({{date_col}}),</span>
+<span id="cb71-6"><a href="#cb71-6"></a>         <span class="at">nHalf =</span> lubridate<span class="sc">::</span><span class="fu">semester</span>({{date_col}}),</span>
+<span id="cb71-7"><a href="#cb71-7"></a>         <span class="at">yHalf =</span> lubridate<span class="sc">::</span><span class="fu">semester</span>({{date_col}}, <span class="at">with_year =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb71-8"><a href="#cb71-8"></a>         <span class="at">dHalf =</span> <span class="fu">paste0</span>(lubridate<span class="sc">::</span><span class="fu">semester</span>({{date_col}}), <span class="st">"H"</span>, <span class="fu">format</span>({{date_col}},<span class="st">"%y"</span>)),</span>
+<span id="cb71-9"><a href="#cb71-9"></a>         <span class="at">nQtr =</span> lubridate<span class="sc">::</span><span class="fu">quarter</span>({{date_col}}),</span>
+<span id="cb71-10"><a href="#cb71-10"></a>         <span class="at">yQtr =</span> lubridate<span class="sc">::</span><span class="fu">quarter</span>({{date_col}}, <span class="at">with_year =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb71-11"><a href="#cb71-11"></a>         <span class="at">dQtr =</span> <span class="fu">paste0</span>(lubridate<span class="sc">::</span><span class="fu">quarter</span>({{date_col}}),<span class="st">"Q"</span>, <span class="fu">format</span>({{date_col}},<span class="st">"%y"</span>)),</span>
+<span id="cb71-12"><a href="#cb71-12"></a>         <span class="at">Month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>({{date_col}}),</span>
+<span id="cb71-13"><a href="#cb71-13"></a>         <span class="at">yMonth =</span> <span class="fu">as.numeric</span>(<span class="fu">format</span>({{date_col}}, <span class="st">"%Y.%m"</span>)),</span>
+<span id="cb71-14"><a href="#cb71-14"></a>         <span class="at">dMonth =</span> <span class="fu">format</span>({{date_col}}, <span class="st">"%b %Y"</span>)</span>
+<span id="cb71-15"><a href="#cb71-15"></a>         )</span>
+<span id="cb71-16"><a href="#cb71-16"></a>}</span>
+<span id="cb71-17"><a href="#cb71-17"></a></span>
+<span id="cb71-18"><a href="#cb71-18"></a><span class="fu">create_ymq</span>(<span class="at">df =</span> small_df, <span class="at">date_col =</span> date) <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8,602
+Columns: 14
+$ city   &lt;chr&gt; "Abilene", "Abilene", "Abilene", "Abilene", "Abilene", "Abilene~
+$ date   &lt;date&gt; 2000-01-01, 2000-02-01, 2000-03-01, 2000-04-01, 2000-05-01, 20~
+$ sales  &lt;dbl&gt; 72, 98, 130, 98, 141, 156, 152, 131, 104, 101, 100, 92, 75, 112~
+$ volume &lt;dbl&gt; 5380000, 6505000, 9285000, 9730000, 10590000, 13910000, 1263500~
+$ Year   &lt;dbl&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 200~
+$ nHalf  &lt;int&gt; 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, ~
+$ yHalf  &lt;dbl&gt; 2000.1, 2000.1, 2000.1, 2000.1, 2000.1, 2000.1, 2000.2, 2000.2,~
+$ dHalf  &lt;chr&gt; "1H00", "1H00", "1H00", "1H00", "1H00", "1H00", "2H00", "2H00",~
+$ nQtr   &lt;int&gt; 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 1, 1, 1, 2, 2, 2, 3, 3, 3, ~
+$ yQtr   &lt;dbl&gt; 2000.1, 2000.1, 2000.1, 2000.2, 2000.2, 2000.2, 2000.3, 2000.3,~
+$ dQtr   &lt;chr&gt; "1Q00", "1Q00", "1Q00", "2Q00", "2Q00", "2Q00", "3Q00", "3Q00",~
+$ Month  &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, ~
+$ yMonth &lt;dbl&gt; 2000.01, 2000.02, 2000.03, 2000.04, 2000.05, 2000.06, 2000.07, ~
+$ dMonth &lt;chr&gt; "Jan 2000", "Feb 2000", "Mar 2000", "Apr 2000", "May 2000", "Ju~</code></pre>
+</div>
+</div>
+</section><section id="group_by-example" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="group_by-example">
+<code>group_by()</code> example</h3>
+<p>Now that we have a function that creates various date-related columns, let us create a function that let’s you create summary tables like annual sales per city, quarterly volumes per city etc.</p>
+<div class="cell column-body-outset-right" data-label="tx_summary">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>tx_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(df, grp_col, sum_col) {</span>
+<span id="cb73-2"><a href="#cb73-2"></a>  df <span class="sc">%&gt;%</span> </span>
+<span id="cb73-3"><a href="#cb73-3"></a>    <span class="fu">group_by</span>(city, {{grp_col}}) <span class="sc">%&gt;%</span> </span>
+<span id="cb73-4"><a href="#cb73-4"></a>    <span class="fu">summarise</span>(<span class="st">"total_{{sum_col}}"</span> <span class="sc">:</span><span class="er">=</span> <span class="fu">sum</span>({{sum_col}}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">'drop'</span>)</span>
+<span id="cb73-5"><a href="#cb73-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Using these 2 functions, we can now create multiple summary tables</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>small_df_with_date_cols <span class="ot">&lt;-</span> small_df <span class="sc">%&gt;%</span> <span class="fu">create_ymq</span>(<span class="at">date_col =</span> date)</span>
+<span id="cb74-2"><a href="#cb74-2"></a></span>
+<span id="cb74-3"><a href="#cb74-3"></a><span class="co"># Annual Sales per city</span></span>
+<span id="cb74-4"><a href="#cb74-4"></a>small_df_with_date_cols <span class="sc">%&gt;%</span> <span class="fu">tx_summary</span>(<span class="at">grp_col =</span> Year, <span class="at">sum_col =</span> sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 736 x 3
+   city     Year total_sales
+   &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Abilene  2000        1375
+ 2 Abilene  2001        1431
+ 3 Abilene  2002        1516
+ 4 Abilene  2003        1632
+ 5 Abilene  2004        1830
+ 6 Abilene  2005        1977
+ 7 Abilene  2006        1997
+ 8 Abilene  2007        2003
+ 9 Abilene  2008        1651
+10 Abilene  2009        1634
+# ... with 726 more rows</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="co"># Half Yearly volumes per city</span></span>
+<span id="cb76-2"><a href="#cb76-2"></a>small_df_with_date_cols <span class="sc">%&gt;%</span> <span class="fu">tx_summary</span>(<span class="at">grp_col =</span> yHalf, <span class="at">sum_col =</span> volume)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,472 x 3
+   city    yHalf total_volume
+   &lt;chr&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Abilene 2000.     55400000
+ 2 Abilene 2000.     53175000
+ 3 Abilene 2001.     55795000
+ 4 Abilene 2001.     58570000
+ 5 Abilene 2002.     55305000
+ 6 Abilene 2002.     63370000
+ 7 Abilene 2003.     58175000
+ 8 Abilene 2003.     77500000
+ 9 Abilene 2004.     74205000
+10 Abilene 2004.     85465000
+# ... with 1,462 more rows</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="co"># Quarterly Sales per city</span></span>
+<span id="cb78-2"><a href="#cb78-2"></a>small_df_with_date_cols <span class="sc">%&gt;%</span> <span class="fu">tx_summary</span>(<span class="at">grp_col =</span> yQtr, <span class="at">sum_col =</span> sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,898 x 3
+   city     yQtr total_sales
+   &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Abilene 2000.         300
+ 2 Abilene 2000.         395
+ 3 Abilene 2000.         387
+ 4 Abilene 2000.         293
+ 5 Abilene 2001.         305
+ 6 Abilene 2001.         394
+ 7 Abilene 2001.         401
+ 8 Abilene 2001.         331
+ 9 Abilene 2002.         295
+10 Abilene 2002.         425
+# ... with 2,888 more rows</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="co"># Monthly Volumes per city</span></span>
+<span id="cb80-2"><a href="#cb80-2"></a>small_df_with_date_cols <span class="sc">%&gt;%</span> <span class="fu">tx_summary</span>(<span class="at">grp_col =</span> yMonth, <span class="at">sum_col =</span> volume)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8,602 x 3
+   city    yMonth total_volume
+   &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Abilene  2000.      5380000
+ 2 Abilene  2000.      6505000
+ 3 Abilene  2000.      9285000
+ 4 Abilene  2000.      9730000
+ 5 Abilene  2000.     10590000
+ 6 Abilene  2000.     13910000
+ 7 Abilene  2000.     12635000
+ 8 Abilene  2000.     10710000
+ 9 Abilene  2000.      7615000
+10 Abilene  2000.      7040000
+# ... with 8,592 more rows</code></pre>
+</div>
+</div>
+</section><section id="more-ideas" class="level3"><h3 class="anchored" data-anchor-id="more-ideas">More ideas</h3>
+<p>You could further extend this by creating a custom filtering function that gives you, say, the rows with the highest or lowest <code>total_sales</code> or <code>total_volume</code>.</p>
+</section></section><section id="conclusion" class="level1"><h1>Conclusion</h1>
+<p>The ability to create such dynamic functions, enabled by the wonderful {dplyr} package, allows us to level-up in terms of programming with R and helps make our code neat and tidy.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://i.imgur.com/H9jo8OB.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">How I feel while creating custom functions with {dplyr}! I can almost hear the music! Source: imgur.com</figcaption><p></p>
+</figure>
+</div>
+</section><section id="references" class="level1"><h1>References</h1>
+<ul>
+<li>Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2022). dplyr: A Grammar of Data Manipulation. R package version 1.0.9. https://CRAN.R-project.org/package=dplyr</li>
+<li>https://dplyr.tidyverse.org/articles/programming.html</li>
+<li>H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016. https://ggplot2.tidyverse.org</li>
+<li>Jim Hester and Jennifer Bryan (2022). glue: Interpreted String Literals. R package version 1.6.2. https://CRAN.R-project.org/package=glue</li>
+</ul>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+    } else {
+      disableStylesheet(alternateStylesheets);
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Vishal Katti 2022<br>made with , and <a href="https://quarto.org">quarto</a></div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

@@ -10,48 +10,810 @@
 <atom:link href="https://vishalkatti.com/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-0.9.649</generator>
-<lastBuildDate>Sun, 02 Oct 2022 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 16 Jul 2021 18:30:00 GMT</lastBuildDate>
 <item>
-  <title>Post With Code</title>
-  <dc:creator>Harlow Malloc</dc:creator>
-  <link>https://vishalkatti.com/posts/post-with-code/index.html</link>
-  <description><![CDATA[ 
+  <title>Programming with R {dplyr} - As I Understand It!!</title>
+  <dc:creator>Vishal Katti</dc:creator>
+  <link>https://vishalkatti.com/posts/programming-with-dplyr/index.html</link>
+  <description><![CDATA[ <section id="introduction" class="level1"><h1>Introduction</h1>
+<p>The purpose of this article is to act as a quick guide for myself and others to understand how to use <code>dplyr</code> effectively to create dynamic functions. The general assumption is that the reader is familiar with the <a href="https://dplyr.tidyverse.org">dplyr</a> package and how to use it for data wrangling.</p>
+<p>In this article, we will explore how to create functions using the popular <code>dplyr</code> verbs like <code>select</code>, <code>filter</code>, <code>mutate</code>, <code>arrange</code> and finally <code>group_by</code> with <code>summarise</code>.</p>
+<section id="inspiration" class="level3"><h3 class="anchored" data-anchor-id="inspiration">Inspiration</h3>
+<p>I regularly deal with event-related information with event date and few other columns like event type, root cause etc. Most reports usually involve calculating number of events that took place on a monthly, quarterly or annual basis, sometimes split by event type, root cause and other columns. After a few reports I realized that I am basically writing the same code over and over again to calculate these KPIs. Keeping the <code>DRY (Don't Repeat Yourself)</code> principle in mind, I managed to write a few functions to calculate these KPIs with a few dynamic variables. Following is an attempt to articulate what I learnt while creating those functions.</p>
+</section><section id="data" class="level3"><h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>We shall use the Texas Housing Sales data, available as a tibble in the popular <code>ggplot2</code> package as reference data. It contains monthly information about the housing market in Texas provided by the TAMU real estate center, <a href="https://www.recenter.tamu.edu/" class="uri">https://www.recenter.tamu.edu/</a>. It has 8602 observations and 9 variables.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1">txhousing <span class="ot" style="color: #003B4F;">&lt;-</span> ggplot2<span class="sc" style="color: #5E5E5E;">::</span>txhousing</span>
+<span id="cb1-2">dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">glimpse</span>(txhousing)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8,602
+Columns: 9
+$ city      &lt;chr&gt; "Abilene", "Abilene", "Abilene", "Abilene", "Abilene", "Abil~
+$ year      &lt;int&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, ~
+$ month     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, ~
+$ sales     &lt;dbl&gt; 72, 98, 130, 98, 141, 156, 152, 131, 104, 101, 100, 92, 75, ~
+$ volume    &lt;dbl&gt; 5380000, 6505000, 9285000, 9730000, 10590000, 13910000, 1263~
+$ median    &lt;dbl&gt; 71400, 58700, 58100, 68600, 67300, 66900, 73500, 75000, 6450~
+$ listings  &lt;dbl&gt; 701, 746, 784, 785, 794, 780, 742, 765, 771, 764, 721, 658, ~
+$ inventory &lt;dbl&gt; 6.3, 6.6, 6.8, 6.9, 6.8, 6.6, 6.2, 6.4, 6.5, 6.6, 6.2, 5.7, ~
+$ date      &lt;dbl&gt; 2000.000, 2000.083, 2000.167, 2000.250, 2000.333, 2000.417, ~</code></pre>
+</div>
+</div>
+<p>We shall refer the above data in all the following sections.</p>
+</section></section><section id="select" class="level1 page-columns page-full"><h1><code>select()</code></h1>
+<p>When using <code>dplyr</code> functions, the two most popular ways to pass column names is either as bare names i.e.&nbsp;column names without enclosing them in quotes like <code>sales</code> or <code>volume</code> OR pass them as a character string like “sales” or ‘volume’. You could also pass a character vector like <code>c("sales", "volume")</code>. In this section we will explore the 3 ways to dynamically select the columns we want.</p>
+<section id="passing-raw-column-names" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-raw-column-names">Passing raw column names</h3>
+<p>In this method, we pass the raw name of the column we want to select and use the <code>embrace</code> of curly-curly brackets to pass the raw name. For multiple columns, we can pass the raw names as a single vector.</p>
+<div class="cell column-body-outset-right" data-label="select_raw">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1">select_raw <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, var) {</span>
+<span id="cb3-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(<span class="at" style="color: #657422;">.data =</span> df, {{var}}) <span class="sc" style="color: #5E5E5E;">%&gt;%</span>     <span class="co" style="color: #5E5E5E;"># embrace of curly-curly {{}} brackets</span></span>
+<span id="cb3-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb3-4">}</span>
+<span id="cb3-5"><span class="fu" style="color: #4758AB;">select_raw</span>(txhousing, sales)                 <span class="co" style="color: #5E5E5E;"># pass single raw name</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 1
+  sales
+  &lt;dbl&gt;
+1    72
+2    98
+3   130
+4    98
+5   141
+6   156</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">select_raw</span>(txhousing, <span class="fu" style="color: #4758AB;">c</span>(sales, volume))      <span class="co" style="color: #5E5E5E;"># pass a vector of raw names for multiple columns</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  sales   volume
+  &lt;dbl&gt;    &lt;dbl&gt;
+1    72  5380000
+2    98  6505000
+3   130  9285000
+4    98  9730000
+5   141 10590000
+6   156 13910000</code></pre>
+</div>
+</div>
+<p>If passing multiple raw names as vector as in the <code>select_raw()</code> feels like an unnecessary complication, try the next method.</p>
+</section><section id="passing-multiple-raw-column-names-using-argument" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-multiple-raw-column-names-using-argument">Passing multiple raw column names using … argument</h3>
+<p>In this method, we use the <code>.</code> argument to pass the raw names of the columns we want to select.</p>
+<div class="cell column-body-outset-right" data-label="my_select">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1">my_select <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, ...) {</span>
+<span id="cb7-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(<span class="at" style="color: #657422;">.data =</span> df, ...) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb7-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb7-4">}</span>
+<span id="cb7-5"></span>
+<span id="cb7-6"><span class="fu" style="color: #4758AB;">my_select</span>(txhousing, sales, volume)          <span class="co" style="color: #5E5E5E;"># pass multiple raw names directly</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  sales   volume
+  &lt;dbl&gt;    &lt;dbl&gt;
+1    72  5380000
+2    98  6505000
+3   130  9285000
+4    98  9730000
+5   141 10590000
+6   156 13910000</code></pre>
+</div>
+</div>
+</section><section id="passing-a-character-vector-of-column-names" class="level3"><h3 class="anchored" data-anchor-id="passing-a-character-vector-of-column-names">Passing a character vector of column names</h3>
+<p>If we have the column names as a character vector, we use the <code>all_of</code> function to pass the character vector to the internal <code>select</code> function.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1">my_select_char <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, cols) {</span>
+<span id="cb9-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(<span class="at" style="color: #657422;">.data =</span> df, dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">all_of</span>(cols)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb9-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb9-4">}</span>
+<span id="cb9-5"></span>
+<span id="cb9-6">my_cols <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"sales"</span>,<span class="st" style="color: #20794D;">"volume"</span>)</span>
+<span id="cb9-7"><span class="fu" style="color: #4758AB;">my_select_char</span>(txhousing, my_cols)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  sales   volume
+  &lt;dbl&gt;    &lt;dbl&gt;
+1    72  5380000
+2    98  6505000
+3   130  9285000
+4    98  9730000
+5   141 10590000
+6   156 13910000</code></pre>
+</div>
+</div>
+</section></section><section id="filter" class="level1 page-columns page-full"><h1><code>filter()</code></h1>
+<p>In the previous section, we passed column names either as bare names or character strings. <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> takes one or more expressions/conditions that result in a logical vector, with same length as number of rows in the data.frame/tibble and returns only those rows for which the expression/condition returns <code>TRUE</code>. Following are 2 ways to pass these logical expressions/conditions. I’m using expression and condition interchangeably here. In this context, a condition is an expression that results in a boolean <code>TRUE/FALSE</code> result.</p>
+<section id="passing-single-raw-criteria" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-single-raw-criteria">Passing single raw criteria</h3>
+<p>In this method, we pass the condition <code>sales &gt; 8000</code> as a raw/bare expression.</p>
+<div class="cell column-body-outset-right" data-label="filter_raw">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1">filter_raw <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, cond) {</span>
+<span id="cb11-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(<span class="at" style="color: #657422;">.data =</span> df, {{cond}})        <span class="co" style="color: #5E5E5E;"># embrace of curly-curly {{}} brackets</span></span>
+<span id="cb11-3">}</span>
+<span id="cb11-4"></span>
+<span id="cb11-5"><span class="fu" style="color: #4758AB;">filter_raw</span>(txhousing, sales <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">8000</span>)          <span class="co" style="color: #5E5E5E;"># Pass a single raw criterion</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 9
+   city     year month sales     volume median listings inventory  date
+   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 Houston  2006     5  8040 1602621368 151200    35398       5.5 2006.
+ 2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+ 3 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+ 4 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+ 5 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+ 6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+ 7 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+ 8 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+ 9 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+10 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+<p>Do you think we can pass multiple bare conditions as a vector, like we did for <code>select_raw()</code> in the previous section? Let us try passing multiple raw criteria as a vector.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;">filter_raw</span>(txhousing, <span class="fu" style="color: #4758AB;">c</span>(sales <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">8000</span>, year <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">2010</span>))</span></code></pre></div>
+</details><pre style="color: red;"><code>Error in `dplyr::filter()`:
+! Problem while computing `..1 = c(sales &gt; 8000, year &gt; 2010)`.
+x Input `..1` must be of size 8602 or 1, not size 17204.
+</code></pre>
+</div>
+<p>Passing multiple raw criteria as a vector doesn’t work like it works for <code>select_raw()</code> function. Let us understand why. Consider the following code:</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1">A <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="cn" style="color: #8f5902;">TRUE</span>, <span class="cn" style="color: #8f5902;">TRUE</span>)                           <span class="co" style="color: #5E5E5E;"># boolean vector of length = 2</span></span>
+<span id="cb14-2">B <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="cn" style="color: #8f5902;">FALSE</span>, <span class="cn" style="color: #8f5902;">FALSE</span>)                         <span class="co" style="color: #5E5E5E;"># boolean vector of length = 2</span></span>
+<span id="cb14-3">X <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(A, B)</span>
+<span id="cb14-4">X</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE  TRUE FALSE FALSE</code></pre>
+</div>
+</div>
+<p>Notice that length of X is 4. Similarly, <code>sales &gt; 8000</code> evaluates to a TRUE/FALSE boolean vector of length 8602 (equal to number of rows in <code>txhousing</code>) and so does <code>year &gt; 2010</code>. So the vector <code>c(sales &gt; 8000, year &gt; 2010)</code> becomes a TRUE/FALSE boolean vector of length 17204, which results in an error.</p>
+</section><section id="passing-multiple-raw-criteria-using-argument" class="level3"><h3 class="anchored" data-anchor-id="passing-multiple-raw-criteria-using-argument">Passing multiple raw criteria using … argument</h3>
+<p>To pass multiple raw criteria, we can use the <code>...</code> argument.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1">my_filter <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, ...) { </span>
+<span id="cb16-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(<span class="at" style="color: #657422;">.data =</span> df, ...)                <span class="co" style="color: #5E5E5E;"># pass the dots argument</span></span>
+<span id="cb16-3">  }</span>
+<span id="cb16-4"></span>
+<span id="cb16-5"><span class="fu" style="color: #4758AB;">my_filter</span>(txhousing, sales <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">8000</span>, year <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">2010</span>) <span class="co" style="color: #5E5E5E;"># pass multiple raw criteria</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+2 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+3 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+4 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+5 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+6 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+7 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+8 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+</section><section id="passing-single-criteria-as-a-character-string" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-single-criteria-as-a-character-string">Passing single criteria as a character string</h3>
+<p>By default, <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> does not accept conditions as character strings. Following is an example which results in error</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1">dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(txhousing, <span class="st" style="color: #20794D;">"sales &gt; 8000"</span>)</span></code></pre></div>
+</details><pre style="color: red;"><code>Error in `dplyr::filter()`:
+! Problem while computing `..1 = "sales &gt; 8000"`.
+x Input `..1` must be a logical vector, not a character.
+</code></pre>
+</div>
+<p>We need to convert the character condition into a raw expression.</p>
+<div class="cell column-body-outset-right" data-label="my_filter_string">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1">my_filter_string <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, cond) {</span>
+<span id="cb19-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(<span class="at" style="color: #657422;">.data =</span> df, <span class="fu" style="color: #4758AB;">eval</span>(<span class="fu" style="color: #4758AB;">parse</span>(<span class="at" style="color: #657422;">text =</span> cond))) <span class="co" style="color: #5E5E5E;"># convert text to raw criterion</span></span>
+<span id="cb19-3">}</span>
+<span id="cb19-4"></span>
+<span id="cb19-5"><span class="fu" style="color: #4758AB;">my_filter_string</span>(txhousing, <span class="st" style="color: #20794D;">"sales &gt; 8000"</span>)  <span class="co" style="color: #5E5E5E;"># pass single text string as criteria</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 x 9
+   city     year month sales     volume median listings inventory  date
+   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 Houston  2006     5  8040 1602621368 151200    35398       5.5 2006.
+ 2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+ 3 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+ 4 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+ 5 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+ 6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+ 7 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+ 8 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+ 9 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+10 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+<p>The special sauce here is the <code>eval(parse(text = ...))</code> combo that converts the long text criteria into a single raw criteria and passes it to the internal <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function.</p>
+</section><section id="passing-multiple-criteria-as-character-vector" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="passing-multiple-criteria-as-character-vector">Passing multiple criteria as character vector</h3>
+<p>What if want to pass multiple criteria as a string vector? In such a situation, we must combine all the string conditions into a single long string condition using <code>paste0(..., collapse = " &amp; ")</code>. The <code>paste0("(", cond, ")", collapse = " &amp; ")</code> combines all the criteria into a single long criteria, but still a text string.</p>
+<div class="cell column-body-outset-right" data-label="my_filter_strings">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1">my_filter_strings <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, cond) { </span>
+<span id="cb21-2">  filter_text <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">paste0</span>(<span class="st" style="color: #20794D;">"("</span>, cond, <span class="st" style="color: #20794D;">")"</span>, <span class="at" style="color: #657422;">collapse =</span> <span class="st" style="color: #20794D;">" &amp; "</span>)   <span class="co" style="color: #5E5E5E;"># combine all criteria</span></span>
+<span id="cb21-3">  <span class="fu" style="color: #4758AB;">message</span>(<span class="st" style="color: #20794D;">"Filter Condition: "</span>, filter_text)                <span class="co" style="color: #5E5E5E;"># (OPTIONAL) show the combined filter string</span></span>
+<span id="cb21-4">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">filter</span>(<span class="at" style="color: #657422;">.data =</span> df, <span class="fu" style="color: #4758AB;">eval</span>(<span class="fu" style="color: #4758AB;">parse</span>(<span class="at" style="color: #657422;">text =</span> filter_text)))<span class="co" style="color: #5E5E5E;"># convert text to raw criterion</span></span>
+<span id="cb21-5">  }</span>
+<span id="cb21-6"></span>
+<span id="cb21-7">my_filter_criteria <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"sales &gt; 8000"</span>, <span class="st" style="color: #20794D;">"year &gt; 2010"</span>)</span>
+<span id="cb21-8"><span class="fu" style="color: #4758AB;">my_filter_strings</span>(txhousing, my_filter_criteria)</span></code></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Filter Condition: (sales &gt; 8000) &amp; (year &gt; 2010)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+2 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+3 Houston  2013     8  8155 2083377894 186700    21366       3.3 2014.
+4 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.
+5 Houston  2014     7  8391 2278932511 199700    20214       3   2014.
+6 Houston  2014     8  8167 2195184825 202400    20007       2.9 2015.
+7 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+8 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.</code></pre>
+</div>
+</div>
+<div class="cell column-body-outset-right" data-label="filter_OR">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="co" style="color: #5E5E5E;"># </span><span class="al" style="color: #AD0000;">NOTE</span><span class="co" style="color: #5E5E5E;">: OR criteria must be a single string separated by pipe '|' as in example below.</span></span>
+<span id="cb24-2">my_filter_criteria_with_OR <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"sales &gt; 8000 | sales &lt; 50"</span>, <span class="st" style="color: #20794D;">"year &gt; 2010"</span>)</span>
+<span id="cb24-3"><span class="fu" style="color: #4758AB;">my_filter_strings</span>(txhousing, my_filter_criteria_with_OR)</span></code></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Filter Condition: (sales &gt; 8000 | sales &lt; 50) &amp; (year &gt; 2010)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 315 x 9
+   city         year month sales  volume median listings inventory  date
+   &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 Brownsville  2011     1    48 4974408  83300      784      12.6 2011 
+ 2 Brownsville  2011     2    47 5558575 101400      776      12.7 2011.
+ 3 Brownsville  2011     7    47 4807019  91200      749      13.1 2012.
+ 4 Brownsville  2011    12    39 4203440  86800      726      12.4 2012.
+ 5 Brownsville  2012     1    43 3892348  85000      791      13.6 2012 
+ 6 Brownsville  2012     3    27 2976148  93800      734      13.3 2012.
+ 7 Brownsville  2012    11    41 5115393  99000      807      14   2013.
+ 8 Brownsville  2013    11    38 4824930 108000      859      13.4 2014.
+ 9 Brownsville  2015     1    41 5400796  97000      733      10.7 2015 
+10 Galveston    2011     1    43 8882961 170000     1015      13.7 2011 
+# ... with 305 more rows</code></pre>
+</div>
+</div>
+</section></section><section id="mutate" class="level1"><h1><code>mutate()</code></h1>
+<p><code>mutate()</code> allows you to add new columns or modify existing columns. In the example below, we will create a new column <code>volume_in_millions</code> from the existing column <code>volume</code>. The names of both the columns can be passed to the function either as raw names or character strings.</p>
+<section id="passing-the-column-name-as-raw-name" class="level3"><h3 class="anchored" data-anchor-id="passing-the-column-name-as-raw-name">Passing the column name as raw name</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1">mutate_raw <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, new_col_raw, old_col_raw, <span class="at" style="color: #657422;">num =</span> <span class="dv" style="color: #AD0000;">1</span>) { </span>
+<span id="cb27-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">.data =</span> df, {{new_col_raw}} <span class="sc" style="color: #5E5E5E;">:</span><span class="er" style="color: #AD0000;">=</span> {{old_col_raw}}<span class="sc" style="color: #5E5E5E;">/</span>num) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb27-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb27-4">}</span>
+<span id="cb27-5"></span>
+<span id="cb27-6">txhousing <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb27-7">  <span class="fu" style="color: #4758AB;">select</span>(city, year, month, volume) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb27-8">  <span class="fu" style="color: #4758AB;">mutate_raw</span>(vol_in_millions, volume, <span class="fl" style="color: #AD0000;">1E6</span>) <span class="co" style="color: #5E5E5E;"># pass raw column names w/o quotes</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 5
+  city     year month   volume vol_in_millions
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;           &lt;dbl&gt;
+1 Abilene  2000     1  5380000            5.38
+2 Abilene  2000     2  6505000            6.50
+3 Abilene  2000     3  9285000            9.28
+4 Abilene  2000     4  9730000            9.73
+5 Abilene  2000     5 10590000           10.6 
+6 Abilene  2000     6 13910000           13.9 </code></pre>
+</div>
+</div>
+</section><section id="passing-the-new-variable-name-as-character-string-direct" class="level3"><h3 class="anchored" data-anchor-id="passing-the-new-variable-name-as-character-string-direct">Passing the new variable name as character string (direct)</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1">mutate_text <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, new_col_str, old_col_str, <span class="at" style="color: #657422;">num =</span> <span class="dv" style="color: #AD0000;">1</span>) { </span>
+<span id="cb29-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">.data =</span> df, {{new_col_str}} <span class="sc" style="color: #5E5E5E;">:</span><span class="er" style="color: #AD0000;">=</span> df[[old_col_str]]<span class="sc" style="color: #5E5E5E;">/</span>num) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb29-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb29-4">}</span>
+<span id="cb29-5"></span>
+<span id="cb29-6">txhousing <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb29-7">  <span class="fu" style="color: #4758AB;">select</span>(city, year, month, volume) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb29-8">  <span class="fu" style="color: #4758AB;">mutate_text</span>(<span class="st" style="color: #20794D;">"vol_in_millions"</span>, <span class="st" style="color: #20794D;">"volume"</span>, <span class="fl" style="color: #AD0000;">1E6</span>) <span class="co" style="color: #5E5E5E;"># pass column names as strings</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 5
+  city     year month   volume vol_in_millions
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;           &lt;dbl&gt;
+1 Abilene  2000     1  5380000            5.38
+2 Abilene  2000     2  6505000            6.50
+3 Abilene  2000     3  9285000            9.28
+4 Abilene  2000     4  9730000            9.73
+5 Abilene  2000     5 10590000           10.6 
+6 Abilene  2000     6 13910000           13.9 </code></pre>
+</div>
+</div>
+</section><section id="passing-the-new-variable-name-as-character-string-indirect" class="level3"><h3 class="anchored" data-anchor-id="passing-the-new-variable-name-as-character-string-indirect">Passing the new variable name as character string (indirect)</h3>
+<p>Instead of passing the name of the variable as a character string as an argument, we can pass a variable containing the name of the variable. In the below example, the name of the new variable is stored in <code>new_var</code>. Using the new <a href="https://github.com/tidyverse/glue">glue</a> syntax, enabled by the walrus operator <code>:=</code>, we substitute the <code>new_var</code> variable with its value.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1">mutate_var <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, new_col_var, old_col_var, <span class="at" style="color: #657422;">num =</span> <span class="dv" style="color: #AD0000;">1</span>) {</span>
+<span id="cb31-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">.data =</span> df, <span class="st" style="color: #20794D;">"{new_col_var}"</span> <span class="sc" style="color: #5E5E5E;">:</span><span class="er" style="color: #AD0000;">=</span> df[[old_col_var]]<span class="sc" style="color: #5E5E5E;">/</span>num) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb31-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb31-4">}</span>
+<span id="cb31-5"></span>
+<span id="cb31-6">new_var <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">"vol_in_millions"</span></span>
+<span id="cb31-7">old_var <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">"volume"</span></span>
+<span id="cb31-8"></span>
+<span id="cb31-9">txhousing <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb31-10">  <span class="fu" style="color: #4758AB;">select</span>(city, year, month, volume) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb31-11">  <span class="fu" style="color: #4758AB;">mutate_var</span>(new_var, old_var, <span class="fl" style="color: #AD0000;">1E6</span>)  <span class="co" style="color: #5E5E5E;"># pass column names as variables</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 5
+  city     year month   volume vol_in_millions
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;           &lt;dbl&gt;
+1 Abilene  2000     1  5380000            5.38
+2 Abilene  2000     2  6505000            6.50
+3 Abilene  2000     3  9285000            9.28
+4 Abilene  2000     4  9730000            9.73
+5 Abilene  2000     5 10590000           10.6 
+6 Abilene  2000     6 13910000           13.9 </code></pre>
+</div>
+</div>
+</section></section><section id="arrange" class="level1"><h1><code>arrange()</code></h1>
+<p><code>arrange()</code> sorts the rows of a data frame by the values of selected columns. By default, it sorts in Ascending order. To force a column to sort in Descending order, we must use the <code>desc()</code> function.</p>
+<section id="passing-single-raw-name" class="level3"><h3 class="anchored" data-anchor-id="passing-single-raw-name">Passing single raw name</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1">arrange_raw <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, var) {</span>
+<span id="cb33-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">arrange</span>(<span class="at" style="color: #657422;">.data =</span> df, {{var}}) <span class="sc" style="color: #5E5E5E;">%&gt;%</span>    <span class="co" style="color: #5E5E5E;"># embrace of curly-curly {{}} brackets</span></span>
+<span id="cb33-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb33-4">}</span>
+<span id="cb33-5"></span>
+<span id="cb33-6"><span class="fu" style="color: #4758AB;">arrange_raw</span>(txhousing, sales)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city                year month sales  volume median listings inventory  date
+  &lt;chr&gt;              &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 San Marcos          2011    10     6 1156999 180000      163       8.3 2012.
+2 Harlingen           2000     7     9 1110000  87500      719      30.8 2000.
+3 South Padre Island  2011     1     9 2088500 225000     1258      55.7 2011 
+4 San Marcos          2011     1    10 1482310 140000      165       7.5 2011 
+5 San Marcos          2011    12    10 1561250 140000      148       8   2012.
+6 San Marcos          2014    11    10 1506878 146700       96       4   2015.</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><span class="fu" style="color: #4758AB;">arrange_raw</span>(txhousing, <span class="fu" style="color: #4758AB;">desc</span>(sales))</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.
+2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+3 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+4 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+5 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.</code></pre>
+</div>
+</div>
+<p><code>arrange_raw()</code> fails when we pass multiple raw names as a vector.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><span class="fu" style="color: #4758AB;">arrange_raw</span>(txhousing, <span class="fu" style="color: #4758AB;">c</span>(sales, volume))</span></code></pre></div>
+</details><pre style="color: red;"><code>Error in `dplyr::arrange()`:
+! Problem with the implicit `transmute()` step.
+x Problem while computing `..1 = c(sales, volume)`.
+x `..1` must be size 8602 or 1, not 17204.
+</code></pre>
+</div>
+</section><section id="passing-multiple-raw-names-using-...-argument" class="level3"><h3 class="anchored" data-anchor-id="passing-multiple-raw-names-using-...-argument">Passing multiple raw names using <code>...</code> argument</h3>
+<p>To pass multiple raw names, we must use the <code>...</code> argument.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1">arrange_raw_multiple <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, ...) {</span>
+<span id="cb38-2">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">arrange</span>(<span class="at" style="color: #657422;">.data =</span> df, ...) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb38-3">    <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb38-4">}</span>
+<span id="cb38-5"></span>
+<span id="cb38-6"><span class="fu" style="color: #4758AB;">arrange_raw_multiple</span>(txhousing, city, sales)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales  volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Abilene  2003     1    68 5385000  70000      668       5.4  2003
+2 Abilene  2011     1    68 8834493 123300      809       6.1  2011
+3 Abilene  2009     1    70 8414801  92900      861       6.3  2009
+4 Abilene  2000     1    72 5380000  71400      701       6.3  2000
+5 Abilene  2010     1    73 9130783 112200      868       6.4  2010
+6 Abilene  2001     1    75 5730000  64500      779       6.8  2001</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><span class="fu" style="color: #4758AB;">arrange_raw_multiple</span>(txhousing, city, <span class="fu" style="color: #4758AB;">desc</span>(sales))</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales   volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Abilene  2015     7   268 45845730 148700      986       5   2016.
+2 Abilene  2015     6   260 41396230 141500      965       5   2015.
+3 Abilene  2007     7   239 29315000 114300      940       5.2 2008.
+4 Abilene  2013     8   236 30777727 120000      976       5.4 2014.
+5 Abilene  2014     7   231 35861350 145800     1033       5.8 2014.
+6 Abilene  2005     6   230 24050000  92500      664       4.1 2005.</code></pre>
+</div>
+</div>
+</section><section id="pass-single-column-name-as-string" class="level3"><h3 class="anchored" data-anchor-id="pass-single-column-name-as-string">Pass single column name as string</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1">arrange_str <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, var, <span class="at" style="color: #657422;">.desc =</span> <span class="cn" style="color: #8f5902;">FALSE</span>) {</span>
+<span id="cb42-2">  <span class="cf" style="color: #003B4F;">if</span> (.desc) {</span>
+<span id="cb42-3">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">arrange</span>(<span class="at" style="color: #657422;">.data =</span> df, <span class="fu" style="color: #4758AB;">desc</span>(df[[var]])) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb42-4">  } <span class="cf" style="color: #003B4F;">else</span> {</span>
+<span id="cb42-5">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">arrange</span>(<span class="at" style="color: #657422;">.data =</span> df, df[[var]]) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb42-6">  }</span>
+<span id="cb42-7">}</span>
+<span id="cb42-8"></span>
+<span id="cb42-9"><span class="fu" style="color: #4758AB;">arrange_str</span>(txhousing, <span class="st" style="color: #20794D;">"sales"</span>)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city                year month sales  volume median listings inventory  date
+  &lt;chr&gt;              &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 San Marcos          2011    10     6 1156999 180000      163       8.3 2012.
+2 Harlingen           2000     7     9 1110000  87500      719      30.8 2000.
+3 South Padre Island  2011     1     9 2088500 225000     1258      55.7 2011 
+4 San Marcos          2011     1    10 1482310 140000      165       7.5 2011 
+5 San Marcos          2011    12    10 1561250 140000      148       8   2012.
+6 San Marcos          2014    11    10 1506878 146700       96       4   2015.</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><span class="fu" style="color: #4758AB;">arrange_str</span>(txhousing, <span class="st" style="color: #20794D;">"sales"</span>, <span class="at" style="color: #657422;">.desc =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city     year month sales     volume median listings inventory  date
+  &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston  2015     7  8945 2568156780 217600    23875       3.4 2016.
+2 Houston  2006     6  8628 1795898108 155200    36281       5.6 2006.
+3 Houston  2013     7  8468 2168720825 187800    21497       3.3 2014.
+4 Houston  2015     6  8449 2490238594 222400    22311       3.2 2015.
+5 Houston  2013     5  8439 2121508529 186100    20526       3.3 2013.
+6 Houston  2014     6  8391 2342443127 211200    19725       2.9 2014.</code></pre>
+</div>
+</div>
+</section><section id="pass-multiple-column-name-as-string" class="level3"><h3 class="anchored" data-anchor-id="pass-multiple-column-name-as-string">Pass multiple column name as string</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1">arrange_str_multiple <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, var, <span class="at" style="color: #657422;">desc =</span> <span class="cn" style="color: #8f5902;">FALSE</span>) {</span>
+<span id="cb46-2">  <span class="cf" style="color: #003B4F;">if</span> (desc) {</span>
+<span id="cb46-3">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">arrange</span>(<span class="at" style="color: #657422;">.data =</span> df, <span class="fu" style="color: #4758AB;">desc</span>(df[var])) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb46-4">  } <span class="cf" style="color: #003B4F;">else</span> {</span>
+<span id="cb46-5">    dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">arrange</span>(<span class="at" style="color: #657422;">.data =</span> df, df[var]) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">head</span>()</span>
+<span id="cb46-6">  }</span>
+<span id="cb46-7">}</span>
+<span id="cb46-8"></span>
+<span id="cb46-9"><span class="co" style="color: #5E5E5E;"># This function arranges the dataframe either all ascending</span></span>
+<span id="cb46-10"><span class="co" style="color: #5E5E5E;"># or all descending. Definitely need a better example.</span></span>
+<span id="cb46-11"></span>
+<span id="cb46-12"><span class="fu" style="color: #4758AB;">arrange_str_multiple</span>(txhousing, <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"year"</span>, <span class="st" style="color: #20794D;">"month"</span>, <span class="st" style="color: #20794D;">"sales"</span>))</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city         year month sales  volume median listings inventory  date
+  &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Paris        2000     1    19 1440000  71700      286       7.5  2000
+2 San Marcos   2000     1    22 2380000 106700      190       6.3  2000
+3 Lufkin       2000     1    28 2280000  68000       NA      NA    2000
+4 Harlingen    2000     1    31 3910000  87500      644      24.9  2000
+5 Galveston    2000     1    37 4555000  95000      636       9.1  2000
+6 Port Arthur  2000     1    40 3090000  68300      314       5.6  2000</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb48" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><span class="fu" style="color: #4758AB;">arrange_str_multiple</span>(txhousing, <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"year"</span>, <span class="st" style="color: #20794D;">"month"</span>, <span class="st" style="color: #20794D;">"sales"</span>), <span class="at" style="color: #657422;">desc =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 9
+  city           year month sales     volume median listings inventory  date
+  &lt;chr&gt;         &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 Houston        2015     7  8945 2568156780 217600    23875       3.4 2016.
+2 Dallas         2015     7  7038 2021907410 233000    12292       2.4 2016.
+3 Austin         2015     7  3466 1150381553 264600     7913       3   2016.
+4 San Antonio    2015     7  2962  704891602 198100     9462       4.1 2016.
+5 Collin County  2015     7  1861  613669702 292600     2809       2.1 2016.
+6 Fort Bend      2015     7  1372  431875327 280400     3328       3.1 2016.</code></pre>
+</div>
+</div>
+</section></section><section id="group_by" class="level1"><h1><code>group_by()</code></h1>
+<p>In <code>group_by()</code>, we <em>select</em> which columns to, well, group by! (Damn these well-named functions!). So one can use the same techniques as <code>select()</code> to choose the columns.</p>
+<p>In the following examples, we will create only one summarised value <code>total_sales</code> for simplicity.</p>
+<section id="passing-single-raw-name-1" class="level3"><h3 class="anchored" data-anchor-id="passing-single-raw-name-1">Passing single raw name</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb50" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1">group_raw <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, grp) {</span>
+<span id="cb50-2">  df <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb50-3">    <span class="fu" style="color: #4758AB;">group_by</span>({{grp}}) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb50-4">    <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">total_sales =</span> <span class="fu" style="color: #4758AB;">sum</span>(sales, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>),</span>
+<span id="cb50-5">              <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)  <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb50-6">    <span class="fu" style="color: #4758AB;">head</span>(<span class="at" style="color: #657422;">n=</span><span class="dv" style="color: #AD0000;">5</span>)</span>
+<span id="cb50-7">}</span>
+<span id="cb50-8"></span>
+<span id="cb50-9"><span class="fu" style="color: #4758AB;">group_raw</span>(txhousing, year)        <span class="co" style="color: #5E5E5E;"># Sum of sales per year</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb52" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><span class="fu" style="color: #4758AB;">group_raw</span>(txhousing, month)       <span class="co" style="color: #5E5E5E;"># Sum of sales per month</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+  month total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1     1      245924
+2     2      296410
+3     3      386909
+4     4      397332
+5     5      448968</code></pre>
+</div>
+</div>
+</section><section id="passing-multiple-raw-names-using-the-...-operator" class="level3"><h3 class="anchored" data-anchor-id="passing-multiple-raw-names-using-the-...-operator">Passing multiple raw names using the <code>...</code> operator</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb54" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1">group_raw_multiple <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, ...) {</span>
+<span id="cb54-2">  df <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb54-3">    <span class="fu" style="color: #4758AB;">group_by</span>(...) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb54-4">    <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">total_sales =</span> <span class="fu" style="color: #4758AB;">sum</span>(sales, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>),</span>
+<span id="cb54-5">              <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)  <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb54-6">    <span class="fu" style="color: #4758AB;">head</span>(<span class="at" style="color: #657422;">n =</span> <span class="dv" style="color: #AD0000;">5</span>)</span>
+<span id="cb54-7">}</span>
+<span id="cb54-8"></span>
+<span id="cb54-9"><span class="fu" style="color: #4758AB;">group_raw_multiple</span>(txhousing, year)              <span class="co" style="color: #5E5E5E;"># Sum of sales per year</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb56" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><span class="fu" style="color: #4758AB;">group_raw_multiple</span>(txhousing, year, month)       <span class="co" style="color: #5E5E5E;"># Sum of sales per month</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 3
+   year month total_sales
+  &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+1  2000     1       11411
+2  2000     2       15674
+3  2000     3       20202
+4  2000     4       18658
+5  2000     5       22388</code></pre>
+</div>
+</div>
+</section><section id="passing-single-or-multiple-column-names-as-character-string" class="level3"><h3 class="anchored" data-anchor-id="passing-single-or-multiple-column-names-as-character-string">Passing single or multiple column names as character string</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb58" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1">group_str <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, grp) {</span>
+<span id="cb58-2">  df <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb58-3">    <span class="fu" style="color: #4758AB;">group_by</span>(df[grp]) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb58-4">    <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">total_sales =</span> <span class="fu" style="color: #4758AB;">sum</span>(sales, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>),</span>
+<span id="cb58-5">              <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)  <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb58-6">    <span class="fu" style="color: #4758AB;">head</span>(<span class="at" style="color: #657422;">n=</span><span class="dv" style="color: #AD0000;">5</span>)</span>
+<span id="cb58-7">}</span>
+<span id="cb58-8"></span>
+<span id="cb58-9"><span class="fu" style="color: #4758AB;">group_str</span>(txhousing, <span class="st" style="color: #20794D;">"year"</span>)                   <span class="co" style="color: #5E5E5E;"># Sum of sales per year</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb60" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><span class="fu" style="color: #4758AB;">group_str</span>(txhousing, <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"year"</span>, <span class="st" style="color: #20794D;">"month"</span>))       <span class="co" style="color: #5E5E5E;"># Sum of sales per month</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 3
+   year month total_sales
+  &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+1  2000     1       11411
+2  2000     2       15674
+3  2000     3       20202
+4  2000     4       18658
+5  2000     5       22388</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><span class="co" style="color: #5E5E5E;"># The same column names can be passed as variables containing the character names</span></span>
+<span id="cb62-2">yr <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">"year"</span></span>
+<span id="cb62-3"><span class="fu" style="color: #4758AB;">group_str</span>(txhousing, yr)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1">yrmon <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"year"</span>, <span class="st" style="color: #20794D;">"month"</span>)</span>
+<span id="cb64-2"><span class="fu" style="color: #4758AB;">group_str</span>(txhousing, yrmon)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 3
+   year month total_sales
+  &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+1  2000     1       11411
+2  2000     2       15674
+3  2000     3       20202
+4  2000     4       18658
+5  2000     5       22388</code></pre>
+</div>
+</div>
+<p>If you want the summarise column to have a custom name like <code>total_&lt;sumvar&gt;</code>, then you can wrap the value in quotes as below. This method uses the <code>glue</code> syntax enabled by the <code>:=</code> walrus operator. The walrus operator takes either a raw name or a character string on its LHS.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1">group_raw2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, grp, sumvar) {</span>
+<span id="cb66-2">  df <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb66-3">    <span class="fu" style="color: #4758AB;">group_by</span>({{grp}}) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb66-4">    <span class="fu" style="color: #4758AB;">summarise</span>(<span class="st" style="color: #20794D;">"total_{{sumvar}}"</span> <span class="sc" style="color: #5E5E5E;">:</span><span class="er" style="color: #AD0000;">=</span> <span class="fu" style="color: #4758AB;">sum</span>({{sumvar}}, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>),</span>
+<span id="cb66-5">              <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)  <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb66-6">    <span class="fu" style="color: #4758AB;">head</span>(<span class="at" style="color: #657422;">n=</span><span class="dv" style="color: #AD0000;">5</span>)</span>
+<span id="cb66-7">}</span>
+<span id="cb66-8"></span>
+<span id="cb66-9"><span class="fu" style="color: #4758AB;">group_raw2</span>(txhousing, year, sales)            <span class="co" style="color: #5E5E5E;"># Sum of sales per year</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+   year total_sales
+  &lt;int&gt;       &lt;dbl&gt;
+1  2000      222483
+2  2001      231453
+3  2002      234600
+4  2003      253909
+5  2004      283999</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb68" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><span class="fu" style="color: #4758AB;">group_raw2</span>(txhousing, month, listings)        <span class="co" style="color: #5E5E5E;"># Sum of listings per month</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+  month total_listings
+  &lt;int&gt;          &lt;dbl&gt;
+1     1        1854661
+2     2        1888104
+3     3        1949187
+4     4        1991278
+5     5        2038932</code></pre>
+</div>
+</div>
+<p>After writing so many examples, I see a pattern. <code>group_by()</code> works with techniques similar to <code>select()</code> while <code>summarise()</code> works with techniques similar to <code>mutate()</code>.</p>
+</section></section><section id="slightly-better-examples" class="level1 page-columns page-full"><h1>(Slightly Better) Examples</h1>
+<p>The <code>txhousing</code> is a city-wise monthly sales and volume dataset. It has a <code>year</code> and <code>month</code> column. Let us create a <code>date</code> column and keep only those columns relevant for our custom <code>tx_summary()</code> function.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb70" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1">small_df <span class="ot" style="color: #003B4F;">&lt;-</span> txhousing <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb70-2">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">date =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">as_date</span>(glue<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">glue</span>(<span class="st" style="color: #20794D;">"{year}-{month}-01"</span>))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb70-3">  <span class="fu" style="color: #4758AB;">select</span>(city, date, sales, volume)</span></code></pre></div>
+</details>
+</div>
+<section id="mutate-example" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="mutate-example">
+<code>mutate()</code> example</h3>
+<p>Now let us create the <code>create_ymq()</code> function. This function would take 2 arguments, a data frame <code>df</code> and a raw name of a date column.</p>
+<div class="cell column-body-outset-right" data-label="create_ymq">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb71" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1">create_ymq <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, date_col) {</span>
+<span id="cb71-2">  <span class="fu" style="color: #4758AB;">stopifnot</span>(<span class="fu" style="color: #4758AB;">inherits</span>(df, <span class="st" style="color: #20794D;">"data.frame"</span>))</span>
+<span id="cb71-3">  <span class="fu" style="color: #4758AB;">stopifnot</span>(<span class="fu" style="color: #4758AB;">class</span>(df <span class="sc" style="color: #5E5E5E;">%&gt;%</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pull</span>({{date_col}})) <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'Date'</span>)</span>
+<span id="cb71-4">  <span class="fu" style="color: #4758AB;">mutate</span>(df,</span>
+<span id="cb71-5">         <span class="at" style="color: #657422;">Year =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">year</span>({{date_col}}),</span>
+<span id="cb71-6">         <span class="at" style="color: #657422;">nHalf =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">semester</span>({{date_col}}),</span>
+<span id="cb71-7">         <span class="at" style="color: #657422;">yHalf =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">semester</span>({{date_col}}, <span class="at" style="color: #657422;">with_year =</span> <span class="cn" style="color: #8f5902;">TRUE</span>),</span>
+<span id="cb71-8">         <span class="at" style="color: #657422;">dHalf =</span> <span class="fu" style="color: #4758AB;">paste0</span>(lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">semester</span>({{date_col}}), <span class="st" style="color: #20794D;">"H"</span>, <span class="fu" style="color: #4758AB;">format</span>({{date_col}},<span class="st" style="color: #20794D;">"%y"</span>)),</span>
+<span id="cb71-9">         <span class="at" style="color: #657422;">nQtr =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">quarter</span>({{date_col}}),</span>
+<span id="cb71-10">         <span class="at" style="color: #657422;">yQtr =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">quarter</span>({{date_col}}, <span class="at" style="color: #657422;">with_year =</span> <span class="cn" style="color: #8f5902;">TRUE</span>),</span>
+<span id="cb71-11">         <span class="at" style="color: #657422;">dQtr =</span> <span class="fu" style="color: #4758AB;">paste0</span>(lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">quarter</span>({{date_col}}),<span class="st" style="color: #20794D;">"Q"</span>, <span class="fu" style="color: #4758AB;">format</span>({{date_col}},<span class="st" style="color: #20794D;">"%y"</span>)),</span>
+<span id="cb71-12">         <span class="at" style="color: #657422;">Month =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">month</span>({{date_col}}),</span>
+<span id="cb71-13">         <span class="at" style="color: #657422;">yMonth =</span> <span class="fu" style="color: #4758AB;">as.numeric</span>(<span class="fu" style="color: #4758AB;">format</span>({{date_col}}, <span class="st" style="color: #20794D;">"%Y.%m"</span>)),</span>
+<span id="cb71-14">         <span class="at" style="color: #657422;">dMonth =</span> <span class="fu" style="color: #4758AB;">format</span>({{date_col}}, <span class="st" style="color: #20794D;">"%b %Y"</span>)</span>
+<span id="cb71-15">         )</span>
+<span id="cb71-16">}</span>
+<span id="cb71-17"></span>
+<span id="cb71-18"><span class="fu" style="color: #4758AB;">create_ymq</span>(<span class="at" style="color: #657422;">df =</span> small_df, <span class="at" style="color: #657422;">date_col =</span> date) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">glimpse</span>()</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8,602
+Columns: 14
+$ city   &lt;chr&gt; "Abilene", "Abilene", "Abilene", "Abilene", "Abilene", "Abilene~
+$ date   &lt;date&gt; 2000-01-01, 2000-02-01, 2000-03-01, 2000-04-01, 2000-05-01, 20~
+$ sales  &lt;dbl&gt; 72, 98, 130, 98, 141, 156, 152, 131, 104, 101, 100, 92, 75, 112~
+$ volume &lt;dbl&gt; 5380000, 6505000, 9285000, 9730000, 10590000, 13910000, 1263500~
+$ Year   &lt;dbl&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 200~
+$ nHalf  &lt;int&gt; 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, ~
+$ yHalf  &lt;dbl&gt; 2000.1, 2000.1, 2000.1, 2000.1, 2000.1, 2000.1, 2000.2, 2000.2,~
+$ dHalf  &lt;chr&gt; "1H00", "1H00", "1H00", "1H00", "1H00", "1H00", "2H00", "2H00",~
+$ nQtr   &lt;int&gt; 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 1, 1, 1, 2, 2, 2, 3, 3, 3, ~
+$ yQtr   &lt;dbl&gt; 2000.1, 2000.1, 2000.1, 2000.2, 2000.2, 2000.2, 2000.3, 2000.3,~
+$ dQtr   &lt;chr&gt; "1Q00", "1Q00", "1Q00", "2Q00", "2Q00", "2Q00", "3Q00", "3Q00",~
+$ Month  &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, ~
+$ yMonth &lt;dbl&gt; 2000.01, 2000.02, 2000.03, 2000.04, 2000.05, 2000.06, 2000.07, ~
+$ dMonth &lt;chr&gt; "Jan 2000", "Feb 2000", "Mar 2000", "Apr 2000", "May 2000", "Ju~</code></pre>
+</div>
+</div>
+</section><section id="group_by-example" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="group_by-example">
+<code>group_by()</code> example</h3>
+<p>Now that we have a function that creates various date-related columns, let us create a function that let’s you create summary tables like annual sales per city, quarterly volumes per city etc.</p>
+<div class="cell column-body-outset-right" data-label="tx_summary">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb73" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1">tx_summary <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(df, grp_col, sum_col) {</span>
+<span id="cb73-2">  df <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb73-3">    <span class="fu" style="color: #4758AB;">group_by</span>(city, {{grp_col}}) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb73-4">    <span class="fu" style="color: #4758AB;">summarise</span>(<span class="st" style="color: #20794D;">"total_{{sum_col}}"</span> <span class="sc" style="color: #5E5E5E;">:</span><span class="er" style="color: #AD0000;">=</span> <span class="fu" style="color: #4758AB;">sum</span>({{sum_col}}, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>), <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)</span>
+<span id="cb73-5">}</span></code></pre></div>
+</details>
+</div>
+<p>Using these 2 functions, we can now create multiple summary tables</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb74" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1">small_df_with_date_cols <span class="ot" style="color: #003B4F;">&lt;-</span> small_df <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">create_ymq</span>(<span class="at" style="color: #657422;">date_col =</span> date)</span>
+<span id="cb74-2"></span>
+<span id="cb74-3"><span class="co" style="color: #5E5E5E;"># Annual Sales per city</span></span>
+<span id="cb74-4">small_df_with_date_cols <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">tx_summary</span>(<span class="at" style="color: #657422;">grp_col =</span> Year, <span class="at" style="color: #657422;">sum_col =</span> sales)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 736 x 3
+   city     Year total_sales
+   &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Abilene  2000        1375
+ 2 Abilene  2001        1431
+ 3 Abilene  2002        1516
+ 4 Abilene  2003        1632
+ 5 Abilene  2004        1830
+ 6 Abilene  2005        1977
+ 7 Abilene  2006        1997
+ 8 Abilene  2007        2003
+ 9 Abilene  2008        1651
+10 Abilene  2009        1634
+# ... with 726 more rows</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb76" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><span class="co" style="color: #5E5E5E;"># Half Yearly volumes per city</span></span>
+<span id="cb76-2">small_df_with_date_cols <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">tx_summary</span>(<span class="at" style="color: #657422;">grp_col =</span> yHalf, <span class="at" style="color: #657422;">sum_col =</span> volume)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,472 x 3
+   city    yHalf total_volume
+   &lt;chr&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Abilene 2000.     55400000
+ 2 Abilene 2000.     53175000
+ 3 Abilene 2001.     55795000
+ 4 Abilene 2001.     58570000
+ 5 Abilene 2002.     55305000
+ 6 Abilene 2002.     63370000
+ 7 Abilene 2003.     58175000
+ 8 Abilene 2003.     77500000
+ 9 Abilene 2004.     74205000
+10 Abilene 2004.     85465000
+# ... with 1,462 more rows</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb78" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><span class="co" style="color: #5E5E5E;"># Quarterly Sales per city</span></span>
+<span id="cb78-2">small_df_with_date_cols <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">tx_summary</span>(<span class="at" style="color: #657422;">grp_col =</span> yQtr, <span class="at" style="color: #657422;">sum_col =</span> sales)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,898 x 3
+   city     yQtr total_sales
+   &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+ 1 Abilene 2000.         300
+ 2 Abilene 2000.         395
+ 3 Abilene 2000.         387
+ 4 Abilene 2000.         293
+ 5 Abilene 2001.         305
+ 6 Abilene 2001.         394
+ 7 Abilene 2001.         401
+ 8 Abilene 2001.         331
+ 9 Abilene 2002.         295
+10 Abilene 2002.         425
+# ... with 2,888 more rows</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb80" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><span class="co" style="color: #5E5E5E;"># Monthly Volumes per city</span></span>
+<span id="cb80-2">small_df_with_date_cols <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">tx_summary</span>(<span class="at" style="color: #657422;">grp_col =</span> yMonth, <span class="at" style="color: #657422;">sum_col =</span> volume)</span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8,602 x 3
+   city    yMonth total_volume
+   &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Abilene  2000.      5380000
+ 2 Abilene  2000.      6505000
+ 3 Abilene  2000.      9285000
+ 4 Abilene  2000.      9730000
+ 5 Abilene  2000.     10590000
+ 6 Abilene  2000.     13910000
+ 7 Abilene  2000.     12635000
+ 8 Abilene  2000.     10710000
+ 9 Abilene  2000.      7615000
+10 Abilene  2000.      7040000
+# ... with 8,592 more rows</code></pre>
+</div>
+</div>
+</section><section id="more-ideas" class="level3"><h3 class="anchored" data-anchor-id="more-ideas">More ideas</h3>
+<p>You could further extend this by creating a custom filtering function that gives you, say, the rows with the highest or lowest <code>total_sales</code> or <code>total_volume</code>.</p>
+</section></section><section id="conclusion" class="level1"><h1>Conclusion</h1>
+<p>The ability to create such dynamic functions, enabled by the wonderful {dplyr} package, allows us to level-up in terms of programming with R and helps make our code neat and tidy.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://vishalkatti.com/posts/programming-with-dplyr/https:/i.imgur.com/H9jo8OB.gif" class="img-fluid figure-img"></p>
+<p></p><p></p>
+</figure>
+</div>
+</section><section id="references" class="level1"><h1>References</h1>
+<ul>
+<li>Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2022). dplyr: A Grammar of Data Manipulation. R package version 1.0.9. https://CRAN.R-project.org/package=dplyr</li>
+<li>https://dplyr.tidyverse.org/articles/programming.html</li>
+<li>H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016. https://ggplot2.tidyverse.org</li>
+<li>Jim Hester and Jennifer Bryan (2022). glue: Interpreted String Literals. R package version 1.6.2. https://CRAN.R-project.org/package=glue</li>
+</ul>
 
 
-
-
-<p>This is a post with executable code.</p>
-
-
-
- ]]></description>
-  <category>news</category>
-  <category>code</category>
-  <category>analysis</category>
-  <guid>https://vishalkatti.com/posts/post-with-code/index.html</guid>
-  <pubDate>Sun, 02 Oct 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://vishalkatti.com/posts/post-with-code/image.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Welcome To My Blog</title>
-  <dc:creator>Tristan O'Malley</dc:creator>
-  <link>https://vishalkatti.com/posts/welcome/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="https://vishalkatti.com/posts/welcome/thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
-
-
-
- ]]></description>
-  <category>news</category>
-  <guid>https://vishalkatti.com/posts/welcome/index.html</guid>
-  <pubDate>Thu, 29 Sep 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://vishalkatti.com/posts/welcome/thumbnail.jpg" medium="image" type="image/jpeg"/>
+</section> ]]></description>
+  <category>R</category>
+  <category>dplyr</category>
+  <category>functions</category>
+  <guid>https://vishalkatti.com/posts/programming-with-dplyr/index.html</guid>
+  <pubDate>Fri, 16 Jul 2021 18:30:00 GMT</pubDate>
+  <media:content url="https://i.imgur.com/H9jo8OB.gif" medium="image" type="image/gif"/>
 </item>
 </channel>
 </rss>

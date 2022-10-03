@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://vishalkatti.com/about.html</loc>
+    <lastmod>2022-10-03T15:37:23.159Z</lastmod>
+  </url>
+  <url>
     <loc>https://vishalkatti.com/index.html</loc>
-    <lastmod>2022-10-03T08:35:01.595Z</lastmod>
+    <lastmod>2022-10-03T15:37:05.912Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/programming-with-dplyr/index.html</loc>
+    <lastmod>2022-10-03T15:37:08.114Z</lastmod>
   </url>
 </urlset>
