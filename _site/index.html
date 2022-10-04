@@ -67,9 +67,9 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -90,7 +90,7 @@ ul.task-list{list-style: none;}
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Vishal Katti" href="index.xml"><meta property="og:title" content="Vishal Katti - Blog">
+<link rel="alternate" type="application/rss+xml" title="Vishal Katti's Blog" href="index.xml"><meta property="og:title" content="Vishal Katti - Blog">
 <meta property="og:site-name" content="Vishal Katti">
 <meta name="twitter:title" content="Vishal Katti - Blog">
 <meta name="twitter:card" content="summary">
@@ -163,7 +163,7 @@ ul.task-list{list-style: none;}
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dplyr">dplyr <span class="quarto-category-count">(1)</span></div><div class="category" data-category="functions">functions <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Excel">Excel <span class="quarto-category-count">(2)</span></div><div class="category" data-category="PowerPoint">PowerPoint <span class="quarto-category-count">(2)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(7)</span></div><div class="category" data-category="RDCOMClient">RDCOMClient <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VBA">VBA <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dplyr">dplyr <span class="quarto-category-count">(1)</span></div><div class="category" data-category="drill-down">drill-down <span class="quarto-category-count">(1)</span></div><div class="category" data-category="functions">functions <span class="quarto-category-count">(4)</span></div><div class="category" data-category="openxlsx">openxlsx <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pivot">pivot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="reactable">reactable <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tidyr">tidyr <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -174,18 +174,303 @@ ul.task-list{list-style: none;}
 
 
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="R,dplyr,functions" data-listing-date-sort="1626460200000" data-listing-file-modified-sort="1664873895877" data-listing-reading-time-sort="12.825">
-<a href="./posts/programming-with-dplyr/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://i.imgur.com/H9jo8OB.gif" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+</div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="R,functions,tidyr,pivot" data-listing-date-sort="1661711400000" data-listing-file-modified-sort="1664896704021" data-listing-reading-time-sort="5.255">
+<div class="thumbnail">
+<p><a href="./posts/tidyr-pivot-wider/index.html"> <img src="https://i.imgur.com/A9SfEdJ.gif" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/tidyr-pivot-wider/index.html">
+<h3 class="no-anchor listing-title">
+Pivoting your tables with Tidyr: Part II
+</h3>
+<div class="listing-subtitle">
+Converting “long” to “wide” format
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('functions'); return false;">
+functions
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('tidyr'); return false;">
+tidyr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('pivot'); return false;">
+pivot
+</div>
+</div>
+<a href="./posts/tidyr-pivot-wider/index.html">
+<div class="listing-description">
+<p>This post demonstrates how to use <code>pivot_wider()</code> to convert your long data to wide data. This is part 2 of the Pivoting your tables with Tidyr series.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/tidyr-pivot-wider/index.html">
+<div class="listing-date">
+Aug 29, 2022
+</div>
+<div class="listing-author">
+Vishal Katti
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="R,functions,tidyr,pivot" data-listing-date-sort="1657218600000" data-listing-file-modified-sort="1664896771621" data-listing-reading-time-sort="4.675">
+<div class="thumbnail">
+<p><a href="./posts/tidyr-pivot-longer/index.html"> <img src="https://i.imgur.com/0qMbFC1.gif" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/tidyr-pivot-longer/index.html">
+<h3 class="no-anchor listing-title">
+Pivoting your tables with Tidyr: Part I
+</h3>
+<div class="listing-subtitle">
+Converting “wide” to “long” format
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('functions'); return false;">
+functions
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('tidyr'); return false;">
+tidyr
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('pivot'); return false;">
+pivot
+</div>
+</div>
+<a href="./posts/tidyr-pivot-longer/index.html">
+<div class="listing-description">
+<p>This post demonstrates how to use <code>pivot_longer()</code> to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/tidyr-pivot-longer/index.html">
+<div class="listing-date">
+Jul 8, 2022
+</div>
+<div class="listing-author">
+Vishal Katti
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="R,functions" data-listing-date-sort="1642444200000" data-listing-file-modified-sort="1664896508127" data-listing-reading-time-sort="17.065">
+<div class="thumbnail">
+<p><a href="./posts/writing-robust-functions/index.html"> <img src="https://i.imgur.com/hbjbLMN.gif" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/writing-robust-functions/index.html">
+<h3 class="no-anchor listing-title">
+Writing Robust R Functions
+</h3>
+<div class="listing-subtitle">
+Some designs to validate function arguments.
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('functions'); return false;">
+functions
+</div>
+</div>
+<a href="./posts/writing-robust-functions/index.html">
+<div class="listing-description">
+<p>This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/writing-robust-functions/index.html">
+<div class="listing-date">
+Jan 18, 2022
+</div>
+<div class="listing-author">
+Vishal Katti
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="R,Excel,VBA,PowerPoint,openxlsx,RDCOMClient" data-listing-date-sort="1640716200000" data-listing-file-modified-sort="1664897011549" data-listing-reading-time-sort="10.49">
+<div class="thumbnail">
+<p><a href="./posts/R2VBA2PPT2/index.html"> <img src="./posts/R2VBA2PPT2/images/R2XL2PPT_logo.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/R2VBA2PPT2/index.html">
+<h3 class="no-anchor listing-title">
+Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2
+</h3>
+<div class="listing-subtitle">
+Using R to trigger Excel VBA macros to create PowerPoint presentations
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Excel'); return false;">
+Excel
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('VBA'); return false;">
+VBA
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('PowerPoint'); return false;">
+PowerPoint
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('openxlsx'); return false;">
+openxlsx
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('RDCOMClient'); return false;">
+RDCOMClient
+</div>
+</div>
+<a href="./posts/R2VBA2PPT2/index.html">
+<div class="listing-description">
+<p>This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/R2VBA2PPT2/index.html">
+<div class="listing-date">
+Dec 29, 2021
+</div>
+<div class="listing-author">
+Vishal Katti
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="R,Excel,VBA,PowerPoint" data-listing-date-sort="1634581800000" data-listing-file-modified-sort="1664897152069" data-listing-reading-time-sort="5.295">
+<div class="thumbnail">
+<p><a href="./posts/R2VBA2PPT1/index.html"> <img src="./posts/R2VBA2PPT1/images/R2XL2PPT_logo.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/R2VBA2PPT1/index.html">
+<h3 class="no-anchor listing-title">
+Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2
+</h3>
+<div class="listing-subtitle">
+Using R to trigger Excel VBA macros to create PowerPoint presentations!
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Excel'); return false;">
+Excel
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('VBA'); return false;">
+VBA
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('PowerPoint'); return false;">
+PowerPoint
+</div>
+</div>
+<a href="./posts/R2VBA2PPT1/index.html">
+<div class="listing-description">
+<p>This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/R2VBA2PPT1/index.html">
+<div class="listing-date">
+Oct 19, 2021
+</div>
+<div class="listing-author">
+Vishal Katti
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="R,reactable,drill-down" data-listing-date-sort="1627324200000" data-listing-file-modified-sort="1664897815875" data-listing-reading-time-sort="11.65">
+<div class="thumbnail">
+<p><a href="./posts/drilldown-with-reactable/index.html"> <img src="https://i.imgur.com/Zzk5SWf.gif" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/drilldown-with-reactable/index.html">
+<h3 class="no-anchor listing-title">
+Interactive Drill-down Tables using {reactable}
+</h3>
+<div class="listing-subtitle">
+How to create multi-level tables with hidden rows
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('reactable'); return false;">
+reactable
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('drill-down'); return false;">
+drill-down
+</div>
+</div>
+<a href="./posts/drilldown-with-reactable/index.html">
+<div class="listing-description">
+<p>This post demonstrates how to use the {reactable} package to create multi-level drill-down tables having hidden rows</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/drilldown-with-reactable/index.html">
+<div class="listing-date">
+Jul 27, 2021
+</div>
+<div class="listing-author">
+Vishal Katti
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="R,dplyr,functions" data-listing-date-sort="1626460200000" data-listing-file-modified-sort="1664897367309" data-listing-reading-time-sort="12.705">
+<div class="thumbnail">
+<p><a href="./posts/programming-with-dplyr/index.html"> <img src="https://i.imgur.com/H9jo8OB.gif" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/programming-with-dplyr/index.html">
+<h3 class="no-anchor listing-title">
 Programming with R {dplyr} - As I Understand It!!
-</h5>
+</h3>
+<div class="listing-subtitle">
+How to create your own functions using {dplyr}
+</div>
+</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -197,20 +482,22 @@ dplyr
 functions
 </div>
 </div>
-<div class="card-text listing-description">
-In this article, we will explore how to create functions using the popular <code>dplyr</code> verbs like <code>select</code>, <code>filter</code>, <code>mutate</code>, <code>arrange</code> and finally <code>group_by</code> with <code>summarise</code>.
+<a href="./posts/programming-with-dplyr/index.html">
+<div class="listing-description">
+<p>This post demonstrates how to write your own dynamic functions using popular <code>dplyr</code> verbs like <code>select()</code>, <code>filter()</code>, <code>mutate()</code>, <code>arrange()</code> and <code>group_by()</code> with <code>summarise()</code>.</p>
 </div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Vishal Katti
+</a>
 </div>
+<div class="metadata">
+<a href="./posts/programming-with-dplyr/index.html">
 <div class="listing-date">
 Jul 17, 2021
 </div>
-</div>
-</div>
+<div class="listing-author">
+Vishal Katti
 </div>
 </a>
+</div>
 </div>
 </div>
 <div class="listing-no-matching d-none">
@@ -444,10 +731,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Vishal Katti 2022<br>made with , and <a href="https://quarto.org">quarto</a></div>   
+    <div class="nav-footer-left">Vishal Katti ©️ 2022<br>made with 💖, R and <a href="https://quarto.org">quarto</a></div>   
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

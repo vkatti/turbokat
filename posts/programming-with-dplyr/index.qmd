@@ -1,6 +1,7 @@
 ---
 title: "Programming with R {dplyr} - As I Understand It!!"
 subtitle: "How to create your own functions using {dplyr}"
+abstract: "This post demonstrates how to write your own dynamic functions using popular `dplyr` verbs like `select()`, `filter()`, `mutate()`, `arrange()` and `group_by()` with `summarise()`. "
 author: Vishal Katti
 date: 07-17-2021
 categories: [R, dplyr, functions]
@@ -19,8 +20,6 @@ suppressWarnings(suppressPackageStartupMessages(library(tidyverse)))
 ```
 
 # Introduction
-
-In this article, we will explore how to create functions using the popular `dplyr` verbs like `select`, `filter`, `mutate`, `arrange` and finally `group_by` with `summarise`.
 
 The purpose of this article is to act as a quick guide for myself and others to understand how to use `dplyr` effectively to create dynamic functions. The general assumption is that the reader is familiar with the `{dplyr}` package and how to use it for data wrangling.
 

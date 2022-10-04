@@ -1,0 +1,571 @@
+---
+title: "Writing Robust R Functions"
+subtitle: "Some designs to validate function arguments."
+abstract: "This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages."
+author: Vishal Katti
+date: 2022-01-18
+image: https://i.imgur.com/hbjbLMN.gif
+categories: [R, functions]
+format: html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comments = '')
+knitr::knit_hooks$set(error = function(x, options) {
+  paste0("<pre style=\"color: red;\"><code>", x, "</code></pre>")
+})
+knitr::knit_hooks$set(warning = function(x, options) {
+  paste0("<pre style=\"color: orange;\"><code>", x, "</code></pre>")
+})
+```
+
+## Introduction
+
+Functions in R ( or any other programming language in general) allow us
+to encapsulate some lines of code that we want to run again and again.
+Functions are the natural outcome of the **DRY** (Don't Repeat
+Yourself!) principle. Functions group together a couple of lines of
+consistent logic making our code modular and consequently, easy to
+manage. However, when we write functions, we need to ensure that they
+behave exactly as we want them to and are able to handle whatever we
+throw at them. By whatever, I mean any and all kinds of inputs. The idea
+of creating unbreakable code is idealistic. I say this since creating
+robust functions requires additional code to handle the unwanted inputs
+and most useRs write functions during some one-time analysis. Hence we
+need to be pragmatic about how much time and effort we spend trying to
+make our functions robust. Maybe, we need our functions to be just
+robust enough! All I am saying is, if you are creating functions that
+will be used by you and only you i.e. if you have absolute control over
+what inputs would be provided to your functions, then you can forego
+certain checks and the functions need not be unbreakable. But, if you
+intend to write functions that will be used by a larger audience, you
+need to ensure that such functions are able to handle all kinds of
+innocent and malicious intents.
+
+## What do we mean by Robust Functions?
+
+You must be familiar with the *Garbage-In-Garbage-Out* philosophy of
+Software engineering. We can think of it in terms of functions, that,
+given garbage or bad input, you get garbage or bad output. For a
+function to be robust, it must behave in a consistent manner for known
+and correct inputs, however, more importantly, it mustn't give us
+garbage for bad inputs. Rather, it must provide useful output (as
+messages or instructions) which can be further used to inform the
+end-user about possible problems in the inputs to drive proper usage.
+The useful output/s in case of bad inputs would ideally be a combination
+of clean early exit and easy-to-understand error messages. So we shall
+try to implement *Garbage-In-Useful-Info-Out* by looking at some ways we
+can build well-behaved and reliable functions.
+
+Input values passed to a function are more popularly known as arguments
+or parameters. A robust function must validate the function arguments
+before proceeding to implement the function logic. If this is not done,
+then the bad arguments will cause some errors in the logic and display
+error messages that the end-user may not be familiar with. Worst-case
+scenario is when the function doesn't encounter any errors and just
+gives bad results!! Surely, we do not want this unpredictable behavior.
+
+![Enough Talk, Let's Fight! - Kungfu Panda
+\@imgflip.com](https://i.imgflip.com/28bxz3.jpg){width="60%"}
+
+## Our sweet, innocent and naive Function
+
+Consider the following function `make_date` that takes 3 numeric inputs
+`yyyy`, `mm` and `dd` and returns a single 'Date\` object.
+
+```{r}
+make_date <-  function(yyyy, mm, dd) {
+  
+  # main logic
+  as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+}
+
+my_date <- make_date(yyyy = 2022, mm = 1, dd = 31)
+my_date
+class(my_date)
+```
+
+We will use `make_date` to demonstrate a couple of scenarios where this
+function can fail and the methods to safeguard against such scenarios.
+
+## Scenario 1: Missing Arguments
+
+The most basic check we should perform before running the function logic
+is to confirm if all the required arguments are available. Think about
+how your function should behave if one of the arguments, suppose `mm` is
+missing.
+
+```{r error=TRUE}
+make_date(yyyy = 2022, dd = 31)
+```
+
+Note that the error message shown to the user, is triggered, not from
+our function `make_date` but from the internal `paste` function. We do
+not have any control over what error messages are shown when errors
+occur. In this case, we know specifically that this error is due to a
+missing argument.
+
+There are two ways to handle missing arguments:
+
+### 1.1 Early Exit
+
+If a certain required argument is missing, we can stop the execution of
+the function and show informative error message about which argument is
+missing. Your friends here are the `missing` and `stop` functions. The
+`missing` function checks if the given argument is missing or is set to
+NULL and returns TRUE, else it returns FALSE. The `stop` function stops
+the execution and displays the custom error message we provide. Using
+these functions inside an `if` condition will let us check for missing
+arguments. Let us modify our naive function to stop early when required
+arguments are missing.
+
+```{r error=TRUE}
+make_date <-  function(yyyy, mm, dd) {
+  
+  # check missing arguments
+  if (missing(yyyy)) stop("argument `yyyy` is required.")
+  if (missing(mm))   stop("argument `mm` is required.")
+  if (missing(dd))   stop("argument `dd` is required.")
+  
+  # main logic
+  as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+}
+
+# Calling the function without `mm` argument
+make_date(yyyy = 2022, dd = 31)
+```
+
+Note that here, we add three `if-missing-stop` statements, one for each
+required argument. We must do this if we want to display specific error
+messages for each argument. There is another way to do the same but we
+will look at it later. If we want to display a single error message, we
+can do so by clubbing the `missing` functions inside an `any` which will
+return TRUE if any one of the arguments is missing. However, providing
+clear error messages becomes challenging in this method.
+
+```{r error=TRUE}
+dummy_fun <- function(a, b, c) { 
+  if(any(missing(a), missing(b), missing(c))) {
+    stop("One or more required arguments missing.")
+  }
+  # Do something...
+}
+dummy_fun(a = 1)
+```
+
+### 1.2 Sensible defaults with warnings
+
+In some cases, we may need the function to use some sensible default
+value for the required arguments and continue execution. Here, we
+display a warning message instead of an error message. This is required
+when the argument value is either considered to be obvious or the
+argument is not necessarily the most important one and is used only in
+extreme customization. **Providing default values to arguments makes
+them optional arguments**. An example of default argument values can be
+seen in the `paste` function we have used earlier. The default value of
+the separator argument `sep` is a single whitespace character.
+
+```{r}
+args(paste)
+```
+
+Similarly, we can provide some sensible defaults for the `make_date`
+function. Let's modify the function further to provide defaults for the
+`mm` and `dd` arguments only.
+
+```{r warning=TRUE}
+make_date <-  function(yyyy, mm = 1, dd = 1) {
+  
+  # check missing arguments
+  if (missing(yyyy))  stop("argument `yyyy` is required.") 
+  if (missing(mm)) warning("argument `mm` is missing. Using default value mm = 1 instead") 
+  if (missing(dd)) warning("argument `dd` is missing. Using default value dd = 1 instead")
+  
+  # main logic
+  as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+}
+
+# Calling the function without `mm` and `dd` arguments
+make_date(yyyy = 2022) # here, only `yyyy` is the required argument.
+
+```
+
+There are a few concerns about using warnings instead of error messages.
+Some are listed here in this article from RBloggers [A Warning About
+`warning`](https://www.r-bloggers.com/2012/05/a-warning-about-warning/).
+
+## Scenario 2: Invalid Argument Data Type
+
+We have defined `make_date` to accept 3 numeric arguments i.e. all 3
+must be numbers. What would happen if someone tried to call `make_date`
+with character, factor or boolean inputs?
+
+```{r}
+make_date(yyyy = "2022", mm = "5", dd = "20") # works!! why?
+```
+
+In this case, the function works because when the arguments are combined
+into a single string using `paste` , it matches the `format` argument of
+the `as.Date` function in the main logic of `make_date` which is
+`as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")`
+
+```{r}
+make_date(yyyy = "2022", mm = "May", dd = "1") # works but shows NA !!!
+```
+
+In this case, all the arguments pass the checks but the output is `NA`
+since we pass `2022-May-1` to `as.Date` which doesn't match the
+`format = '%Y-%m-%d'`.
+
+How do we check if the values provided to the arguments are numbers or
+number-like? If the values are numbers, we let them pass. But if they
+are non-numeric, we must check if they can be converted to numbers i.e.
+we must check if they are number-like. By number-like, I mean, will
+coercing the value using `as.numeric` give us a numeric value or `NA` ?
+You guessed it right, we will pass the values through `as.numeric` and
+check if the output is `NA` or not.
+
+What are the various data types in R that are not `numeric` but can look
+like numbers? We have `character`, `factor` and `boolean` data types
+which can behave like numbers sometimes. Let's see a few scenarios.
+
+### Character arguments
+
+```{r}
+Year <- c("2022", "TwentyTwo")
+Year_num <- as.numeric(Year) # this should show a warning about NAs introduced by coercion
+Year_num # must show the number 2022 without quotes and one NA
+```
+
+As you can see in above example, when passed through `as.numeric`, the
+value "2022" gets converted to the number 2022 but the value "TwentyTwo"
+does not. Hence we can say "2022" is number-like but "TwentyTwo" is not.
+
+### Factor arguments
+
+```{r}
+Year <- factor(c("2022","2021","TwentyTwo"))
+as.numeric(Year)
+
+YearX <- factor(c("2022", "X"))
+as.numeric(YearX)
+
+YearY <- factor(2022)
+as.numeric(YearY)
+```
+
+As you can see from above examples, `factor` values do get converted to
+numeric but do not give the right results. So we can safely say that
+factors are not number-like.
+
+I will ignore `boolean` data types hoping that useRs are bright enough
+to not use Booleans while creating a Date!
+
+From the above examples, we can conclude that `numeric` values and
+number-like `character` values are the only valid data types that should
+be allowed. Modifying our `make_date` function to include data type
+checks.
+
+```{r error=TRUE}
+make_date <-  function(yyyy, mm = 1, dd = 1) {
+  
+  # check missing arguments
+  if (missing(yyyy))  stop("argument `yyyy` is required.") 
+  if (missing(mm)) warning("argument `mm` is missing. Using default value mm = 1 instead") 
+  if (missing(dd)) warning("argument `dd` is missing. Using default value dd = 1 instead")
+  
+  # Check data types
+  if (!is.numeric(yyyy) & !is.character(yyyy)) {
+    stop("argument `yyyy` must be numeric")
+  } else if (is.character(yyyy) & is.na(as.numeric(yyyy))) {
+    stop("argument `yyyy` must be numeric")
+  }
+  if (!is.numeric(mm) & !is.character(mm)) {
+    stop("argument `mm` must be numeric")
+  } else if (is.character(mm) & is.na(as.numeric(mm))) {
+    stop("argument `mm` must be numeric")
+  }
+  if (!is.numeric(dd) & !is.character(dd)) {
+    stop("argument `dd` must be numeric")
+  } else if (is.character(dd) & is.na(as.numeric(dd))) {
+    stop("argument `dd` must be numeric")
+  }
+  
+  # main logic
+  as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+}
+
+# Calling the function with new datatype checks
+make_date(yyyy = "2022", mm = "May", dd = "1")
+make_date(yyyy = "2022", mm = factor("5"), dd = "1")
+```
+
+Notice that the datatype check is lengthy and similar for all 3
+arguments. We can apply **DRY** principle again and encapsulate that
+code into a small function `is_numberlike` which will return `TRUE` or
+`FALSE` . Note that `is_numberlike` has no checks because it is an
+internal function.
+
+```{r}
+# This function check if value is number or number-like.
+is_numberlike <- function(x){
+  if (!is.numeric(x) & !is.character(x)) {
+    return(FALSE) # Early Exit 1 if value is neither numeric nor character
+  } else if (is.character(x) & is.na(as.numeric(x))) {
+    return(FALSE) # Early Exit 2 if character value is not number-like.
+  }
+  return(TRUE)
+}
+```
+
+Thus our `make_date` function with data types check will look as below.
+
+```{r error=TRUE, warning=TRUE}
+make_date <-  function(yyyy, mm = 1, dd = 1) {
+  
+  # check missing arguments
+  if (missing(yyyy))  stop("argument `yyyy` is required.") 
+  if (missing(mm)) warning("argument `mm` is missing. Using default value mm = 1 instead") 
+  if (missing(dd)) warning("argument `dd` is missing. Using default value dd = 1 instead")
+  
+  # Check data types
+  if (!is_numberlike(yyyy)) stop("argument `yyyy` must be numeric")
+  if (!is_numberlike(mm))   stop("argument `mm` must be numeric")
+  if (!is_numberlike(dd))   stop("argument `dd` must be numeric")
+  
+  # main logic
+  as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+}
+
+# Calling the function with new datatype checks
+make_date(yyyy = "TwentyTwo", mm = "5", dd = 1)
+make_date(yyyy = "2022", mm = factor("5"), dd = "1")
+make_date(yyyy = 2022, mm = 5, dd = "one")
+
+```
+
+One of the most interesting features of R is vectorization! Due to this
+feature, our function `make_date` behaves in interesting ways. In some
+cases, it is desirable and sometimes it is not.
+
+```{r}
+make_date(yyyy = 2022, mm = 1:12, dd = "1")
+```
+
+Note the above warnings. These warnings appear because the `if`
+statement checks if the condition provided results in a single `TRUE` or
+`FALSE` value. However, the output of the check `is.na(as.numeric(mm))`
+is a boolean vector of length 12. But `if` needs only 1 `TRUE` or
+`FALSE`.
+
+The output contains 12 date values since `paste` is vectorised, it
+recycles the values for `yyyy` and `dd` to give us 12 dates!
+
+```{r}
+mm <- 1:12
+paste("Month", mm)
+```
+
+What do we do if we want `make_date` to return just one date?
+
+## Scenario 3: Incorrect Argument Size
+
+To ensure `make_date` gives you just one date, we must ensure that the
+arguments have just value and is not a vector of multiple values i.e.
+`length(arg)==1`. Let's further add a few checks for the data size of
+the arguments and rearrange the checks.
+
+```{r error=TRUE}
+make_date <-  function(yyyy, mm = 1, dd = 1) {
+  
+  # check missing arguments
+  if (missing(yyyy))  stop("argument `yyyy` is required.") 
+  if (missing(mm)) warning("argument `mm` is missing. Using default value mm = 1 instead") 
+  if (missing(dd)) warning("argument `dd` is missing. Using default value dd = 1 instead")
+  
+  # Check argument lengths
+  if (length(yyyy)!=1) stop(paste0("Length of argument `yyyy` is ", length(yyyy),". Must be only 1."))
+  if (length(mm)!=1)   stop(paste0("Length of argument `mm` is ", length(mm),". Must be only 1."))
+  if (length(dd)!=1)   stop(paste0("Length of argument `dd` is ", length(dd),". Must be only 1."))
+  
+  # Check data types
+  if (!is_numberlike(yyyy)) stop("argument `yyyy` must be numeric")
+  if (!is_numberlike(mm))   stop("argument `mm` must be numeric")
+  if (!is_numberlike(dd))   stop("argument `dd` must be numeric")
+  
+  # main logic
+  as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+}
+
+# Calling function with new data size checks
+make_date(yyyy = 2022, mm = 1:12, dd = "01")
+make_date(yyyy = c("2021","2022"), mm = "1", dd = 1)
+make_date(yyyy = 2022, mm = 1, dd = c("1","2"))
+```
+
+## A little detour...
+
+So far we checked for missing arguments, arguments with bad data types
+and arguments with incorrect sizes. We've used the `stop` function along
+with `if` to check for all failure conditions and show appropriate error
+messages. When we use `stop`, we must specify all the failure conditions
+and the number of specific error messages goes up as number of arguments
+increases.
+
+In case of our `make_date`, if an argument is not missing, it must be a
+number-like value of length 1. To reduce the number of error messages,
+we can combine the error messages for data type and length. for eg, the
+error message could be *argument `yyyy` must be a number-like value of
+length 1.*
+
+Wouldn't it be easier if we just specify what is the success condition
+aka the "happy path", and show error for all other conditions? To do
+this, we can use the `stopifnot` function that let's us specify all the
+happy paths. See example below.
+
+```{r error=TRUE}
+dummy_sum <- function(a, b, c){
+  
+  # check missing
+  stopifnot(!missing(a) & !missing(b) & !missing(c))
+  
+  # check argument values
+  stopifnot(!is.na(a) & is.numeric(a) & length(a)==1,
+            !is.na(b) & is.numeric(b) & length(b)==1,
+            !is.na(c) & is.numeric(c) & length(c)==1
+            )
+  sum(a, b, c)
+}
+
+dummy_sum(b = 2, c = 3) # a is missing
+dummy_sum(a = NA_integer_, b = 2, c = 3) # a has NA value
+dummy_sum(a = 1, b = "2", c = 3) # b has non-numeric value
+dummy_sum(a = 1, b = 2, c = 5:7)  # c has length != 1
+
+```
+
+Note the error messages above. They are not so user-friendly. Luckily,
+we can specify error messages in `stopifnot` by providing the error
+messages as the names of the "happy path" conditions.
+
+```{r error=TRUE}
+dummy_sum <- function(a, b, c){
+  
+  # check missing
+  stopifnot("one or more required arguments missing" = !missing(a) & !missing(b) & !missing(c))
+  
+  # check argument values
+  stopifnot("argument `a` must not be NA, must be a number of length 1" = !is.na(a) & is.numeric(a) & length(a)==1,
+            "argument `b` must not be NA, must be a number of length 1" = !is.na(b) & is.numeric(b) & length(b)==1,
+            "argument `c` must not be NA, must be a number of length 1" = !is.na(c) & is.numeric(c) & length(c)==1
+            )
+  sum(a, b, c)
+}
+
+dummy_sum(b = 2, c = 3) # a is missing
+dummy_sum(a = NA_integer_, b = 2, c = 3) # a has NA value
+dummy_sum(a = 1, b = "2", c = 3) # b has non-numeric value
+dummy_sum(a = 1, b = 2, c = 5:7)  # c has length != 1
+
+```
+
+Using `stopifnot` in our `make_date` function to combine the datatype
+and length checks, we get...
+
+```{r warning=TRUE, error=TRUE}
+make_date <-  function(yyyy, mm = 1, dd = 1) {
+  
+  # check missing arguments
+  if (missing(yyyy))  stop("argument `yyyy` is required.") 
+  if (missing(mm)) warning("argument `mm` is missing. Using default value mm = 1 instead") 
+  if (missing(dd)) warning("argument `dd` is missing. Using default value dd = 1 instead")
+  
+  
+  # Check argument types and length
+  stopifnot(
+    "argument `yyyy` must be numeric with length 1" = is_numberlike(yyyy) & length(yyyy)==1,
+    "argument `mm` must be numeric with length 1"   = is_numberlike(mm)   & length(mm)==1,
+    "argument `dd` must be numeric with length 1"   = is_numberlike(dd)   & length(dd)==1
+  )
+  
+  # main logic
+  as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+}
+
+make_date() # no arguments provided
+make_date(yyyy = 2022, mm = 1:12, dd = 31) # Length mm not equal to 1
+make_date(yyyy = 2022, mm = "Jan", dd = 31) # mm is not number-like
+make_date(yyyy = 2022, dd = 31) # argument mm is missing but should work using default value
+
+
+```
+
+## Scenario 4: Values of Arguments that result in invalid outputs
+
+Finally, what do we do when the arguments provided will definitely give
+us bad results despite passing all checks? In our case, `make_date`
+creates a date but if we give it values that will result in an invalid
+date, it will give us invalid results (remember
+*Garbage-In-Garbage-Out*?).
+
+```{r}
+make_date(yyyy = 2022, mm = 13, dd = 1) # is there a 13th month?
+```
+
+We get `NA` because `as.Date` returns NA for invalid inputs with no
+error messages or warnings! We can check the output and provide a
+generic error message.
+
+```{r warning=TRUE, error=TRUE}
+make_date <-  function(yyyy, mm = 1, dd = 1) {
+  # check missing arguments
+  if (missing(yyyy))  stop("argument `yyyy` is required.") 
+  if (missing(mm)) warning("argument `mm` is missing. Using default value mm = 1 instead") 
+  if (missing(dd)) warning("argument `dd` is missing. Using default value dd = 1 instead")
+  
+  
+  # Check argument types and length
+  stopifnot(
+    "argument `yyyy` must be numeric with length 1" = is_numberlike(yyyy) & length(yyyy)==1,
+    "argument `mm` must be numeric with length 1"   = is_numberlike(mm)   & length(mm)==1,
+    "argument `dd` must be numeric with length 1"   = is_numberlike(dd)   & length(dd)==1
+  )
+  
+  # main logic
+  out <- as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")
+  if (is.na(out)) {
+    stop("Invalid values provided. Please check your inputs.")
+  }
+  return(out)
+}
+
+make_date(yyyy = 2022, mm = 13, dd = 1) # is there a 13th month?
+make_date(yyyy = 2022, mm = 2, dd = 31) # are there 31 days in February?
+```
+
+Do you think our function `make_date` is robust enough?
+
+![As robust as Superman! Source:
+Imgur](https://i.imgur.com/hbjbLMN.gif)
+
+## Conclusion
+
+Making functions robust requires some prior thought about its intended
+use and audience. Based on this, we can decide what checks to implement,
+what to skip, whether to stop execution using error messages or to use
+default values with warnings. Checking for "happy paths" is simpler
+compared to checking each and every bad input and providing specific
+error messages. Too many different error messages for the same argument
+could become a source of frustration of the end user, so consider
+combining some checks and their error messages to be informative and
+precise. Robustness, like everything else, in moderation, is good and
+getting it "just right" takes time and dedicated effort. Happy Coding!
+
+## Citations & References
+
+-   [Techniques for writing robust R programs -
+    LexJansen](https://www.lexjansen.com/phuse/2014/ts/TS03.pdf)
+-   [R Programming for Data
+    Science](https://bookdown.org/rdpeng/rprogdatascience/functions.html)
+-   [A Warning About
+    warning](https://www.r-bloggers.com/2012/05/a-warning-about-warning/)

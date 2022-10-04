@@ -1,0 +1,359 @@
+---
+title: "Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2"
+subtitle: "Using R to trigger Excel VBA macros to create PowerPoint presentations"
+abstract: "This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates."
+author: Vishal Katti
+date: 2021-12-29
+image: images/R2XL2PPT_logo.png
+categories: [R, Excel, VBA, PowerPoint, openxlsx, RDCOMClient]
+format: html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is part 2 of 2. Read part 1
+[here](https://www.vishalkatti.com/posts/R2VBA2PPT1/ "link to Part 1 of this article.").
+
+## Quick Recap
+
+In the previous post, we create the `.potx` template from the `.pptx`
+file we wanted to automate and the Excel template with the macro `.xlsm`
+that uses the PowerPoint template to create a new `.pptx` file with
+given data using VBA.
+
+The report we want to automate is...
+
+![The Gapminder Report : The PowerPoint presentation we want to
+automate](https://i.imgur.com/LL6UwWH.gif "The Gapminder Report")
+
+...and the Excel and PowerPoint template we created are shown below.
+
+![Excel Template with VBA
+macro](https://i.imgur.com/tB3QxhJ.png "Excel Template with VBA macro")
+
+In this post, we will write the R script that will first massage the
+data into desired format and then load the data for one region into the
+Excel template and execute the VBA macro that will create the PowerPoint
+file with that data.
+
+## Strategy
+
+Before we dive into code, we need to check a few things. We wish to
+create a presentation for each continent in the Gapminder data. A closer
+look at the Presentation will tell you what kind of data we need for
+each slide/graph/table while the Excel template will reveal what should
+the structure of each dataset should be. While looking into this
+structure, some questions will pop-up. The idea here is to create the
+datasets in such a way that they can be easily filtered for each
+continent and the resultant table can be written to the Excel template
+without any or very little modification. Let us proceed slide-by-slide.
+
+## Creating the datasets
+
+### Slide 1
+
+Slide 1 is the title page and needs 2 strings; one for Title, one for
+Subtitle. The Title for the base presentation is "World Population". For
+each continent, it could be "\<continent_name\> Population". The
+subtitle is a combination of Author Name and Created Date. So we need a
+string like "\<author_name\> \| \<created_date\>" where created_date is
+the formatted system date.
+
+These strings can be created while writing the data to the Excel
+template.
+
+### Slide 2
+
+The chart on slide 2 needs raw data structured as below. You will notice
+that at a continent-level, this table needs a minimum of 5 countries. Do
+we have any continents in the Gapminder data with less than 5 countries?
+Yes, we have Oceania with only Australia and New Zealand. For ease of
+use, let us include these countries along with Asian countries in a new
+`Region` variable.
+
+![02_chart](https://i.imgur.com/KvGxnyt.png "02_chart")
+
+We will create the `region` variable in the gapminder data. But first,
+let us load some relevant packages.
+
+```{r load-packages}
+options(tidyverse.quiet = TRUE)
+library(tidyverse) # duh!
+library(reactable) # to display the tables interactively in this post. Not really needed for the final solution.
+library(openxlsx) # to write the data to the Excel Template.
+# library(RDCOMClient) # to load and run the Excel macro post data load.
+```
+
+```{r read-data}
+
+# Read in Gapminder data
+gp <- gapminder::gapminder
+
+# Create new region variable
+gp <- gp %>%
+  mutate(region = if_else(as.character(continent) %in% c("Asia","Oceania"),
+                          "Asia-Pacific", 
+                          as.character(continent)),
+         country = as.character(country))
+
+# Keep only relevant columns
+gp <- gp %>% select(region, country, year, pop)
+
+# View details
+glimpse(gp)
+```
+
+Now that we have the source data available, we must now create the
+datasets we need that we can write to the Excel template for each
+region.
+
+The required table shows the top 4 countries (based on 2007 population)
+and all other countries clubbed into 'others' in a given region and then
+the total population of the region on a yearly basis. This table has to
+be created for all 4 regions.
+
+```{r 02_chart}
+#| column: body-outset-right
+pop_trend <- gp %>%
+  group_by(region, country, year) %>% 
+  summarise(pop = sum(pop, na.rm = TRUE),
+            .groups = 'drop') %>%
+  mutate(pop = round(pop/1E6, 0)) %>% # population in millions
+  pivot_wider(names_from = year, values_from = pop, names_sort = TRUE) %>% 
+  arrange(desc(`2007`)) # sort by max pop to min pop in latest year i.e. 2007
+
+reactable(pop_trend, compact=TRUE,
+                     style = "font-size:12px")
+```
+
+Now that we have the required columns, let's plan the row order. We
+notice that, for each region, we have the top 4 countries (as per 2007)
+, followed by 'Others'. Let's create the `top-4` dataset.
+
+```{r top-4}
+#| column: body-outset-right
+top4 <- pop_trend %>% 
+  group_by(region) %>% 
+  slice_max(`2007`, n = 4, with_ties = FALSE) %>% 
+  ungroup()
+
+reactable(top4, compact=TRUE, style = "font-size:12px")
+```
+
+To create the `others` dataset, we exclude all countries that are
+present in the `top-4`.
+
+```{r others}
+#| column: body-outset-right
+others <- pop_trend %>% 
+  filter(!country %in% top4$country) %>% 
+  group_by(region) %>% 
+  summarise(across(.cols = -country, .fns = sum),
+            .groups = 'drop') %>% 
+  mutate(country = "Others") %>% 
+  select(region, country, everything())
+
+reactable(others, compact=TRUE, style = "font-size:12px")
+```
+
+While we create the `top-4` and `others` datasets separately, we will
+combine them later at the very last moment before writing them to the
+Excel template.
+
+Now that we have the datasets needed for `02_chart`, let's proceed to
+the create `02_table` . This table gives you the count of countries that
+fall under various population ranges.
+
+![02_table on Slide 2](https://i.imgur.com/uf3flVN.png "02_table"){width="250"}
+
+Let's create `02_table`. To create this table, we first create a new
+variable called `pop_range`.
+
+```{r 02_table}
+
+pop_levels <- c('Less than 500K','500K - 1 Million',
+                '1M - 10 Million', '10M - 100 Million',
+                '100M - 1 Billion', 'More than 1 Billion')
+
+gp2007 <- gp %>% 
+  filter(year == 2007) %>% 
+  mutate(pop_range = case_when(pop < 5E5 ~ pop_levels[1],
+                               pop < 1E6 ~ pop_levels[2],
+                               pop < 1E7 ~ pop_levels[3],
+                               pop < 1E8 ~ pop_levels[4],
+                               pop < 1E9 ~ pop_levels[5],
+                               TRUE      ~ pop_levels[6]),
+         pop_range = factor(pop_range, levels = pop_levels))
+
+pop_groups <- gp2007 %>% 
+  group_by(region, pop_range, .drop = FALSE) %>% 
+  summarise(`# of Countries` = n(),
+            .groups = 'drop') %>% 
+  arrange(region, pop_range) %>% 
+  rename(`Population Category` = pop_range)
+
+reactable(pop_groups, compact=TRUE, style = "font-size:12px")
+```
+
+### Slide 3
+
+Slide 3 contains 2 strings and one chart. The data for the chart looks
+as shown below.
+
+![03_chart table for Slide 3](https://i.imgur.com/kDAbook.png "Slide 3")
+
+The data for `03_chart` is the list of top 10 countries in each region
+as per latest record i.e. 2007. Let's create the `top10` table.
+
+```{r top10}
+#| column: body-outset-right
+top10 <- gp %>% 
+  filter(year == 2007) %>% 
+  group_by(region) %>% 
+  slice_max(pop, n = 10, with_ties = FALSE) %>% 
+  ungroup() %>% 
+  select(-year) %>% 
+  mutate(pop = round(pop/1E6, 4)) %>% # population in millions
+  set_names(c("region","country","population"))
+
+reactable(top10, compact=TRUE, style = "font-size:12px")
+```
+
+## The `for` loop!
+
+We now have to load the Excel template with the data at appropriate cell
+locations for one region at a time. Since we have about 4 regions, we
+will create a vector of unique regions to iterate over.
+
+```{r unique-regions}
+unique_regions <- gp %>% distinct(region) %>% pull()
+cat(unique_regions, sep = "\n")
+```
+
+As our last step, we will create the `for` loop that will iterate over
+`unique_regions` , filter the datasets for each region, write them to
+the Excel Template, save the template with temporary name. We save the
+file with different name to prevent unintentionally corrupting the Excel
+macro template. Finally, we run the macro in the renamed file.
+
+The code will look something like this
+
+```{r for-loop-skeleton, eval=FALSE}
+for (region in unique_regions) {
+  
+  # Step 1: filter the data sets
+  # Step 2: write the data sets
+  # Step 3: save the excel template with different name
+  # Step 4: load the renamed Excel file
+  # Step 5: run macro
+}
+```
+
+Let's populate the above `for` loop with the code we need.
+
+```{r create-ppt, eval=FALSE}
+#| column: body-outset-right
+for (curr_region in unique_regions) {
+  
+  # Step 1: filter the data sets
+  
+  # Slide 1
+  S1_title <- paste(curr_region, "Population")
+  S1_subtitle <- paste("Vishal Katti","|",format(Sys.Date(),"%b %d, %Y"), sep = "   ")
+  
+  # Slide 2
+  S2_title <- paste(curr_region, "Population since 1952")
+  
+  S2_top4 <- top4        %>% filter(region == all_of(curr_region)) %>% select(-region) %>% arrange(desc(`2007`))
+  S2_others <- others    %>% filter(region == all_of(curr_region)) %>% select(-region)
+  S2_top5 <- bind_rows(S2_top4, S2_others)
+  
+  S2_table <- pop_groups %>% filter(region == all_of(curr_region)) %>% select(-region)
+  
+  # Slide 3
+  S3_title <- paste("Top 10 most populated countries in", curr_region)
+  
+  S3_chart <- top10      %>% filter(region == all_of(curr_region)) %>% select(-region)
+  
+  S3_factoid <- paste("The population of", S3_chart$country[1], "is approx.",
+                      round(S3_chart$population[1]/S3_chart$population[10], 0),
+                      "times that of", S3_chart$country[10])
+  
+  # Step 2: write the data sets
+  
+  # Load the template
+  wb <- loadWorkbook("path/to/template/XL2PPT.xlsm") # relative to this R script
+  sht <- "Sheet1"
+  
+  # write data to coordinate (col, row)
+  writeData(wb, sht, S1_title,    xy = c(3, 3),  colNames = FALSE)
+  writeData(wb, sht, S1_subtitle, xy = c(3, 4),  colNames = FALSE)
+  writeData(wb, sht, S2_title,    xy = c(3, 7),  colNames = FALSE)
+  writeData(wb, sht, S2_top5,     xy = c(3, 9),  colNames = TRUE)
+  writeData(wb, sht, S2_table,    xy = c(18, 9), colNames = TRUE)
+  writeData(wb, sht, S3_title,    xy = c(3, 18), colNames = FALSE)
+  writeData(wb, sht, S3_factoid,  xy = c(3, 19), colNames = FALSE)
+  writeData(wb, sht, S3_chart,    xy = c(3, 21), colNames = TRUE)
+  
+  # Step 3: save the excel template with different name
+  saveWorkbook(wb, "path/to/template/XL2PPT_edited.xlsm", overwrite = TRUE)
+  gc(verbose = TRUE)
+  Sys.sleep(2)
+  
+  # Step 4: load the renamed Excel file
+  # Create Excel Application
+  xlApp <- COMCreate("Excel.Application")
+
+  # Open the Macro Excel book
+  xlWbk <- xlApp$Workbooks()$Open(normalizePath("path/to/template/XL2PPT_edited.xlsm", winslash = "/")) # Change to your directory
+  # its ok to run macro without visible excel application
+  # If you want to see your workbook, please set it to TRUE
+  xlApp[["Visible"]] <- FALSE
+  
+  # Step 5: run macro
+  xlApp$Run("Create_Continental_Deck") # Name of Macro to run
+
+  xlWbk$Close(TRUE) # save and close excel book
+  xlApp$Quit()
+  gc(verbose = TRUE)
+  Sys.sleep(2)
+}
+```
+
+Once the code runs completely, you will see 4 new PowerPoint
+Presentations in your working folder.
+
+![Output Files](https://i.imgur.com/Pe8yyxI.png "Output Files")
+
+You can download the full R script from
+[here](https://gist.github.com/vkatti/cc95c56e11c1b8985bbd288f353c7386 "Navigate to Github Gist").
+
+## References & Citations
+
+-   Jennifer Bryan (2017). gapminder: Data from Gapminder. R package
+    version 0.3.0. <https://CRAN.R-project.org/package=gapminder>
+
+-   Hadley Wickham, Romain Francois, Lionel Henry and Kirill Muller
+    (2021). dplyr: A Grammar of Data Manipulation. R package version
+    1.0.7. <https://CRAN.R-project.org/package=dplyr>
+
+-   Hadley Wickham (2021). tidyr: Tidy Messy Data. R package version
+    1.1.3. <https://CRAN.R-project.org/package=tidyr>
+
+-   Greg Lin (2020). reactable: Interactive Data Tables Based on 'React
+    Table'. R package version 0.2.3.
+    <https://CRAN.R-project.org/package=reactable>
+
+-   Philipp Schauberger and Alexander Walker (2021). openxlsx: Read,
+    Write and Edit xlsx Files. R package version 4.2.4.
+    <https://CRAN.R-project.org/package=openxlsx>
+
+-   Duncan Temple Lang (NA). RDCOMClient: R-DCOM client.
+    <http://www.omegahat.net/RDCOMClient,> <http://www.omegahat.net>
+    <http://www.omegahat.net/bugs.>
+
+-   <https://docs.microsoft.com/en-us/office/vba/api/overview/excel>
+
+-   <https://docs.microsoft.com/en-us/office/vba/api/overview/powerpoint>

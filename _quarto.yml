@@ -1,8 +1,13 @@
 project:
   type: website
+  preview:
+    port: 4200
+    browser: true
 
 website:
   title: "Vishal Katti"
+  site-url: https://vishalkatti.com
+  description: "Vishal Katti's Blog"
   navbar:
     search: true
     right:
@@ -17,15 +22,19 @@ website:
       - icon: rss
         file: index.xml
   page-footer: 
-    left: Vishal Katti {{< fa regular copyright >}} 2022<br>made with {{< fa heart >}}, {{< fa brands r-project >}}  and [quarto](https://quarto.org)
+    left: Vishal Katti ©️ 2022<br>made with 💖, R and [quarto](https://quarto.org)
     right: 
       - icon: github
         href: https://github.com/vkatti
       - icon: twitter 
         href: https://twitter.com/vishal_katti
-  site-url: https://vishalkatti.com
-  twitter-card: true
+  
+  twitter-card: 
+    site: "@vishal_katti"
   open-graph: true
+  comments: 
+    utterances:
+      repo: vkatti/turbokat
 format:
   html:
     theme: 

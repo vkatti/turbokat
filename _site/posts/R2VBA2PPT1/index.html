@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.649">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Vishal Katti">
+<meta name="dcterms.date" content="2021-10-19">
+<title>Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2">
+<meta property="og:description" content="This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.">
+<meta property="og:image" content="https://vishalkatti.com/posts\R2VBA2PPT1\images\R2XL2PPT_logo.png">
+<meta property="og:site-name" content="Vishal Katti">
+<meta property="og:image:height" content="619">
+<meta property="og:image:width" content="1500">
+<meta name="twitter:title" content="Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2">
+<meta name="twitter:description" content="This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.">
+<meta name="twitter:image" content="https://vishalkatti.com/posts\R2VBA2PPT1\images\R2XL2PPT_logo.png">
+<meta name="twitter:image-height" content="619">
+<meta name="twitter:image-width" content="1500">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vishal Katti</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+<div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2</h1>
+            <p class="subtitle lead">Using R to trigger Excel VBA macros to create PowerPoint presentations!</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Excel</div>
+                <div class="quarto-category">VBA</div>
+                <div class="quarto-category">PowerPoint</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vishal Katti </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 19, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="abstract-title">Abstract</div>
+      This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
+  <li><a href="#the-powerpoint-template" id="toc-the-powerpoint-template" class="nav-link" data-scroll-target="#the-powerpoint-template">The PowerPoint Template</a></li>
+  <li><a href="#the-excel-template" id="toc-the-excel-template" class="nav-link" data-scroll-target="#the-excel-template">The Excel Template</a></li>
+  <li><a href="#the-vba-macro" id="toc-the-vba-macro" class="nav-link" data-scroll-target="#the-vba-macro">The VBA Macro</a></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r">R</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>One of the most common tasks in most offices, is creating presentations and reports in Microsoft PowerPoint. While the tool is great for creating ad hoc presentations, editing the same with new data on a periodic basis gets tedious. Now, I know that some wonderful packages like <code>officer</code> and <code>officedown</code> exist that enable us to create PowerPoint presentations with editable charts from R itself. You can read all about this in the amazing <a href="https://alison.rbind.io/blog/2021-07-officedown/">Alison Hill’s blog post “Up and running with officedown”</a>.</p>
+<p>Since I discovered R while looking for a better alternative to VBA for data analysis and Excel/PowerPoint automation, the following is an alternative workflow to create multiple PowerPoint presentations using a combination of these technologies. Note that this workflow uses the <code>RDCOMClient</code> package which works in Windows environment only.</p>
+<section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>In this 2-part blog, we create a PowerPoint template with named placeholders which we populate from an Excel file using VBA. The Excel file is loaded with data using R with the help of <code>openxlsx</code> package and then the macro is triggered using the <code>RDCOMClient</code> package.</p>
+<p>This solution has great potential to give you the same feeling as those Jurassic Park scientists that Dr.&nbsp;Ian Malcolm remarked about!</p>
+<p>Advantages of this approach over <code>officer</code> and <code>officedown</code>:</p>
+<ol type="1">
+<li>Slide/content/header/footer formatting control is in the PowerPoint template rather than R code.</li>
+<li>All charts are native and can contain any feature (dual axis, mixed data series like bar + line, line + points). All Excel chart-types are available. Go wild!</li>
+<li>You can use any PowerPoint template design (Yes, even your sad/weird/exciting corporate template!).</li>
+</ol>
+<p>Let’s begin.</p>
+<p>Suppose we want to automate the following PowerPoint presentation. It contains 3 slides with a title slide and 2 content slides having graphs and tables created from the <code>gapminder</code> dataset. This <code>.pptx</code> file also has a custom footer.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder World Report" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">The Gapminder World Population Report</figcaption><p></p>
+</figure>
+</div>
+<p>We want to create the same presentation with same structure but at a continent-level. <code>gapminder</code> has data for 5 continents and we wish to create 5 presentations by the end of this.</p>
+</section><section id="the-powerpoint-template" class="level2"><h2 class="anchored" data-anchor-id="the-powerpoint-template">The PowerPoint Template</h2>
+<p>In this approach, we start with the PowerPoint presentation file. We will create a template with placeholders and charts with dummy data. Usually, you would have a copy of the <code>.pptx</code> file you want to automate. Save a copy of it as a <code>PowerPoint Template (.potx)</code>, ideally to your R Project folder. To know more about what an R Project is, read about it <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">here</a>. In my case, I’ve created a new R Project folder named <code>R2XL2PPT</code> as shown below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/NvdILBA.png" title="Save As PowerPoint Template (.potx)" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">Save As PowerPoint Template (.potx)</figcaption><p></p>
+</figure>
+</div>
+<p>Now let us prep the template. If you open the template file by double-click or right-click &gt; New, it would open a fresh <code>.pptx</code> presentation using the template. Right-Click and click Open in the context menu to open the <code>.potx</code> template file for editing.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://i.imgur.com/eQokXoX.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">CORRECT: Right-Click &gt; Open</figcaption><p></p>
+</figure>
+</div>
+<p>Once you have the template open, we will add names to all the text placeholders, tables and graphs we wish to update. To update the placeholder name:</p>
+<ol type="1">
+<li>Select the shape/text-area/table/graph.</li>
+<li>From Shape Format, click Selection Pane.</li>
+<li>In the Selection Pane, change the name of the selected item.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/xhA0D3u.png" title="Add shape names from Selection Pane" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">Add shape names from Selection Pane</figcaption><p></p>
+</figure>
+</div>
+<p>Advisory: We use the format <code>NN_[Position]Object</code> where <code>NN</code> is the slide number, <code>[Position]</code> is the either TopLeft, TopRight, BottomLeft, BottomRight or any other position and finally, <code>Object</code> is either Table, Chart, Title, Subtitle, TextBox etc. You can use any fancy identifier here, just make sure that your future self and others can recognise them easily.</p>
+<p>Once you set the names of all the items that you want to customise, save the template.</p>
+<p>Download the <code>GP_template.potx</code> template <a href="content/GP_template.potx">here</a>.</p>
+</section><section id="the-excel-template" class="level2"><h2 class="anchored" data-anchor-id="the-excel-template">The Excel Template</h2>
+<p>To populate all the named items in the PowerPoint template, we will now create an Excel document which looks identical to the template with respect to the named items. Please see image below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/A080o1Z.png" title="PowerPoint item to Excel named range mapping" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">PowerPoint item to Excel named range mapping</figcaption><p></p>
+</figure>
+</div>
+<p>For every named item, depending on whether it is a textbox or chart or table, we will create a named range for that item. For example, for item <code>01_title</code> in the PowerPoint template, we create a <code>S1_title</code> named range (which points to cell C3) as a placeholder for it. If you don’t know how to create a named range in Excel, read more <a href="https://support.microsoft.com/en-us/office/define-and-use-names-in-formulas-4d0f13ac-53b7-422e-afd2-abd7ff379c64">here</a>.</p>
+<blockquote class="blockquote">
+<p>Excel does not allow named ranges names to start with a number, hence <code>01_title</code> is mapped to <code>S1_title</code>. The S stands for Slide. Just one of those Excel quirks I guess!</p>
+</blockquote>
+<p>You can set a single Excel cell as named range for each <strong>textbox</strong> in the PowerPoint template. You can copy-paste <strong>tables</strong> from Powerpoint to the Excel template directly. The entire table must be set as a named range.</p>
+<p>For charts, right-click the chart in PowerPoint and select <code>Edit Data</code>. An excel worksheet is displayed with the underlying data. Copy-paste the entire data into the Excel template.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/rVsb1a6.png" title="Excel Chart: Right Click > Edit Data" class="img-fluid figure-img" width="225"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">Excel Chart: Right Click &gt; Edit Data</figcaption><p></p>
+</figure>
+</div>
+<p>For the <code>GP_template.potx</code>, the corresponding excel template <code>XL2PPT.xlsm</code> looks like the below image. Please note that this template does not have the VBA macro yet.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/oMdSUvp.png" title="XL2PPT design" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">XL2PPT design</figcaption><p></p>
+</figure>
+</div>
+</section><section id="the-vba-macro" class="level2"><h2 class="anchored" data-anchor-id="the-vba-macro">The VBA Macro</h2>
+<p>We want the VBA macro to:</p>
+<ol type="1">
+<li>Open a new instance of PowerPoint presentation using the <code>GP_template.potx</code> file.</li>
+<li>Copy text/numbers from various placeholders and replace existing text/numbers in the PowerPoint presentation.</li>
+<li>Save the presentation with custom file name with <code>.pptx</code> extension.</li>
+</ol>
+<p>The actual mapping of the named ranges in the Excel template to the named shapes in the PowerPoint template happens in the VBA code. However, at this stage, you can actually create the PowerPoint presentation by copying the numbers into the Excel template and hitting the big <code>RUN MACRO</code> button.</p>
+<p>For your reference, I am embedding the VBA macro code below. You can download the <code>XL2PPT.xlsm</code> file from <a href="content/XL2PPT.xlsm">here</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<details closed=""><summary><span title="Click to Expand"> VBA Macro Code </span>
+</summary><script src="https://gist.github.com/vkatti/6b62c49c7dac8901b0194a758a77c0df.js"></script></details><p><br></p>
+</div>
+</div>
+</section><section id="r" class="level2"><h2 class="anchored" data-anchor-id="r">R</h2>
+<p>Suppose we want to create a 10 variations of PowerPoint presentation using the same template. While creating the presentation from Excel is now automated, how about creating the numbers for each of those 10 variations? This is where we bring in R with the <code>openxlsx</code> and <code>RDCOMClient</code> packages. We use the <code>tidyverse</code> set of packages to read in data, clean and massage the data into the various formats we need, <code>openxlsx</code> to write the data (single numbers, text or tables of numbers) to the Excel template and <code>RDCOMClient</code> to run the embedded VBA code in the Excel template.</p>
+<p>Check out the upcoming Part 2 of this blog to see how to run VBA code using R. Let me know if you find this useful or any corrections required in the comments below.</p>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+    } else {
+      disableStylesheet(alternateStylesheets);
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Vishal Katti 2022<br>made with , and <a href="https://quarto.org">quarto</a></div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

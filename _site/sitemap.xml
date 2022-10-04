@@ -2,14 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vishalkatti.com/about.html</loc>
-    <lastmod>2022-10-04T08:54:34.704Z</lastmod>
+    <lastmod>2022-10-04T16:18:30.592Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/index.html</loc>
-    <lastmod>2022-10-04T08:58:29.078Z</lastmod>
+    <lastmod>2022-10-04T16:21:15.915Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/drilldown-with-reactable/index.html</loc>
+    <lastmod>2022-10-04T15:51:58.195Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/programming-with-dplyr/index.html</loc>
-    <lastmod>2022-10-04T08:58:28.571Z</lastmod>
+    <lastmod>2022-10-04T15:29:38.812Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/R2VBA2PPT1/index.html</loc>
+    <lastmod>2022-10-04T15:56:44.566Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/R2VBA2PPT2/index.html</loc>
+    <lastmod>2022-10-04T15:23:39.508Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/tidyr-pivot-longer/index.html</loc>
+    <lastmod>2022-10-04T16:00:56.068Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/tidyr-pivot-wider/index.html</loc>
+    <lastmod>2022-10-04T15:18:28.807Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/writing-robust-functions/index.html</loc>
+    <lastmod>2022-10-04T15:15:14.884Z</lastmod>
   </url>
 </urlset>

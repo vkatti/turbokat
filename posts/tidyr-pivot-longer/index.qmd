@@ -1,0 +1,117 @@
+---
+title: "Pivoting your tables with Tidyr: Part I"
+subtitle: "Converting \"wide\" to \"long\" format"
+abstract: "This post demonstrates how to use `pivot_longer()` to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series."
+author: Vishal Katti
+date: 2022-07-08
+image: https://i.imgur.com/0qMbFC1.gif
+categories: [R, functions, tidyr, pivot]
+format: html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Intro
+
+One of the primary data manipulation operations is pivoting your tabular data from "wide" format to "long" format and vice-versa.
+
+The idea is to make your tabular data "tidy" i.e.
+
+-   Every column is a variable.
+-   Every row is an observation.
+-   Every cell is a single value.
+
+In other words, every column contains just one type of information, every row in the table is a snapshot or a version of the information your table captures and every cell contains just one piece of information. Read more about wide vs. long formats [here](https://www.statology.org/long-vs-wide-data/).
+
+While the wide format is more human-readable, the long format is preferred and is desirable for data and plotting operations using R, Python or other data processing programming languages. The {tidyr} R package has functions that allow you to transform your tabular data between the two formats.
+
+In this post, we will see how to convert a wide dataframe to long format using the *pivot_longer()* function from {tidyr} package.
+
+# The wide one
+
+Consider the following data table. It has been created from the famous Gapminder dataset. This table shows the average life expectancy in each continent for 2 years. While some of you may say that Gapminder data contains records for a lot more number of years, here we consider just the latest 2 years for ease of explanation and visual purposes.
+
+![Continent-wise Average Life Expectancy over last 2 years](https://i.imgur.com/sMJDveZ.png)
+
+`my_data` is in the wide format as we have continent names in column headers and average life expectancy values in each of those columns. To convert this tibble to the long format, we need to pull together the continent names in one column and their corresponding values into another column.
+
+![](https://i.imgur.com/kbMDurH.png)
+
+# The long one
+
+The long format of this table would ideally have only `year`, `continent` and `average_life_expectancy` columns and look something like the table below.
+
+![](https://i.imgur.com/63PMzJ3.png){width="60%"}
+
+The long format has repeated values of the column that are not gathered/collected. In this case, the `year` column gets its values repeated for each row.
+
+Let's recreate the above transformation in R. First, we create the `my_data` table.
+
+```{r}
+my_data <- data.frame(
+  year     = c(2002L, 2007L), 
+  Africa   = c(53.33, 54.81), 
+  Americas = c(72.42, 73.61), 
+  Asia     = c(69.23, 70.73), 
+  Europe   = c(76.70, 77.65), 
+  Oceania  = c(79.74, 80.72)
+)
+
+knitr::kable(my_data)
+```
+
+To convert this table into long format, we use the *pivot_longer()* function from {tidyr} R package. Let us see how to use this function.
+
+::: callout-tip
+Use \`formals\` to view all the formal arguments of a function and their default values. \`formals\` returns a named list.
+:::
+
+```{r}
+library(tidyr, quietly = TRUE, warn.conflicts = FALSE)
+
+formals(pivot_longer)
+```
+
+The result of `formals(pivot_longer)` tells us that the minimum information needed to use this function is to provide values to the `data` and `cols` arguments as all other arguments have default values and hence, are optional.
+
+Using only the minimum arguments with `pivot_longer()`, we get a long formatted tibble with the columns `year`, `name` and `value`.
+
+```{r}
+long_minimal <- pivot_longer(
+                        data      = my_data,
+                        cols      = c("Africa", "Americas", "Asia", "Europe", "Oceania")
+                        )
+
+knitr::kable(long_minimal)
+```
+
+Notice that the continent names and their corresponding average life expectancy values appear in columns named `name` and `value`. These are the default column names. We can change these column names by providing our own names to the arguments `names_to` and `values_to`.
+
+Since the `year` column is the only one that remains as is, we can rewrite the above `pivot_longer` statement as below
+
+```{r}
+my_data_longer <- pivot_longer(data      = my_data,
+                               cols      = !year,
+                               names_to  = "continent",
+                               values_to = "average_life_expectancy")
+
+knitr::kable(my_data_longer)
+```
+
+If you are a visual person like me and wish to see this transformation with explanations, check out this GIF I made using good ol' Powerpoint.
+
+![{tidyr} pivot_longer() explained](https://i.imgur.com/0qMbFC1.gif)
+
+# Conclusion
+
+`pivot_longer()` is the successor for the great `gather()` function and has many advantages over the latter. `pivot_longer()` repeats all the values in the columns that are not included in the `cols` argument. Therefore, if your dataframe/tibble had a primary key prior to the transformation, the primary key of your transformed "longer" dataframe is your old primary key + the new column created by `names_to`. This function has many other arguments that allow some truly great transformations. Mastering this function (and its wide counterpart) is a great skill upgrade while massaging your data to make it "tidy".
+
+Happy Gathering!
+
+# References
+
+-   [Long vs. Wide Data: What's the Difference?](https://www.statology.org/long-vs-wide-data/)
+-   Hadley Wickham and Maximilian Girlich (2022). tidyr: Tidy Messy Data. R package version 1.2.0. <https://CRAN.R-project.org/package=tidyr>
+-   Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in R. R package version 1.39.

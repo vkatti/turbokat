@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.649">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Vishal Katti">
+<meta name="dcterms.date" content="2022-01-18">
+<title>Vishal Katti - Writing Robust R Functions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Vishal Katti - Writing Robust R Functions">
+<meta property="og:description" content="This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages.">
+<meta property="og:image" content="https://i.imgur.com/hbjbLMN.gif">
+<meta property="og:site-name" content="Vishal Katti">
+<meta name="twitter:title" content="Vishal Katti - Writing Robust R Functions">
+<meta name="twitter:description" content="This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages.">
+<meta name="twitter:image" content="https://i.imgur.com/hbjbLMN.gif">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vishal Katti</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+<div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Writing Robust R Functions</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+            <p class="subtitle lead">Some designs to validate function arguments.</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">functions</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vishal Katti </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 18, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="abstract-title">Abstract</div>
+      This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages.
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#what-do-we-mean-by-robust-functions" id="toc-what-do-we-mean-by-robust-functions" class="nav-link" data-scroll-target="#what-do-we-mean-by-robust-functions">What do we mean by Robust Functions?</a></li>
+  <li><a href="#our-sweet-innocent-and-naive-function" id="toc-our-sweet-innocent-and-naive-function" class="nav-link" data-scroll-target="#our-sweet-innocent-and-naive-function">Our sweet, innocent and naive Function</a></li>
+  <li>
+<a href="#scenario-1-missing-arguments" id="toc-scenario-1-missing-arguments" class="nav-link" data-scroll-target="#scenario-1-missing-arguments">Scenario 1: Missing Arguments</a>
+  <ul class="collapse">
+<li><a href="#early-exit" id="toc-early-exit" class="nav-link" data-scroll-target="#early-exit">1.1 Early Exit</a></li>
+  <li><a href="#sensible-defaults-with-warnings" id="toc-sensible-defaults-with-warnings" class="nav-link" data-scroll-target="#sensible-defaults-with-warnings">1.2 Sensible defaults with warnings</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#scenario-2-invalid-argument-data-type" id="toc-scenario-2-invalid-argument-data-type" class="nav-link" data-scroll-target="#scenario-2-invalid-argument-data-type">Scenario 2: Invalid Argument Data Type</a>
+  <ul class="collapse">
+<li><a href="#character-arguments" id="toc-character-arguments" class="nav-link" data-scroll-target="#character-arguments">Character arguments</a></li>
+  <li><a href="#factor-arguments" id="toc-factor-arguments" class="nav-link" data-scroll-target="#factor-arguments">Factor arguments</a></li>
+  </ul>
+</li>
+  <li><a href="#scenario-3-incorrect-argument-size" id="toc-scenario-3-incorrect-argument-size" class="nav-link" data-scroll-target="#scenario-3-incorrect-argument-size">Scenario 3: Incorrect Argument Size</a></li>
+  <li><a href="#a-little-detour" id="toc-a-little-detour" class="nav-link" data-scroll-target="#a-little-detour">A little detour…</a></li>
+  <li><a href="#scenario-4-values-of-arguments-that-result-in-invalid-outputs" id="toc-scenario-4-values-of-arguments-that-result-in-invalid-outputs" class="nav-link" data-scroll-target="#scenario-4-values-of-arguments-that-result-in-invalid-outputs">Scenario 4: Values of Arguments that result in invalid outputs</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#citations-references" id="toc-citations-references" class="nav-link" data-scroll-target="#citations-references">Citations &amp; References</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Functions in R ( or any other programming language in general) allow us to encapsulate some lines of code that we want to run again and again. Functions are the natural outcome of the <strong>DRY</strong> (Don’t Repeat Yourself!) principle. Functions group together a couple of lines of consistent logic making our code modular and consequently, easy to manage. However, when we write functions, we need to ensure that they behave exactly as we want them to and are able to handle whatever we throw at them. By whatever, I mean any and all kinds of inputs. The idea of creating unbreakable code is idealistic. I say this since creating robust functions requires additional code to handle the unwanted inputs and most useRs write functions during some one-time analysis. Hence we need to be pragmatic about how much time and effort we spend trying to make our functions robust. Maybe, we need our functions to be just robust enough! All I am saying is, if you are creating functions that will be used by you and only you i.e.&nbsp;if you have absolute control over what inputs would be provided to your functions, then you can forego certain checks and the functions need not be unbreakable. But, if you intend to write functions that will be used by a larger audience, you need to ensure that such functions are able to handle all kinds of innocent and malicious intents.</p>
+</section><section id="what-do-we-mean-by-robust-functions" class="level2"><h2 class="anchored" data-anchor-id="what-do-we-mean-by-robust-functions">What do we mean by Robust Functions?</h2>
+<p>You must be familiar with the <em>Garbage-In-Garbage-Out</em> philosophy of Software engineering. We can think of it in terms of functions, that, given garbage or bad input, you get garbage or bad output. For a function to be robust, it must behave in a consistent manner for known and correct inputs, however, more importantly, it mustn’t give us garbage for bad inputs. Rather, it must provide useful output (as messages or instructions) which can be further used to inform the end-user about possible problems in the inputs to drive proper usage. The useful output/s in case of bad inputs would ideally be a combination of clean early exit and easy-to-understand error messages. So we shall try to implement <em>Garbage-In-Useful-Info-Out</em> by looking at some ways we can build well-behaved and reliable functions.</p>
+<p>Input values passed to a function are more popularly known as arguments or parameters. A robust function must validate the function arguments before proceeding to implement the function logic. If this is not done, then the bad arguments will cause some errors in the logic and display error messages that the end-user may not be familiar with. Worst-case scenario is when the function doesn’t encounter any errors and just gives bad results!! Surely, we do not want this unpredictable behavior.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://i.imgflip.com/28bxz3.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">Enough Talk, Let’s Fight! - Kungfu Panda @imgflip.com</figcaption><p></p>
+</figure>
+</div>
+</section><section id="our-sweet-innocent-and-naive-function" class="level2"><h2 class="anchored" data-anchor-id="our-sweet-innocent-and-naive-function">Our sweet, innocent and naive Function</h2>
+<p>Consider the following function <code>make_date</code> that takes 3 numeric inputs <code>yyyy</code>, <code>mm</code> and <code>dd</code> and returns a single ’Date` object.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, mm, dd) {</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  </span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="co"># main logic</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>my_date <span class="ot">&lt;-</span> <span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="dv">31</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>my_date</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-01-31"</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">class</span>(my_date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "Date"</code></pre>
+</div>
+</div>
+<p>We will use <code>make_date</code> to demonstrate a couple of scenarios where this function can fail and the methods to safeguard against such scenarios.</p>
+</section><section id="scenario-1-missing-arguments" class="level2"><h2 class="anchored" data-anchor-id="scenario-1-missing-arguments">Scenario 1: Missing Arguments</h2>
+<p>The most basic check we should perform before running the function logic is to confirm if all the required arguments are available. Think about how your function should behave if one of the arguments, suppose <code>mm</code> is missing.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">dd =</span> <span class="dv">31</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in paste(yyyy, mm, dd, sep = "-"): argument "mm" is missing, with no default
+</code></pre>
+</div>
+<p>Note that the error message shown to the user, is triggered, not from our function <code>make_date</code> but from the internal <code>paste</code> function. We do not have any control over what error messages are shown when errors occur. In this case, we know specifically that this error is due to a missing argument.</p>
+<p>There are two ways to handle missing arguments:</p>
+<section id="early-exit" class="level3"><h3 class="anchored" data-anchor-id="early-exit">1.1 Early Exit</h3>
+<p>If a certain required argument is missing, we can stop the execution of the function and show informative error message about which argument is missing. Your friends here are the <code>missing</code> and <code>stop</code> functions. The <code>missing</code> function checks if the given argument is missing or is set to NULL and returns TRUE, else it returns FALSE. The <code>stop</code> function stops the execution and displays the custom error message we provide. Using these functions inside an <code>if</code> condition will let us check for missing arguments. Let us modify our naive function to stop early when required arguments are missing.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, mm, dd) {</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  </span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="co"># check missing arguments</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(yyyy)) <span class="fu">stop</span>(<span class="st">"argument `yyyy` is required."</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(mm))   <span class="fu">stop</span>(<span class="st">"argument `mm` is required."</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(dd))   <span class="fu">stop</span>(<span class="st">"argument `dd` is required."</span>)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>  </span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="co"># main logic</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>}</span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co"># Calling the function without `mm` argument</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">dd =</span> <span class="dv">31</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = 2022, dd = 31): argument `mm` is required.
+</code></pre>
+</div>
+<p>Note that here, we add three <code>if-missing-stop</code> statements, one for each required argument. We must do this if we want to display specific error messages for each argument. There is another way to do the same but we will look at it later. If we want to display a single error message, we can do so by clubbing the <code>missing</code> functions inside an <code>any</code> which will return TRUE if any one of the arguments is missing. However, providing clear error messages becomes challenging in this method.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>dummy_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b, c) { </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="cf">if</span>(<span class="fu">any</span>(<span class="fu">missing</span>(a), <span class="fu">missing</span>(b), <span class="fu">missing</span>(c))) {</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="fu">stop</span>(<span class="st">"One or more required arguments missing."</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  }</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="co"># Do something...</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>}</span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="fu">dummy_fun</span>(<span class="at">a =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_fun(a = 1): One or more required arguments missing.
+</code></pre>
+</div>
+</section><section id="sensible-defaults-with-warnings" class="level3"><h3 class="anchored" data-anchor-id="sensible-defaults-with-warnings">1.2 Sensible defaults with warnings</h3>
+<p>In some cases, we may need the function to use some sensible default value for the required arguments and continue execution. Here, we display a warning message instead of an error message. This is required when the argument value is either considered to be obvious or the argument is not necessarily the most important one and is used only in extreme customization. <strong>Providing default values to arguments makes them optional arguments</strong>. An example of default argument values can be seen in the <code>paste</code> function we have used earlier. The default value of the separator argument <code>sep</code> is a single whitespace character.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">args</span>(paste)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>function (..., sep = " ", collapse = NULL, recycle0 = FALSE) 
+NULL</code></pre>
+</div>
+</div>
+<p>Similarly, we can provide some sensible defaults for the <code>make_date</code> function. Let’s modify the function further to provide defaults for the <code>mm</code> and <code>dd</code> arguments only.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="dv">1</span>) {</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  </span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="co"># check missing arguments</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(yyyy))  <span class="fu">stop</span>(<span class="st">"argument `yyyy` is required."</span>) </span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(mm)) <span class="fu">warning</span>(<span class="st">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(dd)) <span class="fu">warning</span>(<span class="st">"argument `dd` is missing. Using default value dd = 1 instead"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7"></a>  </span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="co"># main logic</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10"></a>}</span>
+<span id="cb10-11"><a href="#cb10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="co"># Calling the function without `mm` and `dd` arguments</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>) <span class="co"># here, only `yyyy` is the required argument.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in make_date(yyyy = 2022): argument `mm` is missing. Using default value
+mm = 1 instead
+</code></pre>
+<pre style="color: orange;"><code>Warning in make_date(yyyy = 2022): argument `dd` is missing. Using default value
+dd = 1 instead
+</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-01-01"</code></pre>
+</div>
+</div>
+<p>There are a few concerns about using warnings instead of error messages. Some are listed here in this article from RBloggers <a href="https://www.r-bloggers.com/2012/05/a-warning-about-warning/">A Warning About <code>warning</code></a>.</p>
+</section></section><section id="scenario-2-invalid-argument-data-type" class="level2"><h2 class="anchored" data-anchor-id="scenario-2-invalid-argument-data-type">Scenario 2: Invalid Argument Data Type</h2>
+<p>We have defined <code>make_date</code> to accept 3 numeric arguments i.e.&nbsp;all 3 must be numbers. What would happen if someone tried to call <code>make_date</code> with character, factor or boolean inputs?</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="st">"2022"</span>, <span class="at">mm =</span> <span class="st">"5"</span>, <span class="at">dd =</span> <span class="st">"20"</span>) <span class="co"># works!! why?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-05-20"</code></pre>
+</div>
+</div>
+<p>In this case, the function works because when the arguments are combined into a single string using <code>paste</code> , it matches the <code>format</code> argument of the <code>as.Date</code> function in the main logic of <code>make_date</code> which is <code>as.Date(paste(yyyy, mm, dd, sep = "-"), format = "%Y-%m-%d")</code></p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="st">"2022"</span>, <span class="at">mm =</span> <span class="st">"May"</span>, <span class="at">dd =</span> <span class="st">"1"</span>) <span class="co"># works but shows NA !!!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p>In this case, all the arguments pass the checks but the output is <code>NA</code> since we pass <code>2022-May-1</code> to <code>as.Date</code> which doesn’t match the <code>format = '%Y-%m-%d'</code>.</p>
+<p>How do we check if the values provided to the arguments are numbers or number-like? If the values are numbers, we let them pass. But if they are non-numeric, we must check if they can be converted to numbers i.e. we must check if they are number-like. By number-like, I mean, will coercing the value using <code>as.numeric</code> give us a numeric value or <code>NA</code> ? You guessed it right, we will pass the values through <code>as.numeric</code> and check if the output is <code>NA</code> or not.</p>
+<p>What are the various data types in R that are not <code>numeric</code> but can look like numbers? We have <code>character</code>, <code>factor</code> and <code>boolean</code> data types which can behave like numbers sometimes. Let’s see a few scenarios.</p>
+<section id="character-arguments" class="level3"><h3 class="anchored" data-anchor-id="character-arguments">Character arguments</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>Year <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2022"</span>, <span class="st">"TwentyTwo"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>Year_num <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(Year) <span class="co"># this should show a warning about NAs introduced by coercion</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning: NAs introduced by coercion
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>Year_num <span class="co"># must show the number 2022 without quotes and one NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 2022   NA</code></pre>
+</div>
+</div>
+<p>As you can see in above example, when passed through <code>as.numeric</code>, the value “2022” gets converted to the number 2022 but the value “TwentyTwo” does not. Hence we can say “2022” is number-like but “TwentyTwo” is not.</p>
+</section><section id="factor-arguments" class="level3"><h3 class="anchored" data-anchor-id="factor-arguments">Factor arguments</h3>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>Year <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"2022"</span>,<span class="st">"2021"</span>,<span class="st">"TwentyTwo"</span>))</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">as.numeric</span>(Year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 1 3</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>YearX <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"2022"</span>, <span class="st">"X"</span>))</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">as.numeric</span>(YearX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>YearY <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="dv">2022</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">as.numeric</span>(YearY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>As you can see from above examples, <code>factor</code> values do get converted to numeric but do not give the right results. So we can safely say that factors are not number-like.</p>
+<p>I will ignore <code>boolean</code> data types hoping that useRs are bright enough to not use Booleans while creating a Date!</p>
+<p>From the above examples, we can conclude that <code>numeric</code> values and number-like <code>character</code> values are the only valid data types that should be allowed. Modifying our <code>make_date</code> function to include data type checks.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="dv">1</span>) {</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="co"># check missing arguments</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(yyyy))  <span class="fu">stop</span>(<span class="st">"argument `yyyy` is required."</span>) </span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(mm)) <span class="fu">warning</span>(<span class="st">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
+<span id="cb25-6"><a href="#cb25-6"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(dd)) <span class="fu">warning</span>(<span class="st">"argument `dd` is missing. Using default value dd = 1 instead"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7"></a>  </span>
+<span id="cb25-8"><a href="#cb25-8"></a>  <span class="co"># Check data types</span></span>
+<span id="cb25-9"><a href="#cb25-9"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(yyyy) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.character</span>(yyyy)) {</span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="fu">stop</span>(<span class="st">"argument `yyyy` must be numeric"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.character</span>(yyyy) <span class="sc">&amp;</span> <span class="fu">is.na</span>(<span class="fu">as.numeric</span>(yyyy))) {</span>
+<span id="cb25-12"><a href="#cb25-12"></a>    <span class="fu">stop</span>(<span class="st">"argument `yyyy` must be numeric"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13"></a>  }</span>
+<span id="cb25-14"><a href="#cb25-14"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(mm) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.character</span>(mm)) {</span>
+<span id="cb25-15"><a href="#cb25-15"></a>    <span class="fu">stop</span>(<span class="st">"argument `mm` must be numeric"</span>)</span>
+<span id="cb25-16"><a href="#cb25-16"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.character</span>(mm) <span class="sc">&amp;</span> <span class="fu">is.na</span>(<span class="fu">as.numeric</span>(mm))) {</span>
+<span id="cb25-17"><a href="#cb25-17"></a>    <span class="fu">stop</span>(<span class="st">"argument `mm` must be numeric"</span>)</span>
+<span id="cb25-18"><a href="#cb25-18"></a>  }</span>
+<span id="cb25-19"><a href="#cb25-19"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(dd) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.character</span>(dd)) {</span>
+<span id="cb25-20"><a href="#cb25-20"></a>    <span class="fu">stop</span>(<span class="st">"argument `dd` must be numeric"</span>)</span>
+<span id="cb25-21"><a href="#cb25-21"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.character</span>(dd) <span class="sc">&amp;</span> <span class="fu">is.na</span>(<span class="fu">as.numeric</span>(dd))) {</span>
+<span id="cb25-22"><a href="#cb25-22"></a>    <span class="fu">stop</span>(<span class="st">"argument `dd` must be numeric"</span>)</span>
+<span id="cb25-23"><a href="#cb25-23"></a>  }</span>
+<span id="cb25-24"><a href="#cb25-24"></a>  </span>
+<span id="cb25-25"><a href="#cb25-25"></a>  <span class="co"># main logic</span></span>
+<span id="cb25-26"><a href="#cb25-26"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb25-27"><a href="#cb25-27"></a>}</span>
+<span id="cb25-28"><a href="#cb25-28"></a></span>
+<span id="cb25-29"><a href="#cb25-29"></a><span class="co"># Calling the function with new datatype checks</span></span>
+<span id="cb25-30"><a href="#cb25-30"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="st">"2022"</span>, <span class="at">mm =</span> <span class="st">"May"</span>, <span class="at">dd =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in make_date(yyyy = "2022", mm = "May", dd = "1"): NAs introduced by
+coercion
+</code></pre>
+<pre style="color: red;"><code>Error in make_date(yyyy = "2022", mm = "May", dd = "1"): argument `mm` must be numeric
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="st">"2022"</span>, <span class="at">mm =</span> <span class="fu">factor</span>(<span class="st">"5"</span>), <span class="at">dd =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = "2022", mm = factor("5"), dd = "1"): argument `mm` must be numeric
+</code></pre>
+</div>
+<p>Notice that the datatype check is lengthy and similar for all 3 arguments. We can apply <strong>DRY</strong> principle again and encapsulate that code into a small function <code>is_numberlike</code> which will return <code>TRUE</code> or <code>FALSE</code> . Note that <code>is_numberlike</code> has no checks because it is an internal function.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># This function check if value is number or number-like.</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>is_numberlike <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.character</span>(x)) {</span>
+<span id="cb27-4"><a href="#cb27-4"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>) <span class="co"># Early Exit 1 if value is neither numeric nor character</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.character</span>(x) <span class="sc">&amp;</span> <span class="fu">is.na</span>(<span class="fu">as.numeric</span>(x))) {</span>
+<span id="cb27-6"><a href="#cb27-6"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>) <span class="co"># Early Exit 2 if character value is not number-like.</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>  }</span>
+<span id="cb27-8"><a href="#cb27-8"></a>  <span class="fu">return</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb27-9"><a href="#cb27-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Thus our <code>make_date</code> function with data types check will look as below.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="dv">1</span>) {</span>
+<span id="cb28-2"><a href="#cb28-2"></a>  </span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="co"># check missing arguments</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(yyyy))  <span class="fu">stop</span>(<span class="st">"argument `yyyy` is required."</span>) </span>
+<span id="cb28-5"><a href="#cb28-5"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(mm)) <span class="fu">warning</span>(<span class="st">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
+<span id="cb28-6"><a href="#cb28-6"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(dd)) <span class="fu">warning</span>(<span class="st">"argument `dd` is missing. Using default value dd = 1 instead"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7"></a>  </span>
+<span id="cb28-8"><a href="#cb28-8"></a>  <span class="co"># Check data types</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_numberlike</span>(yyyy)) <span class="fu">stop</span>(<span class="st">"argument `yyyy` must be numeric"</span>)</span>
+<span id="cb28-10"><a href="#cb28-10"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_numberlike</span>(mm))   <span class="fu">stop</span>(<span class="st">"argument `mm` must be numeric"</span>)</span>
+<span id="cb28-11"><a href="#cb28-11"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_numberlike</span>(dd))   <span class="fu">stop</span>(<span class="st">"argument `dd` must be numeric"</span>)</span>
+<span id="cb28-12"><a href="#cb28-12"></a>  </span>
+<span id="cb28-13"><a href="#cb28-13"></a>  <span class="co"># main logic</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb28-15"><a href="#cb28-15"></a>}</span>
+<span id="cb28-16"><a href="#cb28-16"></a></span>
+<span id="cb28-17"><a href="#cb28-17"></a><span class="co"># Calling the function with new datatype checks</span></span>
+<span id="cb28-18"><a href="#cb28-18"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="st">"TwentyTwo"</span>, <span class="at">mm =</span> <span class="st">"5"</span>, <span class="at">dd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in is_numberlike(yyyy): NAs introduced by coercion
+</code></pre>
+<pre style="color: red;"><code>Error in make_date(yyyy = "TwentyTwo", mm = "5", dd = 1): argument `yyyy` must be numeric
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="st">"2022"</span>, <span class="at">mm =</span> <span class="fu">factor</span>(<span class="st">"5"</span>), <span class="at">dd =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = "2022", mm = factor("5"), dd = "1"): argument `mm` must be numeric
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">5</span>, <span class="at">dd =</span> <span class="st">"one"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in is_numberlike(dd): NAs introduced by coercion
+</code></pre>
+<pre style="color: red;"><code>Error in make_date(yyyy = 2022, mm = 5, dd = "one"): argument `dd` must be numeric
+</code></pre>
+</div>
+<p>One of the most interesting features of R is vectorization! Due to this feature, our function <code>make_date</code> behaves in interesting ways. In some cases, it is desirable and sometimes it is not.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">dd =</span> <span class="st">"1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in if (is.character(x) &amp; is.na(as.numeric(x))) {: the condition has
+length &gt; 1 and only the first element will be used
+</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "2022-01-01" "2022-02-01" "2022-03-01" "2022-04-01" "2022-05-01"
+ [6] "2022-06-01" "2022-07-01" "2022-08-01" "2022-09-01" "2022-10-01"
+[11] "2022-11-01" "2022-12-01"</code></pre>
+</div>
+</div>
+<p>Note the above warnings. These warnings appear because the <code>if</code> statement checks if the condition provided results in a single <code>TRUE</code> or <code>FALSE</code> value. However, the output of the check <code>is.na(as.numeric(mm))</code> is a boolean vector of length 12. But <code>if</code> needs only 1 <code>TRUE</code> or <code>FALSE</code>.</p>
+<p>The output contains 12 date values since <code>paste</code> is vectorised, it recycles the values for <code>yyyy</code> and <code>dd</code> to give us 12 dates!</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>mm <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">paste</span>(<span class="st">"Month"</span>, mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> [1] "Month 1"  "Month 2"  "Month 3"  "Month 4"  "Month 5"  "Month 6" 
+ [7] "Month 7"  "Month 8"  "Month 9"  "Month 10" "Month 11" "Month 12"</code></pre>
+</div>
+</div>
+<p>What do we do if we want <code>make_date</code> to return just one date?</p>
+</section></section><section id="scenario-3-incorrect-argument-size" class="level2"><h2 class="anchored" data-anchor-id="scenario-3-incorrect-argument-size">Scenario 3: Incorrect Argument Size</h2>
+<p>To ensure <code>make_date</code> gives you just one date, we must ensure that the arguments have just value and is not a vector of multiple values i.e. <code>length(arg)==1</code>. Let’s further add a few checks for the data size of the arguments and rearrange the checks.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="dv">1</span>) {</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  </span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="co"># check missing arguments</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(yyyy))  <span class="fu">stop</span>(<span class="st">"argument `yyyy` is required."</span>) </span>
+<span id="cb35-5"><a href="#cb35-5"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(mm)) <span class="fu">warning</span>(<span class="st">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
+<span id="cb35-6"><a href="#cb35-6"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(dd)) <span class="fu">warning</span>(<span class="st">"argument `dd` is missing. Using default value dd = 1 instead"</span>)</span>
+<span id="cb35-7"><a href="#cb35-7"></a>  </span>
+<span id="cb35-8"><a href="#cb35-8"></a>  <span class="co"># Check argument lengths</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a>  <span class="cf">if</span> (<span class="fu">length</span>(yyyy)<span class="sc">!=</span><span class="dv">1</span>) <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"Length of argument `yyyy` is "</span>, <span class="fu">length</span>(yyyy),<span class="st">". Must be only 1."</span>))</span>
+<span id="cb35-10"><a href="#cb35-10"></a>  <span class="cf">if</span> (<span class="fu">length</span>(mm)<span class="sc">!=</span><span class="dv">1</span>)   <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"Length of argument `mm` is "</span>, <span class="fu">length</span>(mm),<span class="st">". Must be only 1."</span>))</span>
+<span id="cb35-11"><a href="#cb35-11"></a>  <span class="cf">if</span> (<span class="fu">length</span>(dd)<span class="sc">!=</span><span class="dv">1</span>)   <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"Length of argument `dd` is "</span>, <span class="fu">length</span>(dd),<span class="st">". Must be only 1."</span>))</span>
+<span id="cb35-12"><a href="#cb35-12"></a>  </span>
+<span id="cb35-13"><a href="#cb35-13"></a>  <span class="co"># Check data types</span></span>
+<span id="cb35-14"><a href="#cb35-14"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_numberlike</span>(yyyy)) <span class="fu">stop</span>(<span class="st">"argument `yyyy` must be numeric"</span>)</span>
+<span id="cb35-15"><a href="#cb35-15"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_numberlike</span>(mm))   <span class="fu">stop</span>(<span class="st">"argument `mm` must be numeric"</span>)</span>
+<span id="cb35-16"><a href="#cb35-16"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is_numberlike</span>(dd))   <span class="fu">stop</span>(<span class="st">"argument `dd` must be numeric"</span>)</span>
+<span id="cb35-17"><a href="#cb35-17"></a>  </span>
+<span id="cb35-18"><a href="#cb35-18"></a>  <span class="co"># main logic</span></span>
+<span id="cb35-19"><a href="#cb35-19"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb35-20"><a href="#cb35-20"></a>}</span>
+<span id="cb35-21"><a href="#cb35-21"></a></span>
+<span id="cb35-22"><a href="#cb35-22"></a><span class="co"># Calling function with new data size checks</span></span>
+<span id="cb35-23"><a href="#cb35-23"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">dd =</span> <span class="st">"01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = 2022, mm = 1:12, dd = "01"): Length of argument `mm` is 12. Must be only 1.
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="fu">c</span>(<span class="st">"2021"</span>,<span class="st">"2022"</span>), <span class="at">mm =</span> <span class="st">"1"</span>, <span class="at">dd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = c("2021", "2022"), mm = "1", dd = 1): Length of argument `yyyy` is 2. Must be only 1.
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="fu">c</span>(<span class="st">"1"</span>,<span class="st">"2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = 2022, mm = 1, dd = c("1", "2")): Length of argument `dd` is 2. Must be only 1.
+</code></pre>
+</div>
+</section><section id="a-little-detour" class="level2"><h2 class="anchored" data-anchor-id="a-little-detour">A little detour…</h2>
+<p>So far we checked for missing arguments, arguments with bad data types and arguments with incorrect sizes. We’ve used the <code>stop</code> function along with <code>if</code> to check for all failure conditions and show appropriate error messages. When we use <code>stop</code>, we must specify all the failure conditions and the number of specific error messages goes up as number of arguments increases.</p>
+<p>In case of our <code>make_date</code>, if an argument is not missing, it must be a number-like value of length 1. To reduce the number of error messages, we can combine the error messages for data type and length. for eg, the error message could be <em>argument <code>yyyy</code> must be a number-like value of length 1.</em></p>
+<p>Wouldn’t it be easier if we just specify what is the success condition aka the “happy path”, and show error for all other conditions? To do this, we can use the <code>stopifnot</code> function that let’s us specify all the happy paths. See example below.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>dummy_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b, c){</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  </span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="co"># check missing</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">missing</span>(a) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">missing</span>(b) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">missing</span>(c))</span>
+<span id="cb38-5"><a href="#cb38-5"></a>  </span>
+<span id="cb38-6"><a href="#cb38-6"></a>  <span class="co"># check argument values</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a>  <span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">is.na</span>(a) <span class="sc">&amp;</span> <span class="fu">is.numeric</span>(a) <span class="sc">&amp;</span> <span class="fu">length</span>(a)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb38-8"><a href="#cb38-8"></a>            <span class="sc">!</span><span class="fu">is.na</span>(b) <span class="sc">&amp;</span> <span class="fu">is.numeric</span>(b) <span class="sc">&amp;</span> <span class="fu">length</span>(b)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb38-9"><a href="#cb38-9"></a>            <span class="sc">!</span><span class="fu">is.na</span>(c) <span class="sc">&amp;</span> <span class="fu">is.numeric</span>(c) <span class="sc">&amp;</span> <span class="fu">length</span>(c)<span class="sc">==</span><span class="dv">1</span></span>
+<span id="cb38-10"><a href="#cb38-10"></a>            )</span>
+<span id="cb38-11"><a href="#cb38-11"></a>  <span class="fu">sum</span>(a, b, c)</span>
+<span id="cb38-12"><a href="#cb38-12"></a>}</span>
+<span id="cb38-13"><a href="#cb38-13"></a></span>
+<span id="cb38-14"><a href="#cb38-14"></a><span class="fu">dummy_sum</span>(<span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>) <span class="co"># a is missing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(b = 2, c = 3): !missing(a) &amp; !missing(b) &amp; !missing(c) is not TRUE
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">dummy_sum</span>(<span class="at">a =</span> <span class="cn">NA_integer_</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>) <span class="co"># a has NA value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(a = NA_integer_, b = 2, c = 3): !is.na(a) &amp; is.numeric(a) &amp; length(a) == 1 is not TRUE
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">dummy_sum</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"2"</span>, <span class="at">c =</span> <span class="dv">3</span>) <span class="co"># b has non-numeric value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(a = 1, b = "2", c = 3): !is.na(b) &amp; is.numeric(b) &amp; length(b) == 1 is not TRUE
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">dummy_sum</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>)  <span class="co"># c has length != 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(a = 1, b = 2, c = 5:7): !is.na(c) &amp; is.numeric(c) &amp; length(c) == 1 are not all TRUE
+</code></pre>
+</div>
+<p>Note the error messages above. They are not so user-friendly. Luckily, we can specify error messages in <code>stopifnot</code> by providing the error messages as the names of the “happy path” conditions.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>dummy_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b, c){</span>
+<span id="cb42-2"><a href="#cb42-2"></a>  </span>
+<span id="cb42-3"><a href="#cb42-3"></a>  <span class="co"># check missing</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a>  <span class="fu">stopifnot</span>(<span class="st">"one or more required arguments missing"</span> <span class="ot">=</span> <span class="sc">!</span><span class="fu">missing</span>(a) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">missing</span>(b) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">missing</span>(c))</span>
+<span id="cb42-5"><a href="#cb42-5"></a>  </span>
+<span id="cb42-6"><a href="#cb42-6"></a>  <span class="co"># check argument values</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a>  <span class="fu">stopifnot</span>(<span class="st">"argument `a` must not be NA, must be a number of length 1"</span> <span class="ot">=</span> <span class="sc">!</span><span class="fu">is.na</span>(a) <span class="sc">&amp;</span> <span class="fu">is.numeric</span>(a) <span class="sc">&amp;</span> <span class="fu">length</span>(a)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb42-8"><a href="#cb42-8"></a>            <span class="st">"argument `b` must not be NA, must be a number of length 1"</span> <span class="ot">=</span> <span class="sc">!</span><span class="fu">is.na</span>(b) <span class="sc">&amp;</span> <span class="fu">is.numeric</span>(b) <span class="sc">&amp;</span> <span class="fu">length</span>(b)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb42-9"><a href="#cb42-9"></a>            <span class="st">"argument `c` must not be NA, must be a number of length 1"</span> <span class="ot">=</span> <span class="sc">!</span><span class="fu">is.na</span>(c) <span class="sc">&amp;</span> <span class="fu">is.numeric</span>(c) <span class="sc">&amp;</span> <span class="fu">length</span>(c)<span class="sc">==</span><span class="dv">1</span></span>
+<span id="cb42-10"><a href="#cb42-10"></a>            )</span>
+<span id="cb42-11"><a href="#cb42-11"></a>  <span class="fu">sum</span>(a, b, c)</span>
+<span id="cb42-12"><a href="#cb42-12"></a>}</span>
+<span id="cb42-13"><a href="#cb42-13"></a></span>
+<span id="cb42-14"><a href="#cb42-14"></a><span class="fu">dummy_sum</span>(<span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>) <span class="co"># a is missing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(b = 2, c = 3): one or more required arguments missing
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">dummy_sum</span>(<span class="at">a =</span> <span class="cn">NA_integer_</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>) <span class="co"># a has NA value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(a = NA_integer_, b = 2, c = 3): argument `a` must not be NA, must be a number of length 1
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">dummy_sum</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"2"</span>, <span class="at">c =</span> <span class="dv">3</span>) <span class="co"># b has non-numeric value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(a = 1, b = "2", c = 3): argument `b` must not be NA, must be a number of length 1
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">dummy_sum</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>)  <span class="co"># c has length != 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in dummy_sum(a = 1, b = 2, c = 5:7): argument `c` must not be NA, must be a number of length 1
+</code></pre>
+</div>
+<p>Using <code>stopifnot</code> in our <code>make_date</code> function to combine the datatype and length checks, we get…</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="dv">1</span>) {</span>
+<span id="cb46-2"><a href="#cb46-2"></a>  </span>
+<span id="cb46-3"><a href="#cb46-3"></a>  <span class="co"># check missing arguments</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(yyyy))  <span class="fu">stop</span>(<span class="st">"argument `yyyy` is required."</span>) </span>
+<span id="cb46-5"><a href="#cb46-5"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(mm)) <span class="fu">warning</span>(<span class="st">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
+<span id="cb46-6"><a href="#cb46-6"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(dd)) <span class="fu">warning</span>(<span class="st">"argument `dd` is missing. Using default value dd = 1 instead"</span>)</span>
+<span id="cb46-7"><a href="#cb46-7"></a>  </span>
+<span id="cb46-8"><a href="#cb46-8"></a>  </span>
+<span id="cb46-9"><a href="#cb46-9"></a>  <span class="co"># Check argument types and length</span></span>
+<span id="cb46-10"><a href="#cb46-10"></a>  <span class="fu">stopifnot</span>(</span>
+<span id="cb46-11"><a href="#cb46-11"></a>    <span class="st">"argument `yyyy` must be numeric with length 1"</span> <span class="ot">=</span> <span class="fu">is_numberlike</span>(yyyy) <span class="sc">&amp;</span> <span class="fu">length</span>(yyyy)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb46-12"><a href="#cb46-12"></a>    <span class="st">"argument `mm` must be numeric with length 1"</span>   <span class="ot">=</span> <span class="fu">is_numberlike</span>(mm)   <span class="sc">&amp;</span> <span class="fu">length</span>(mm)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb46-13"><a href="#cb46-13"></a>    <span class="st">"argument `dd` must be numeric with length 1"</span>   <span class="ot">=</span> <span class="fu">is_numberlike</span>(dd)   <span class="sc">&amp;</span> <span class="fu">length</span>(dd)<span class="sc">==</span><span class="dv">1</span></span>
+<span id="cb46-14"><a href="#cb46-14"></a>  )</span>
+<span id="cb46-15"><a href="#cb46-15"></a>  </span>
+<span id="cb46-16"><a href="#cb46-16"></a>  <span class="co"># main logic</span></span>
+<span id="cb46-17"><a href="#cb46-17"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb46-18"><a href="#cb46-18"></a>}</span>
+<span id="cb46-19"><a href="#cb46-19"></a></span>
+<span id="cb46-20"><a href="#cb46-20"></a><span class="fu">make_date</span>() <span class="co"># no arguments provided</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(): argument `yyyy` is required.
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">dd =</span> <span class="dv">31</span>) <span class="co"># Length mm not equal to 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in if (is.character(x) &amp; is.na(as.numeric(x))) {: the condition has
+length &gt; 1 and only the first element will be used
+</code></pre>
+<pre style="color: red;"><code>Error in make_date(yyyy = 2022, mm = 1:12, dd = 31): argument `mm` must be numeric with length 1
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="st">"Jan"</span>, <span class="at">dd =</span> <span class="dv">31</span>) <span class="co"># mm is not number-like</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in is_numberlike(mm): NAs introduced by coercion
+</code></pre>
+<pre style="color: red;"><code>Error in make_date(yyyy = 2022, mm = "Jan", dd = 31): argument `mm` must be numeric with length 1
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">dd =</span> <span class="dv">31</span>) <span class="co"># argument mm is missing but should work using default value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: orange;"><code>Warning in make_date(yyyy = 2022, dd = 31): argument `mm` is missing. Using
+default value mm = 1 instead
+</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-01-31"</code></pre>
+</div>
+</div>
+</section><section id="scenario-4-values-of-arguments-that-result-in-invalid-outputs" class="level2"><h2 class="anchored" data-anchor-id="scenario-4-values-of-arguments-that-result-in-invalid-outputs">Scenario 4: Values of Arguments that result in invalid outputs</h2>
+<p>Finally, what do we do when the arguments provided will definitely give us bad results despite passing all checks? In our case, <code>make_date</code> creates a date but if we give it values that will result in an invalid date, it will give us invalid results (remember <em>Garbage-In-Garbage-Out</em>?).</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">13</span>, <span class="at">dd =</span> <span class="dv">1</span>) <span class="co"># is there a 13th month?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p>We get <code>NA</code> because <code>as.Date</code> returns NA for invalid inputs with no error messages or warnings! We can check the output and provide a generic error message.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, <span class="at">mm =</span> <span class="dv">1</span>, <span class="at">dd =</span> <span class="dv">1</span>) {</span>
+<span id="cb53-2"><a href="#cb53-2"></a>  <span class="co"># check missing arguments</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(yyyy))  <span class="fu">stop</span>(<span class="st">"argument `yyyy` is required."</span>) </span>
+<span id="cb53-4"><a href="#cb53-4"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(mm)) <span class="fu">warning</span>(<span class="st">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
+<span id="cb53-5"><a href="#cb53-5"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(dd)) <span class="fu">warning</span>(<span class="st">"argument `dd` is missing. Using default value dd = 1 instead"</span>)</span>
+<span id="cb53-6"><a href="#cb53-6"></a>  </span>
+<span id="cb53-7"><a href="#cb53-7"></a>  </span>
+<span id="cb53-8"><a href="#cb53-8"></a>  <span class="co"># Check argument types and length</span></span>
+<span id="cb53-9"><a href="#cb53-9"></a>  <span class="fu">stopifnot</span>(</span>
+<span id="cb53-10"><a href="#cb53-10"></a>    <span class="st">"argument `yyyy` must be numeric with length 1"</span> <span class="ot">=</span> <span class="fu">is_numberlike</span>(yyyy) <span class="sc">&amp;</span> <span class="fu">length</span>(yyyy)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb53-11"><a href="#cb53-11"></a>    <span class="st">"argument `mm` must be numeric with length 1"</span>   <span class="ot">=</span> <span class="fu">is_numberlike</span>(mm)   <span class="sc">&amp;</span> <span class="fu">length</span>(mm)<span class="sc">==</span><span class="dv">1</span>,</span>
+<span id="cb53-12"><a href="#cb53-12"></a>    <span class="st">"argument `dd` must be numeric with length 1"</span>   <span class="ot">=</span> <span class="fu">is_numberlike</span>(dd)   <span class="sc">&amp;</span> <span class="fu">length</span>(dd)<span class="sc">==</span><span class="dv">1</span></span>
+<span id="cb53-13"><a href="#cb53-13"></a>  )</span>
+<span id="cb53-14"><a href="#cb53-14"></a>  </span>
+<span id="cb53-15"><a href="#cb53-15"></a>  <span class="co"># main logic</span></span>
+<span id="cb53-16"><a href="#cb53-16"></a>  out <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb53-17"><a href="#cb53-17"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(out)) {</span>
+<span id="cb53-18"><a href="#cb53-18"></a>    <span class="fu">stop</span>(<span class="st">"Invalid values provided. Please check your inputs."</span>)</span>
+<span id="cb53-19"><a href="#cb53-19"></a>  }</span>
+<span id="cb53-20"><a href="#cb53-20"></a>  <span class="fu">return</span>(out)</span>
+<span id="cb53-21"><a href="#cb53-21"></a>}</span>
+<span id="cb53-22"><a href="#cb53-22"></a></span>
+<span id="cb53-23"><a href="#cb53-23"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">13</span>, <span class="at">dd =</span> <span class="dv">1</span>) <span class="co"># is there a 13th month?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = 2022, mm = 13, dd = 1): Invalid values provided. Please check your inputs.
+</code></pre>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">make_date</span>(<span class="at">yyyy =</span> <span class="dv">2022</span>, <span class="at">mm =</span> <span class="dv">2</span>, <span class="at">dd =</span> <span class="dv">31</span>) <span class="co"># are there 31 days in February?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><pre style="color: red;"><code>Error in make_date(yyyy = 2022, mm = 2, dd = 31): Invalid values provided. Please check your inputs.
+</code></pre>
+</div>
+<p>Do you think our function <code>make_date</code> is robust enough?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://i.imgur.com/hbjbLMN.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">As robust as Superman! Source: Imgur</figcaption><p></p>
+</figure>
+</div>
+</section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Making functions robust requires some prior thought about its intended use and audience. Based on this, we can decide what checks to implement, what to skip, whether to stop execution using error messages or to use default values with warnings. Checking for “happy paths” is simpler compared to checking each and every bad input and providing specific error messages. Too many different error messages for the same argument could become a source of frustration of the end user, so consider combining some checks and their error messages to be informative and precise. Robustness, like everything else, in moderation, is good and getting it “just right” takes time and dedicated effort. Happy Coding!</p>
+</section><section id="citations-references" class="level2"><h2 class="anchored" data-anchor-id="citations-references">Citations &amp; References</h2>
+<ul>
+<li><a href="https://www.lexjansen.com/phuse/2014/ts/TS03.pdf">Techniques for writing robust R programs - LexJansen</a></li>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/functions.html">R Programming for Data Science</a></li>
+<li><a href="https://www.r-bloggers.com/2012/05/a-warning-about-warning/">A Warning About warning</a></li>
+</ul>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+    } else {
+      disableStylesheet(alternateStylesheets);
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Vishal Katti 2022<br>made with , and <a href="https://quarto.org">quarto</a></div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

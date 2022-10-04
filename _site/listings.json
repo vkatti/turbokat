@@ -2,6 +2,12 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/tidyr-pivot-wider/index.html",
+      "/posts/tidyr-pivot-longer/index.html",
+      "/posts/writing-robust-functions/index.html",
+      "/posts/R2VBA2PPT2/index.html",
+      "/posts/R2VBA2PPT1/index.html",
+      "/posts/drilldown-with-reactable/index.html",
       "/posts/programming-with-dplyr/index.html"
     ]
   }

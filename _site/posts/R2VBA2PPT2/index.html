@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.649">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Vishal Katti">
+<meta name="dcterms.date" content="2021-12-29">
+<title>Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script src="../../site_libs/core-js-2.5.3/shim.min.js"></script><script src="../../site_libs/react-17.0.0/react.min.js"></script><script src="../../site_libs/react-17.0.0/react-dom.min.js"></script><script src="../../site_libs/reactwidget-1.0.0/react-tools.js"></script><script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="../../site_libs/reactable-binding-0.3.0/reactable.js"></script><link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2">
+<meta property="og:description" content="This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.">
+<meta property="og:image" content="https://vishalkatti.com/posts\R2VBA2PPT2\images\R2XL2PPT_logo.png">
+<meta property="og:site-name" content="Vishal Katti">
+<meta property="og:image:height" content="619">
+<meta property="og:image:width" content="1500">
+<meta name="twitter:title" content="Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2">
+<meta name="twitter:description" content="This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.">
+<meta name="twitter:image" content="https://vishalkatti.com/posts\R2VBA2PPT2\images\R2XL2PPT_logo.png">
+<meta name="twitter:image-height" content="619">
+<meta name="twitter:image-width" content="1500">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vishal Katti</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+<div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+            <p class="subtitle lead">Using R to trigger Excel VBA macros to create PowerPoint presentations</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Excel</div>
+                <div class="quarto-category">VBA</div>
+                <div class="quarto-category">PowerPoint</div>
+                <div class="quarto-category">openxlsx</div>
+                <div class="quarto-category">RDCOMClient</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vishal Katti </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 29, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="abstract-title">Abstract</div>
+      This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#quick-recap" id="toc-quick-recap" class="nav-link active" data-scroll-target="#quick-recap">Quick Recap</a></li>
+  <li><a href="#strategy" id="toc-strategy" class="nav-link" data-scroll-target="#strategy">Strategy</a></li>
+  <li>
+<a href="#creating-the-datasets" id="toc-creating-the-datasets" class="nav-link" data-scroll-target="#creating-the-datasets">Creating the datasets</a>
+  <ul class="collapse">
+<li><a href="#slide-1" id="toc-slide-1" class="nav-link" data-scroll-target="#slide-1">Slide 1</a></li>
+  <li><a href="#slide-2" id="toc-slide-2" class="nav-link" data-scroll-target="#slide-2">Slide 2</a></li>
+  <li><a href="#slide-3" id="toc-slide-3" class="nav-link" data-scroll-target="#slide-3">Slide 3</a></li>
+  </ul>
+</li>
+  <li><a href="#the-for-loop" id="toc-the-for-loop" class="nav-link" data-scroll-target="#the-for-loop">The <code>for</code> loop!</a></li>
+  <li><a href="#references-citations" id="toc-references-citations" class="nav-link" data-scroll-target="#references-citations">References &amp; Citations</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><p>This is part 2 of 2. Read part 1 <a href="https://www.vishalkatti.com/posts/R2VBA2PPT1/" title="link to Part 1 of this article.">here</a>.</p>
+<section id="quick-recap" class="level2"><h2 class="anchored" data-anchor-id="quick-recap">Quick Recap</h2>
+<p>In the previous post, we create the <code>.potx</code> template from the <code>.pptx</code> file we wanted to automate and the Excel template with the macro <code>.xlsm</code> that uses the PowerPoint template to create a new <code>.pptx</code> file with given data using VBA.</p>
+<p>The report we want to automate is…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder Report" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">The Gapminder Report : The PowerPoint presentation we want to automate</figcaption><p></p>
+</figure>
+</div>
+<p>…and the Excel and PowerPoint template we created are shown below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/tB3QxhJ.png" title="Excel Template with VBA macro" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">Excel Template with VBA macro</figcaption><p></p>
+</figure>
+</div>
+<p>In this post, we will write the R script that will first massage the data into desired format and then load the data for one region into the Excel template and execute the VBA macro that will create the PowerPoint file with that data.</p>
+</section><section id="strategy" class="level2"><h2 class="anchored" data-anchor-id="strategy">Strategy</h2>
+<p>Before we dive into code, we need to check a few things. We wish to create a presentation for each continent in the Gapminder data. A closer look at the Presentation will tell you what kind of data we need for each slide/graph/table while the Excel template will reveal what should the structure of each dataset should be. While looking into this structure, some questions will pop-up. The idea here is to create the datasets in such a way that they can be easily filtered for each continent and the resultant table can be written to the Excel template without any or very little modification. Let us proceed slide-by-slide.</p>
+</section><section id="creating-the-datasets" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="creating-the-datasets">Creating the datasets</h2>
+<section id="slide-1" class="level3"><h3 class="anchored" data-anchor-id="slide-1">Slide 1</h3>
+<p>Slide 1 is the title page and needs 2 strings; one for Title, one for Subtitle. The Title for the base presentation is “World Population”. For each continent, it could be “&lt;continent_name&gt; Population”. The subtitle is a combination of Author Name and Created Date. So we need a string like “&lt;author_name&gt; | &lt;created_date&gt;” where created_date is the formatted system date.</p>
+<p>These strings can be created while writing the data to the Excel template.</p>
+</section><section id="slide-2" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="slide-2">Slide 2</h3>
+<p>The chart on slide 2 needs raw data structured as below. You will notice that at a continent-level, this table needs a minimum of 5 countries. Do we have any continents in the Gapminder data with less than 5 countries? Yes, we have Oceania with only Australia and New Zealand. For ease of use, let us include these countries along with Asian countries in a new <code>Region</code> variable.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/KvGxnyt.png" title="02_chart" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">02_chart</figcaption><p></p>
+</figure>
+</div>
+<p>We will create the <code>region</code> variable in the gapminder data. But first, let us load some relevant packages.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">options</span>(<span class="at">tidyverse.quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse) <span class="co"># duh!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tibble' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'forcats' was built under R version 4.1.3</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(reactable) <span class="co"># to display the tables interactively in this post. Not really needed for the final solution.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'reactable' was built under R version 4.1.3</code></pre>
+</div>
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(openxlsx) <span class="co"># to write the data to the Excel Template.</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co"># library(RDCOMClient) # to load and run the Excel macro post data load.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Read in Gapminder data</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>gp <span class="ot">&lt;-</span> gapminder<span class="sc">::</span>gapminder</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># Create new region variable</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>gp <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">mutate</span>(<span class="at">region =</span> <span class="fu">if_else</span>(<span class="fu">as.character</span>(continent) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Asia"</span>,<span class="st">"Oceania"</span>),</span>
+<span id="cb10-7"><a href="#cb10-7"></a>                          <span class="st">"Asia-Pacific"</span>, </span>
+<span id="cb10-8"><a href="#cb10-8"></a>                          <span class="fu">as.character</span>(continent)),</span>
+<span id="cb10-9"><a href="#cb10-9"></a>         <span class="at">country =</span> <span class="fu">as.character</span>(country))</span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co"># Keep only relevant columns</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>gp <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> <span class="fu">select</span>(region, country, year, pop)</span>
+<span id="cb10-13"><a href="#cb10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co"># View details</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="fu">glimpse</span>(gp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,704
+Columns: 4
+$ region  &lt;chr&gt; "Asia-Pacific", "Asia-Pacific", "Asia-Pacific", "Asia-Pacific"~
+$ country &lt;chr&gt; "Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", "A~
+$ year    &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 20~
+$ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 1288~</code></pre>
+</div>
+</div>
+<p>Now that we have the source data available, we must now create the datasets we need that we can write to the Excel template for each region.</p>
+<p>The required table shows the top 4 countries (based on 2007 population) and all other countries clubbed into ‘others’ in a given region and then the total population of the region on a yearly basis. This table has to be created for all 4 regions.</p>
+<div class="cell page-columns page-full">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>pop_trend <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">group_by</span>(region, country, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(pop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-4"><a href="#cb12-4"></a>            <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="fu">mutate</span>(<span class="at">pop =</span> <span class="fu">round</span>(pop<span class="sc">/</span><span class="fl">1E6</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> <span class="co"># population in millions</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> pop, <span class="at">names_sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">2007</span><span class="st">`</span>)) <span class="co"># sort by max pop to min pop in latest year i.e. 2007</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="fu">reactable</span>(pop_trend, <span class="at">compact=</span><span class="cn">TRUE</span>,</span>
+<span id="cb12-10"><a href="#cb12-10"></a>                     <span class="at">style =</span> <span class="st">"font-size:12px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display column-body-outset-right">
+
+<div id="htmlwidget-9161fb3ebe710e768071" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9161fb3ebe710e768071">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"region":["Asia-Pacific","Asia-Pacific","Americas","Asia-Pacific","Americas","Asia-Pacific","Asia-Pacific","Africa","Asia-Pacific","Americas","Asia-Pacific","Asia-Pacific","Europe","Africa","Africa","Europe","Asia-Pacific","Africa","Asia-Pacific","Europe","Europe","Europe","Asia-Pacific","Asia-Pacific","Africa","Americas","Africa","Americas","Europe","Europe","Africa","Africa","Africa","Africa","Americas","Asia-Pacific","Africa","Americas","Asia-Pacific","Asia-Pacific","Asia-Pacific","Americas","Asia-Pacific","Africa","Asia-Pacific","Asia-Pacific","Asia-Pacific","Europe","Africa","Asia-Pacific","Asia-Pacific","Africa","Asia-Pacific","Africa","Africa","Europe","Americas","Africa","Americas","Asia-Pacific","Africa","Africa","Americas","Africa","Africa","Africa","Africa","Africa","Americas","Europe","Europe","Africa","Africa","Africa","Europe","Europe","Europe","Europe","Africa","Africa","Americas","Americas","Americas","Europe","Africa","Africa","Europe","Europe","Americas","Americas","Americas","Asia-Pacific","Europe","Africa","Africa","Africa","Americas","Asia-Pacific","Asia-Pacific","Africa","Asia-Pacific","Europe","Europe","Europe","Europe","Europe","Africa","Africa","Americas","Americas","Asia-Pacific","Asia-Pacific","Asia-Pacific","Europe","Europe","Europe","Africa","Africa","Americas","Americas","Americas","Asia-Pacific","Asia-Pacific","Asia-Pacific","Africa","Africa","Africa","Africa","Europe","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Americas","Asia-Pacific","Europe","Africa","Africa","Europe"],"country":["China","India","United States","Indonesia","Brazil","Pakistan","Bangladesh","Nigeria","Japan","Mexico","Philippines","Vietnam","Germany","Egypt","Ethiopia","Turkey","Iran","Congo, Dem. Rep.","Thailand","France","United Kingdom","Italy","Korea, Rep.","Myanmar","South Africa","Colombia","Sudan","Argentina","Spain","Poland","Tanzania","Kenya","Morocco","Algeria","Canada","Afghanistan","Uganda","Peru","Nepal","Saudi Arabia","Iraq","Venezuela","Malaysia","Ghana","Korea, Dem. Rep.","Taiwan","Yemen, Rep.","Romania","Mozambique","Australia","Sri Lanka","Madagascar","Syria","Cameroon","Cote d'Ivoire","Netherlands","Chile","Burkina Faso","Ecuador","Cambodia","Malawi","Niger","Guatemala","Angola","Mali","Senegal","Zambia","Zimbabwe","Cuba","Greece","Portugal","Chad","Guinea","Tunisia","Belgium","Czech Republic","Hungary","Serbia","Rwanda","Somalia","Bolivia","Dominican Republic","Haiti","Sweden","Benin","Burundi","Austria","Switzerland","El Salvador","Honduras","Paraguay","Hong Kong, China","Bulgaria","Libya","Sierra Leone","Togo","Nicaragua","Israel","Jordan","Eritrea","Singapore","Bosnia and Herzegovina","Denmark","Finland","Norway","Slovak Republic","Central African Republic","Congo, Rep.","Costa Rica","Puerto Rico","Lebanon","New Zealand","West Bank and Gaza","Albania","Croatia","Ireland","Liberia","Mauritania","Jamaica","Panama","Uruguay","Kuwait","Mongolia","Oman","Botswana","Gambia","Lesotho","Namibia","Slovenia","Comoros","Equatorial Guinea","Gabon","Guinea-Bissau","Mauritius","Reunion","Swaziland","Trinidad and Tobago","Bahrain","Montenegro","Djibouti","Sao Tome and Principe","Iceland"],"1952":[556,372,158,82,57,41,47,33,86,30,22,26,69,22,21,22,17,14,21,42,50,48,21,20,14,12,9,18,29,26,8,6,10,9,15,8,6,8,9,4,5,5,7,6,9,9,5,17,6,9,8,5,4,5,3,10,6,4,4,5,3,3,3,4,4,3,3,3,6,8,9,3,3,4,9,9,10,7,3,3,3,2,3,7,2,2,7,5,2,2,2,2,7,1,2,1,1,2,1,1,1,3,4,4,3,4,1,1,1,2,1,2,1,1,4,3,1,1,1,1,2,0,1,1,0,0,1,0,1,0,0,0,1,1,0,0,1,0,0,0,0,0],"1957":[637,409,172,90,66,47,51,37,92,35,26,29,71,25,23,26,20,16,25,44,51,49,23,22,16,14,10,20,30,28,9,7,11,10,17,9,7,9,10,4,6,7,8,6,9,10,5,18,7,10,9,5,4,5,3,11,7,5,4,5,3,4,4,5,4,3,3,4,7,8,9,3,3,4,9,10,10,7,3,3,3,3,4,7,2,3,7,5,2,2,2,3,8,1,2,1,1,2,1,2,1,3,4,4,3,4,1,1,1,2,2,2,1,1,4,3,1,1,2,1,2,0,1,1,0,0,1,1,2,0,0,0,1,1,0,0,1,0,0,0,0,0],"1962":[666,454,187,99,76,53,57,42,96,41,30,34,74,28,25,30,23,17,29,47,53,51,26,24,18,17,11,21,31,30,11,9,13,11,19,10,8,11,10,5,7,8,9,7,11,12,6,19,8,11,10,6,5,6,4,12,8,5,5,6,4,4,4,5,5,3,3,4,7,8,9,3,3,4,9,10,10,8,3,3,4,3,4,8,2,3,7,6,3,2,2,3,8,1,2,2,2,2,1,2,2,3,5,4,4,4,2,1,1,2,2,2,1,2,4,3,1,1,2,1,3,0,1,1,1,0,1,1,2,0,0,0,1,1,0,0,1,0,0,0,0,0],"1967":[755,506,199,109,88,61,63,47,101,48,35,39,76,32,28,33,27,20,34,50,55,53,30,26,21,20,13,23,33,32,13,10,15,13,21,12,9,12,11,6,9,10,10,8,13,14,7,19,9,12,12,6,6,6,5,13,9,5,5,7,4,5,5,5,5,4,4,5,8,9,9,3,3,5,10,10,10,8,3,3,4,4,4,8,2,3,7,6,3,3,2,4,8,2,3,2,2,3,1,2,2,4,5,5,4,4,2,1,2,3,2,3,1,2,4,3,1,1,2,1,3,1,1,1,1,0,1,1,2,0,0,0,1,1,0,0,1,0,1,0,0,0],"1972":[862,567,210,121,101,69,71,54,107,56,41,45,79,35,31,37,31,23,39,52,56,54,34,28,24,23,15,25,35,33,15,12,17,15,22,13,10,14,12,6,10,12,11,9,15,15,7,21,10,13,13,7,7,7,6,13,10,5,6,7,5,5,5,6,6,5,5,6,9,9,9,4,4,5,10,10,10,8,4,4,5,5,5,8,3,4,8,6,4,3,3,4,9,2,3,2,2,3,2,2,2,4,5,5,4,5,2,1,2,3,3,3,1,2,4,3,1,1,2,2,3,1,1,1,1,1,1,1,2,0,0,1,1,1,0,0,1,0,1,0,0,0],"1977":[943,634,220,137,114,78,80,62,114,64,47,51,78,39,35,42,35,26,44,53,56,56,36,32,27,25,17,27,36,35,17,15,18,17,24,15,11,16,14,8,12,14,13,11,16,17,8,22,11,14,14,8,8,8,7,14,11,6,7,7,6,6,6,6,6,5,5,7,10,9,10,4,4,6,10,10,11,9,5,4,5,5,5,8,3,4,8,6,4,3,3,5,9,3,3,2,3,3,2,3,2,4,5,5,4,5,2,2,2,3,3,3,1,3,4,3,2,1,2,2,3,1,2,1,1,1,1,1,2,0,0,1,1,1,0,1,1,0,1,0,0,0],"1982":[1000,708,232,153,129,91,93,73,118,72,53,56,78,46,38,47,43,31,49,54,56,57,39,35,31,28,20,29,38,36,20,18,20,20,25,13,13,18,16,11,14,16,14,11,18,19,10,22,13,15,15,9,9,9,9,14,11,7,8,7,7,6,6,7,7,6,6,8,10,10,10,5,5,7,10,10,11,9,6,6,6,6,5,8,4,5,8,6,4,4,3,5,9,3,3,3,3,4,2,3,3,4,5,5,4,5,2,2,2,3,3,3,1,3,4,3,2,2,2,2,3,1,2,1,1,1,1,1,2,0,0,1,1,1,1,1,1,0,1,0,0,0],"1987":[1084,788,243,169,143,105,104,82,122,80,60,63,78,53,43,53,52,35,53,56,57,57,42,38,36,31,25,32,39,38,23,21,23,23,27,14,15,20,18,15,17,18,16,14,19,20,11,23,13,16,16,11,11,11,11,15,12,8,10,8,8,7,7,8,8,7,7,9,10,10,10,5,6,8,10,10,11,9,6,7,6,7,6,8,4,5,8,7,5,4,4,6,9,4,4,3,3,4,3,3,3,4,5,5,4,5,3,2,3,3,3,3,2,3,4,4,2,2,2,2,3,2,2,2,1,1,2,1,2,0,0,1,1,1,1,1,1,0,1,0,0,0],"1992":[1165,872,257,185,156,120,114,93,124,88,67,70,81,59,52,58,60,42,57,57,58,57,44,41,40,34,28,34,40,38,27,25,26,26,29,16,18,22,20,17,18,20,18,16,21,21,13,23,13,17,18,12,13,12,13,15,14,9,11,10,10,8,8,9,8,8,8,11,11,10,10,6,7,9,10,10,10,10,7,6,7,7,6,9,5,6,8,7,5,5,4,6,9,4,4,4,4,5,4,4,3,4,5,5,4,5,3,2,3,4,3,3,2,3,4,4,2,2,2,2,3,1,2,2,1,1,2,2,2,0,0,1,1,1,1,1,1,1,1,0,0,0],"1997":[1230,959,273,199,169,136,123,106,126,96,75,76,82,66,60,63,63,48,60,59,59,57,46,43,43,38,32,36,40,39,31,28,29,29,30,22,21,25,23,21,21,22,20,18,22,22,16,23,17,19,19,14,15,14,15,16,15,10,12,12,10,10,10,10,9,10,9,11,11,11,10,8,8,9,10,10,10,10,7,7,8,8,7,9,6,6,8,7,6,6,5,6,8,5,5,4,5,6,5,4,4,4,5,5,4,5,4,3,4,4,3,4,3,3,4,4,2,2,3,3,3,2,2,2,2,1,2,2,2,1,0,1,1,1,1,1,1,1,1,0,0,0],"2002":[1280,1034,288,211,180,153,136,120,127,102,83,81,82,73,68,67,67,55,63,60,60,58,48,46,44,41,37,38,40,39,35,31,31,31,32,25,25,27,26,25,24,24,23,21,22,22,19,22,18,20,20,16,17,16,16,16,15,12,13,13,12,11,11,11,11,11,11,12,11,11,10,9,9,10,10,10,10,10,8,8,8,9,8,9,7,7,8,7,6,7,6,7,8,5,5,5,5,6,5,4,4,4,5,5,5,5,4,3,4,4,4,4,3,4,4,4,3,3,3,3,3,2,3,3,2,1,2,2,2,1,0,1,1,1,1,1,1,1,1,0,0,0],"2007":[1319,1110,301,224,190,169,150,135,127,109,91,85,82,80,77,71,69,65,65,61,61,58,49,48,44,44,42,40,40,39,38,36,34,33,33,32,29,29,29,28,27,26,25,23,23,23,22,22,20,20,20,19,19,18,18,17,16,14,14,14,13,13,13,12,12,12,12,12,11,11,11,10,10,10,10,10,10,10,9,9,9,9,9,9,8,8,8,8,7,7,7,7,7,6,6,6,6,6,6,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,0,0,0]},"columns":[{"accessor":"region","name":"region","type":"character"},{"accessor":"country","name":"country","type":"character"},{"accessor":"1952","name":"1952","type":"numeric"},{"accessor":"1957","name":"1957","type":"numeric"},{"accessor":"1962","name":"1962","type":"numeric"},{"accessor":"1967","name":"1967","type":"numeric"},{"accessor":"1972","name":"1972","type":"numeric"},{"accessor":"1977","name":"1977","type":"numeric"},{"accessor":"1982","name":"1982","type":"numeric"},{"accessor":"1987","name":"1987","type":"numeric"},{"accessor":"1992","name":"1992","type":"numeric"},{"accessor":"1997","name":"1997","type":"numeric"},{"accessor":"2002","name":"2002","type":"numeric"},{"accessor":"2007","name":"2007","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"compact":true,"style":{"font-size":"12px"},"dataKey":"8faf5e6dd35f4347778f43ed027c4324"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Now that we have the required columns, let’s plan the row order. We notice that, for each region, we have the top 4 countries (as per 2007) , followed by ‘Others’. Let’s create the <code>top-4</code> dataset.</p>
+<div class="cell page-columns page-full">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>top4 <span class="ot">&lt;-</span> pop_trend <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">slice_max</span>(<span class="st">`</span><span class="at">2007</span><span class="st">`</span>, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="fu">reactable</span>(top4, <span class="at">compact=</span><span class="cn">TRUE</span>, <span class="at">style =</span> <span class="st">"font-size:12px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display column-body-outset-right">
+
+<div id="htmlwidget-3ddb7a014aa9d2665566" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3ddb7a014aa9d2665566">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"region":["Africa","Africa","Africa","Africa","Americas","Americas","Americas","Americas","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Europe","Europe","Europe","Europe"],"country":["Nigeria","Egypt","Ethiopia","Congo, Dem. Rep.","United States","Brazil","Mexico","Colombia","China","India","Indonesia","Pakistan","Germany","Turkey","France","United Kingdom"],"1952":[33,22,21,14,158,57,30,12,556,372,82,41,69,22,42,50],"1957":[37,25,23,16,172,66,35,14,637,409,90,47,71,26,44,51],"1962":[42,28,25,17,187,76,41,17,666,454,99,53,74,30,47,53],"1967":[47,32,28,20,199,88,48,20,755,506,109,61,76,33,50,55],"1972":[54,35,31,23,210,101,56,23,862,567,121,69,79,37,52,56],"1977":[62,39,35,26,220,114,64,25,943,634,137,78,78,42,53,56],"1982":[73,46,38,31,232,129,72,28,1000,708,153,91,78,47,54,56],"1987":[82,53,43,35,243,143,80,31,1084,788,169,105,78,53,56,57],"1992":[93,59,52,42,257,156,88,34,1165,872,185,120,81,58,57,58],"1997":[106,66,60,48,273,169,96,38,1230,959,199,136,82,63,59,59],"2002":[120,73,68,55,288,180,102,41,1280,1034,211,153,82,67,60,60],"2007":[135,80,77,65,301,190,109,44,1319,1110,224,169,82,71,61,61]},"columns":[{"accessor":"region","name":"region","type":"character"},{"accessor":"country","name":"country","type":"character"},{"accessor":"1952","name":"1952","type":"numeric"},{"accessor":"1957","name":"1957","type":"numeric"},{"accessor":"1962","name":"1962","type":"numeric"},{"accessor":"1967","name":"1967","type":"numeric"},{"accessor":"1972","name":"1972","type":"numeric"},{"accessor":"1977","name":"1977","type":"numeric"},{"accessor":"1982","name":"1982","type":"numeric"},{"accessor":"1987","name":"1987","type":"numeric"},{"accessor":"1992","name":"1992","type":"numeric"},{"accessor":"1997","name":"1997","type":"numeric"},{"accessor":"2002","name":"2002","type":"numeric"},{"accessor":"2007","name":"2007","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"compact":true,"style":{"font-size":"12px"},"dataKey":"20a2fa7ddabed27d7921edb0c84bba8e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>To create the <code>others</code> dataset, we exclude all countries that are present in the <code>top-4</code>.</p>
+<div class="cell page-columns page-full">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>others <span class="ot">&lt;-</span> pop_trend <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span>country <span class="sc">%in%</span> top4<span class="sc">$</span>country) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>country, <span class="at">.fns =</span> sum),</span>
+<span id="cb14-5"><a href="#cb14-5"></a>            <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="st">"Others"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">select</span>(region, country, <span class="fu">everything</span>())</span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="fu">reactable</span>(others, <span class="at">compact=</span><span class="cn">TRUE</span>, <span class="at">style =</span> <span class="st">"font-size:12px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display column-body-outset-right">
+
+<div id="htmlwidget-bd0aeaea6ffb541f5482" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bd0aeaea6ffb541f5482">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"region":["Africa","Americas","Asia-Pacific","Europe"],"country":["Others","Others","Others","Others"],"1952":[146,88,354,235],"1957":[162,101,391,244],"1962":[183,113,436,257],"1967":[206,127,493,269],"1972":[239,143,546,278],"1977":[270,156,608,289],"1982":[314,167,672,294],"1987":[362,185,745,301],"1992":[409,202,811,303],"1997":[463,224,882,305],"2002":[515,238,949,307],"2007":[570,254,1012,310]},"columns":[{"accessor":"region","name":"region","type":"character"},{"accessor":"country","name":"country","type":"character"},{"accessor":"1952","name":"1952","type":"numeric"},{"accessor":"1957","name":"1957","type":"numeric"},{"accessor":"1962","name":"1962","type":"numeric"},{"accessor":"1967","name":"1967","type":"numeric"},{"accessor":"1972","name":"1972","type":"numeric"},{"accessor":"1977","name":"1977","type":"numeric"},{"accessor":"1982","name":"1982","type":"numeric"},{"accessor":"1987","name":"1987","type":"numeric"},{"accessor":"1992","name":"1992","type":"numeric"},{"accessor":"1997","name":"1997","type":"numeric"},{"accessor":"2002","name":"2002","type":"numeric"},{"accessor":"2007","name":"2007","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"compact":true,"style":{"font-size":"12px"},"dataKey":"15f1fbb3237d2f33f6707a071decb70f"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>While we create the <code>top-4</code> and <code>others</code> datasets separately, we will combine them later at the very last moment before writing them to the Excel template.</p>
+<p>Now that we have the datasets needed for <code>02_chart</code>, let’s proceed to the create <code>02_table</code> . This table gives you the count of countries that fall under various population ranges.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/uf3flVN.png" title="02_table" class="img-fluid figure-img" width="250"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">02_table on Slide 2</figcaption><p></p>
+</figure>
+</div>
+<p>Let’s create <code>02_table</code>. To create this table, we first create a new variable called <code>pop_range</code>.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>pop_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'Less than 500K'</span>,<span class="st">'500K - 1 Million'</span>,</span>
+<span id="cb15-2"><a href="#cb15-2"></a>                <span class="st">'1M - 10 Million'</span>, <span class="st">'10M - 100 Million'</span>,</span>
+<span id="cb15-3"><a href="#cb15-3"></a>                <span class="st">'100M - 1 Billion'</span>, <span class="st">'More than 1 Billion'</span>)</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a>gp2007 <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> </span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">mutate</span>(<span class="at">pop_range =</span> <span class="fu">case_when</span>(pop <span class="sc">&lt;</span> <span class="fl">5E5</span> <span class="sc">~</span> pop_levels[<span class="dv">1</span>],</span>
+<span id="cb15-8"><a href="#cb15-8"></a>                               pop <span class="sc">&lt;</span> <span class="fl">1E6</span> <span class="sc">~</span> pop_levels[<span class="dv">2</span>],</span>
+<span id="cb15-9"><a href="#cb15-9"></a>                               pop <span class="sc">&lt;</span> <span class="fl">1E7</span> <span class="sc">~</span> pop_levels[<span class="dv">3</span>],</span>
+<span id="cb15-10"><a href="#cb15-10"></a>                               pop <span class="sc">&lt;</span> <span class="fl">1E8</span> <span class="sc">~</span> pop_levels[<span class="dv">4</span>],</span>
+<span id="cb15-11"><a href="#cb15-11"></a>                               pop <span class="sc">&lt;</span> <span class="fl">1E9</span> <span class="sc">~</span> pop_levels[<span class="dv">5</span>],</span>
+<span id="cb15-12"><a href="#cb15-12"></a>                               <span class="cn">TRUE</span>      <span class="sc">~</span> pop_levels[<span class="dv">6</span>]),</span>
+<span id="cb15-13"><a href="#cb15-13"></a>         <span class="at">pop_range =</span> <span class="fu">factor</span>(pop_range, <span class="at">levels =</span> pop_levels))</span>
+<span id="cb15-14"><a href="#cb15-14"></a></span>
+<span id="cb15-15"><a href="#cb15-15"></a>pop_groups <span class="ot">&lt;-</span> gp2007 <span class="sc">%&gt;%</span> </span>
+<span id="cb15-16"><a href="#cb15-16"></a>  <span class="fu">group_by</span>(region, pop_range, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-17"><a href="#cb15-17"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at"># of Countries</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">n</span>(),</span>
+<span id="cb15-18"><a href="#cb15-18"></a>            <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-19"><a href="#cb15-19"></a>  <span class="fu">arrange</span>(region, pop_range) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-20"><a href="#cb15-20"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">Population Category</span><span class="st">`</span> <span class="ot">=</span> pop_range)</span>
+<span id="cb15-21"><a href="#cb15-21"></a></span>
+<span id="cb15-22"><a href="#cb15-22"></a><span class="fu">reactable</span>(pop_groups, <span class="at">compact=</span><span class="cn">TRUE</span>, <span class="at">style =</span> <span class="st">"font-size:12px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div id="htmlwidget-66d4805c08703ceecbc3" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-66d4805c08703ceecbc3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"region":["Africa","Africa","Africa","Africa","Africa","Africa","Americas","Americas","Americas","Americas","Americas","Americas","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Europe","Europe","Europe","Europe","Europe","Europe"],"Population Category":["Less than 500K","500K - 1 Million","1M - 10 Million","10M - 100 Million","100M - 1 Billion","More than 1 Billion","Less than 500K","500K - 1 Million","1M - 10 Million","10M - 100 Million","100M - 1 Billion","More than 1 Billion","Less than 500K","500K - 1 Million","1M - 10 Million","10M - 100 Million","100M - 1 Billion","More than 1 Billion","Less than 500K","500K - 1 Million","1M - 10 Million","10M - 100 Million","100M - 1 Billion","More than 1 Billion"],"# of Countries":[2,3,21,25,1,0,0,0,13,9,3,0,0,1,10,18,4,2,1,1,14,14,0,0]},"columns":[{"accessor":"region","name":"region","type":"character"},{"accessor":"Population Category","name":"Population Category","type":"factor"},{"accessor":"# of Countries","name":"# of Countries","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"compact":true,"style":{"font-size":"12px"},"dataKey":"c4f576614516dedb7a57c056b205acff"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section><section id="slide-3" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="slide-3">Slide 3</h3>
+<p>Slide 3 contains 2 strings and one chart. The data for the chart looks as shown below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/kDAbook.png" title="Slide 3" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">03_chart table for Slide 3</figcaption><p></p>
+</figure>
+</div>
+<p>The data for <code>03_chart</code> is the list of top 10 countries in each region as per latest record i.e.&nbsp;2007. Let’s create the <code>top10</code> table.</p>
+<div class="cell page-columns page-full">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>top10 <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">select</span>(<span class="sc">-</span>year) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">mutate</span>(<span class="at">pop =</span> <span class="fu">round</span>(pop<span class="sc">/</span><span class="fl">1E6</span>, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> <span class="co"># population in millions</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>  <span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"region"</span>,<span class="st">"country"</span>,<span class="st">"population"</span>))</span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="fu">reactable</span>(top10, <span class="at">compact=</span><span class="cn">TRUE</span>, <span class="at">style =</span> <span class="st">"font-size:12px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display column-body-outset-right">
+
+<div id="htmlwidget-e5d7f0add615ed6ef4c3" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e5d7f0add615ed6ef4c3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"region":["Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Asia-Pacific","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe"],"country":["Nigeria","Egypt","Ethiopia","Congo, Dem. Rep.","South Africa","Sudan","Tanzania","Kenya","Morocco","Algeria","United States","Brazil","Mexico","Colombia","Argentina","Canada","Peru","Venezuela","Chile","Ecuador","China","India","Indonesia","Pakistan","Bangladesh","Japan","Philippines","Vietnam","Iran","Thailand","Germany","Turkey","France","United Kingdom","Italy","Spain","Poland","Romania","Netherlands","Greece"],"population":[135.0312,80.2645,76.5119,64.6068,43.9978,42.2929,38.1396,35.6102,33.7572,33.3332,301.1399,190.0106,108.7009,44.2276,40.3019,33.3901,28.6748,26.0847,16.2847,13.7557,1318.6831,1110.3963,223.547,169.2706,150.4483,127.468,91.0773,85.2624,69.4536,65.0681,82.401,71.1586,61.0839,60.7762,58.1477,40.4482,38.5182,22.2761,16.5706,10.7063]},"columns":[{"accessor":"region","name":"region","type":"character"},{"accessor":"country","name":"country","type":"character"},{"accessor":"population","name":"population","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"compact":true,"style":{"font-size":"12px"},"dataKey":"e021d757226dfc4c39c1d79e5a5b4803"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section></section><section id="the-for-loop" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-for-loop">The <code>for</code> loop!</h2>
+<p>We now have to load the Excel template with the data at appropriate cell locations for one region at a time. Since we have about 4 regions, we will create a vector of unique regions to iterate over.</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>unique_regions <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(region) <span class="sc">%&gt;%</span> <span class="fu">pull</span>()</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">cat</span>(unique_regions, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Asia-Pacific
+Europe
+Africa
+Americas</code></pre>
+</div>
+</div>
+<p>As our last step, we will create the <code>for</code> loop that will iterate over <code>unique_regions</code> , filter the datasets for each region, write them to the Excel Template, save the template with temporary name. We save the file with different name to prevent unintentionally corrupting the Excel macro template. Finally, we run the macro in the renamed file.</p>
+<p>The code will look something like this</p>
+<div class="cell">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="cf">for</span> (region <span class="cf">in</span> unique_regions) {</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  </span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="co"># Step 1: filter the data sets</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="co"># Step 2: write the data sets</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="co"># Step 3: save the excel template with different name</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="co"># Step 4: load the renamed Excel file</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>  <span class="co"># Step 5: run macro</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s populate the above <code>for</code> loop with the code we need.</p>
+<div class="cell column-body-outset-right">
+<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="cf">for</span> (curr_region <span class="cf">in</span> unique_regions) {</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  </span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="co"># Step 1: filter the data sets</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  </span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="co"># Slide 1</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>  S1_title <span class="ot">&lt;-</span> <span class="fu">paste</span>(curr_region, <span class="st">"Population"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7"></a>  S1_subtitle <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Vishal Katti"</span>,<span class="st">"|"</span>,<span class="fu">format</span>(<span class="fu">Sys.Date</span>(),<span class="st">"%b %d, %Y"</span>), <span class="at">sep =</span> <span class="st">"   "</span>)</span>
+<span id="cb20-8"><a href="#cb20-8"></a>  </span>
+<span id="cb20-9"><a href="#cb20-9"></a>  <span class="co"># Slide 2</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>  S2_title <span class="ot">&lt;-</span> <span class="fu">paste</span>(curr_region, <span class="st">"Population since 1952"</span>)</span>
+<span id="cb20-11"><a href="#cb20-11"></a>  </span>
+<span id="cb20-12"><a href="#cb20-12"></a>  S2_top4 <span class="ot">&lt;-</span> top4        <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">==</span> <span class="fu">all_of</span>(curr_region)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>region) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">2007</span><span class="st">`</span>))</span>
+<span id="cb20-13"><a href="#cb20-13"></a>  S2_others <span class="ot">&lt;-</span> others    <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">==</span> <span class="fu">all_of</span>(curr_region)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>region)</span>
+<span id="cb20-14"><a href="#cb20-14"></a>  S2_top5 <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(S2_top4, S2_others)</span>
+<span id="cb20-15"><a href="#cb20-15"></a>  </span>
+<span id="cb20-16"><a href="#cb20-16"></a>  S2_table <span class="ot">&lt;-</span> pop_groups <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">==</span> <span class="fu">all_of</span>(curr_region)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>region)</span>
+<span id="cb20-17"><a href="#cb20-17"></a>  </span>
+<span id="cb20-18"><a href="#cb20-18"></a>  <span class="co"># Slide 3</span></span>
+<span id="cb20-19"><a href="#cb20-19"></a>  S3_title <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Top 10 most populated countries in"</span>, curr_region)</span>
+<span id="cb20-20"><a href="#cb20-20"></a>  </span>
+<span id="cb20-21"><a href="#cb20-21"></a>  S3_chart <span class="ot">&lt;-</span> top10      <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">==</span> <span class="fu">all_of</span>(curr_region)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>region)</span>
+<span id="cb20-22"><a href="#cb20-22"></a>  </span>
+<span id="cb20-23"><a href="#cb20-23"></a>  S3_factoid <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"The population of"</span>, S3_chart<span class="sc">$</span>country[<span class="dv">1</span>], <span class="st">"is approx."</span>,</span>
+<span id="cb20-24"><a href="#cb20-24"></a>                      <span class="fu">round</span>(S3_chart<span class="sc">$</span>population[<span class="dv">1</span>]<span class="sc">/</span>S3_chart<span class="sc">$</span>population[<span class="dv">10</span>], <span class="dv">0</span>),</span>
+<span id="cb20-25"><a href="#cb20-25"></a>                      <span class="st">"times that of"</span>, S3_chart<span class="sc">$</span>country[<span class="dv">10</span>])</span>
+<span id="cb20-26"><a href="#cb20-26"></a>  </span>
+<span id="cb20-27"><a href="#cb20-27"></a>  <span class="co"># Step 2: write the data sets</span></span>
+<span id="cb20-28"><a href="#cb20-28"></a>  </span>
+<span id="cb20-29"><a href="#cb20-29"></a>  <span class="co"># Load the template</span></span>
+<span id="cb20-30"><a href="#cb20-30"></a>  wb <span class="ot">&lt;-</span> <span class="fu">loadWorkbook</span>(<span class="st">"path/to/template/XL2PPT.xlsm"</span>) <span class="co"># relative to this R script</span></span>
+<span id="cb20-31"><a href="#cb20-31"></a>  sht <span class="ot">&lt;-</span> <span class="st">"Sheet1"</span></span>
+<span id="cb20-32"><a href="#cb20-32"></a>  </span>
+<span id="cb20-33"><a href="#cb20-33"></a>  <span class="co"># write data to coordinate (col, row)</span></span>
+<span id="cb20-34"><a href="#cb20-34"></a>  <span class="fu">writeData</span>(wb, sht, S1_title,    <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>),  <span class="at">colNames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-35"><a href="#cb20-35"></a>  <span class="fu">writeData</span>(wb, sht, S1_subtitle, <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>),  <span class="at">colNames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-36"><a href="#cb20-36"></a>  <span class="fu">writeData</span>(wb, sht, S2_title,    <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>),  <span class="at">colNames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-37"><a href="#cb20-37"></a>  <span class="fu">writeData</span>(wb, sht, S2_top5,     <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">9</span>),  <span class="at">colNames =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-38"><a href="#cb20-38"></a>  <span class="fu">writeData</span>(wb, sht, S2_table,    <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">9</span>), <span class="at">colNames =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-39"><a href="#cb20-39"></a>  <span class="fu">writeData</span>(wb, sht, S3_title,    <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">18</span>), <span class="at">colNames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-40"><a href="#cb20-40"></a>  <span class="fu">writeData</span>(wb, sht, S3_factoid,  <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">19</span>), <span class="at">colNames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-41"><a href="#cb20-41"></a>  <span class="fu">writeData</span>(wb, sht, S3_chart,    <span class="at">xy =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">21</span>), <span class="at">colNames =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-42"><a href="#cb20-42"></a>  </span>
+<span id="cb20-43"><a href="#cb20-43"></a>  <span class="co"># Step 3: save the excel template with different name</span></span>
+<span id="cb20-44"><a href="#cb20-44"></a>  <span class="fu">saveWorkbook</span>(wb, <span class="st">"path/to/template/XL2PPT_edited.xlsm"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-45"><a href="#cb20-45"></a>  <span class="fu">gc</span>(<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-46"><a href="#cb20-46"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb20-47"><a href="#cb20-47"></a>  </span>
+<span id="cb20-48"><a href="#cb20-48"></a>  <span class="co"># Step 4: load the renamed Excel file</span></span>
+<span id="cb20-49"><a href="#cb20-49"></a>  <span class="co"># Create Excel Application</span></span>
+<span id="cb20-50"><a href="#cb20-50"></a>  xlApp <span class="ot">&lt;-</span> <span class="fu">COMCreate</span>(<span class="st">"Excel.Application"</span>)</span>
+<span id="cb20-51"><a href="#cb20-51"></a></span>
+<span id="cb20-52"><a href="#cb20-52"></a>  <span class="co"># Open the Macro Excel book</span></span>
+<span id="cb20-53"><a href="#cb20-53"></a>  xlWbk <span class="ot">&lt;-</span> xlApp<span class="sc">$</span><span class="fu">Workbooks</span>()<span class="sc">$</span><span class="fu">Open</span>(<span class="fu">normalizePath</span>(<span class="st">"path/to/template/XL2PPT_edited.xlsm"</span>, <span class="at">winslash =</span> <span class="st">"/"</span>)) <span class="co"># Change to your directory</span></span>
+<span id="cb20-54"><a href="#cb20-54"></a>  <span class="co"># its ok to run macro without visible excel application</span></span>
+<span id="cb20-55"><a href="#cb20-55"></a>  <span class="co"># If you want to see your workbook, please set it to TRUE</span></span>
+<span id="cb20-56"><a href="#cb20-56"></a>  xlApp[[<span class="st">"Visible"</span>]] <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb20-57"><a href="#cb20-57"></a>  </span>
+<span id="cb20-58"><a href="#cb20-58"></a>  <span class="co"># Step 5: run macro</span></span>
+<span id="cb20-59"><a href="#cb20-59"></a>  xlApp<span class="sc">$</span><span class="fu">Run</span>(<span class="st">"Create_Continental_Deck"</span>) <span class="co"># Name of Macro to run</span></span>
+<span id="cb20-60"><a href="#cb20-60"></a></span>
+<span id="cb20-61"><a href="#cb20-61"></a>  xlWbk<span class="sc">$</span><span class="fu">Close</span>(<span class="cn">TRUE</span>) <span class="co"># save and close excel book</span></span>
+<span id="cb20-62"><a href="#cb20-62"></a>  xlApp<span class="sc">$</span><span class="fu">Quit</span>()</span>
+<span id="cb20-63"><a href="#cb20-63"></a>  <span class="fu">gc</span>(<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-64"><a href="#cb20-64"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb20-65"><a href="#cb20-65"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Once the code runs completely, you will see 4 new PowerPoint Presentations in your working folder.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/Pe8yyxI.png" title="Output Files" class="img-fluid figure-img"></figure><p></p><figcaption aria-hidden="true" class="figure-caption">Output Files</figcaption><p></p>
+</figure>
+</div>
+<p>You can download the full R script from <a href="https://gist.github.com/vkatti/cc95c56e11c1b8985bbd288f353c7386" title="Navigate to Github Gist">here</a>.</p>
+</section><section id="references-citations" class="level2"><h2 class="anchored" data-anchor-id="references-citations">References &amp; Citations</h2>
+<ul>
+<li><p>Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0. <a href="https://CRAN.R-project.org/package=gapminder" class="uri">https://CRAN.R-project.org/package=gapminder</a></p></li>
+<li><p>Hadley Wickham, Romain Francois, Lionel Henry and Kirill Muller (2021). dplyr: A Grammar of Data Manipulation. R package version 1.0.7. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a></p></li>
+<li><p>Hadley Wickham (2021). tidyr: Tidy Messy Data. R package version 1.1.3. <a href="https://CRAN.R-project.org/package=tidyr" class="uri">https://CRAN.R-project.org/package=tidyr</a></p></li>
+<li><p>Greg Lin (2020). reactable: Interactive Data Tables Based on ‘React Table’. R package version 0.2.3. <a href="https://CRAN.R-project.org/package=reactable" class="uri">https://CRAN.R-project.org/package=reactable</a></p></li>
+<li><p>Philipp Schauberger and Alexander Walker (2021). openxlsx: Read, Write and Edit xlsx Files. R package version 4.2.4. <a href="https://CRAN.R-project.org/package=openxlsx" class="uri">https://CRAN.R-project.org/package=openxlsx</a></p></li>
+<li><p>Duncan Temple Lang (NA). RDCOMClient: R-DCOM client. <a href="http://www.omegahat.net/RDCOMClient," class="uri">http://www.omegahat.net/RDCOMClient,</a> <a href="http://www.omegahat.net" class="uri">http://www.omegahat.net</a> <a href="http://www.omegahat.net/bugs." class="uri">http://www.omegahat.net/bugs.</a></p></li>
+<li><p><a href="https://docs.microsoft.com/en-us/office/vba/api/overview/excel" class="uri">https://docs.microsoft.com/en-us/office/vba/api/overview/excel</a></p></li>
+<li><p><a href="https://docs.microsoft.com/en-us/office/vba/api/overview/powerpoint" class="uri">https://docs.microsoft.com/en-us/office/vba/api/overview/powerpoint</a></p></li>
+</ul>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+    } else {
+      disableStylesheet(alternateStylesheets);
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Vishal Katti 2022<br>made with , and <a href="https://quarto.org">quarto</a></div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
