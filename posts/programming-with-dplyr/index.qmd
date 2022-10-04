@@ -5,11 +5,8 @@ author: Vishal Katti
 date: 07-17-2021
 categories: [R, dplyr, functions]
 image: https://i.imgur.com/H9jo8OB.gif
-format:
-  html:
-    code-line-numbers: true
-    toc: true
-    highlight-style: arrow
+format: html
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -23,9 +20,9 @@ suppressWarnings(suppressPackageStartupMessages(library(tidyverse)))
 
 # Introduction
 
-The purpose of this article is to act as a quick guide for myself and others to understand how to use `dplyr` effectively to create dynamic functions. The general assumption is that the reader is familiar with the `{dplyr}` package and how to use it for data wrangling.
-
 In this article, we will explore how to create functions using the popular `dplyr` verbs like `select`, `filter`, `mutate`, `arrange` and finally `group_by` with `summarise`.
+
+The purpose of this article is to act as a quick guide for myself and others to understand how to use `dplyr` effectively to create dynamic functions. The general assumption is that the reader is familiar with the `{dplyr}` package and how to use it for data wrangling.
 
 ### Inspiration
 
@@ -44,7 +41,7 @@ We shall refer the above data in all the following sections.
 
 # `select()`
 
-When using `dplyr` functions, the two most popular ways to pass column names is either as bare names i.e. column names without enclosing them in quotes like `sales` or `volume` OR pass them as a character string like "sales" or 'volume'. You could also pass a character vector like `c("sales", "volume")`. In this section we will explore the 3 ways to dynamically select the columns we want.
+When using `dplyr` functions, the two most popular ways to pass column names is either as bare names i.e. column names without enclosing them in quotes like `sales` or `volume` OR pass them as a character string like double-quote "sales" or single-quote 'volume'. You could also pass a character vector like `c("sales", "volume")`. In this section we will explore the 3 ways to dynamically select the columns we want.
 
 ### Passing raw column names
 
@@ -52,13 +49,19 @@ In this method, we pass the raw name of the column we want to select and use the
 
 ```{r}
 #| Label: select_raw
-#| column: body-outset-right
+
 select_raw <- function(df, var) {
-  dplyr::select(.data = df, {{var}}) %>%     # embrace of curly-curly {{}} brackets
+  
+  # embrace of curly-curly {{}} brackets
+  dplyr::select(.data = df, {{var}}) %>%     
     head()
 }
-select_raw(txhousing, sales)                 # pass single raw name
-select_raw(txhousing, c(sales, volume))      # pass a vector of raw names for multiple columns
+
+# pass single raw name
+select_raw(txhousing, sales)
+
+# pass a vector of raw names for multiple columns
+select_raw(txhousing, c(sales, volume))      
 ```
 
 If passing multiple raw names as vector as in the `select_raw()` feels like an unnecessary complication, try the next method.
@@ -69,13 +72,14 @@ In this method, we use the `.` argument to pass the raw names of the columns we 
 
 ```{r}
 #| Label: my_select
-#| column: body-outset-right
+
 my_select <- function(df, ...) {
   dplyr::select(.data = df, ...) %>% 
     head()
 }
 
-my_select(txhousing, sales, volume)          # pass multiple raw names directly
+# pass multiple raw names directly
+my_select(txhousing, sales, volume)          
 ```
 
 ### Passing a character vector of column names
@@ -102,31 +106,38 @@ In this method, we pass the condition `sales > 8000` as a raw/bare expression.
 
 ```{r}
 #| Label: filter_raw
-#| column: body-outset-right
+
 filter_raw <- function(df, cond) {
-  dplyr::filter(.data = df, {{cond}})        # embrace of curly-curly {{}} brackets
+  
+  # embrace of curly-curly {{}} brackets
+  dplyr::filter(.data = df, {{cond}})        
 }
 
-filter_raw(txhousing, sales > 8000)          # Pass a single raw criterion
-
+# Pass a single raw criterion
+filter_raw(txhousing, sales > 8000)
 ```
 
 Do you think we can pass multiple bare conditions as a vector, like we did for `select_raw()` in the previous section? Let us try passing multiple raw criteria as a vector.
 
-```{r error=TRUE}
+```{r}
+#| error=TRUE
 filter_raw(txhousing, c(sales > 8000, year > 2010))
 ```
+
+::: callout-note
+## Vector Concatenation
 
 Passing multiple raw criteria as a vector doesn't work like it works for `select_raw()` function. Let us understand why. Consider the following code:
 
 ```{r}
-A <- c(TRUE, TRUE)                           # boolean vector of length = 2
-B <- c(FALSE, FALSE)                         # boolean vector of length = 2
+A <- c(TRUE, TRUE)      # boolean vector of length = 2
+B <- c(FALSE, FALSE)    # boolean vector of length = 2
 X <- c(A, B)
 X
 ```
 
 Notice that length of X is 4. Similarly, `sales > 8000` evaluates to a TRUE/FALSE boolean vector of length 8602 (equal to number of rows in `txhousing`) and so does `year > 2010`. So the vector `c(sales > 8000, year > 2010)` becomes a TRUE/FALSE boolean vector of length 17204, which results in an error.
+:::
 
 ### Passing multiple raw criteria using ... argument
 
@@ -134,17 +145,21 @@ To pass multiple raw criteria, we can use the `...` argument.
 
 ```{r my_filter}
 my_filter <- function(df, ...) { 
-  dplyr::filter(.data = df, ...)                # pass the dots argument
+  
+  # pass the dots argument
+  dplyr::filter(.data = df, ...)
   }
 
-my_filter(txhousing, sales > 8000, year > 2010) # pass multiple raw criteria
+# pass multiple raw criteria
+my_filter(txhousing, sales > 8000, year > 2010) 
 ```
 
 ### Passing single criteria as a character string
 
 By default, `dplyr::filter()` does not accept conditions as character strings. Following is an example which results in error
 
-```{r error=TRUE}
+```{r}
+#| error=TRUE
 dplyr::filter(txhousing, "sales > 8000")
 ```
 
@@ -152,12 +167,15 @@ We need to convert the character condition into a raw expression.
 
 ```{r my_filter_string}
 #| Label: my_filter_string
-#| column: body-outset-right
+
 my_filter_string <- function(df, cond) {
-  dplyr::filter(.data = df, eval(parse(text = cond))) # convert text to raw criterion
+  
+  # convert text to raw criterion
+  dplyr::filter(.data = df, eval(parse(text = cond))) 
 }
 
-my_filter_string(txhousing, "sales > 8000")  # pass single text string as criteria
+# pass single text string as criteria
+my_filter_string(txhousing, "sales > 8000")  
 ```
 
 The special sauce here is the `eval(parse(text = ...))` combo that converts the long text criteria into a single raw criteria and passes it to the internal `filter()` function.
@@ -168,11 +186,17 @@ What if want to pass multiple criteria as a string vector? In such a situation, 
 
 ```{r}
 #| Label: my_filter_strings
-#| column: body-outset-right
+
 my_filter_strings <- function(df, cond) { 
-  filter_text <- paste0("(", cond, ")", collapse = " & ")   # combine all criteria
-  message("Filter Condition: ", filter_text)                # (OPTIONAL) show the combined filter string
-  dplyr::filter(.data = df, eval(parse(text = filter_text)))# convert text to raw criterion
+  
+  # combine all criteria
+  filter_text <- paste0("(", cond, ")", collapse = " & ")
+  
+  # (OPTIONAL) show the combined filter string
+  message("Filter Condition: ", filter_text)
+  
+  # convert text to raw criterion
+  dplyr::filter(.data = df, eval(parse(text = filter_text)))
   }
 
 my_filter_criteria <- c("sales > 8000", "year > 2010")
@@ -180,11 +204,16 @@ my_filter_strings(txhousing, my_filter_criteria)
 
 ```
 
+::: callout-caution
+## OR Condition
+
+To create an OR condition, the expression must be a single string separated by pipe '\|' as in example below.
+:::
+
 ```{r filter_OR}
 #| Label: filter_OR
-#| column: body-outset-right
 
-# NOTE: OR criteria must be a single string separated by pipe '|' as in example below.
+
 my_filter_criteria_with_OR <- c("sales > 8000 | sales < 50", "year > 2010")
 my_filter_strings(txhousing, my_filter_criteria_with_OR)
 ```
@@ -203,7 +232,8 @@ mutate_raw <- function(df, new_col_raw, old_col_raw, num = 1) {
 
 txhousing %>% 
   select(city, year, month, volume) %>% 
-  mutate_raw(vol_in_millions, volume, 1E6) # pass raw column names w/o quotes
+  # pass raw column names w/o quotes
+  mutate_raw(vol_in_millions, volume, 1E6) 
 ```
 
 ### Passing the new variable name as character string (direct)
@@ -216,7 +246,8 @@ mutate_text <- function(df, new_col_str, old_col_str, num = 1) {
 
 txhousing %>% 
   select(city, year, month, volume) %>%
-  mutate_text("vol_in_millions", "volume", 1E6) # pass column names as strings
+  # pass column names as strings
+  mutate_text("vol_in_millions", "volume", 1E6) 
 
 ```
 
@@ -236,7 +267,8 @@ old_var <- "volume"
 
 txhousing %>% 
   select(city, year, month, volume) %>%
-  mutate_var(new_var, old_var, 1E6)  # pass column names as variables
+  # pass column names as variables
+  mutate_var(new_var, old_var, 1E6)  
 ```
 
 # `arrange()`
@@ -247,7 +279,9 @@ txhousing %>%
 
 ```{r arrange_raw}
 arrange_raw <- function(df, var) {
-  dplyr::arrange(.data = df, {{var}}) %>%    # embrace of curly-curly {{}} brackets
+  
+  # embrace of curly-curly {{}} brackets
+  dplyr::arrange(.data = df, {{var}}) %>%    
     head()
 }
 
@@ -325,8 +359,11 @@ group_raw <- function(df, grp) {
     head(n=5)
 }
 
-group_raw(txhousing, year)        # Sum of sales per year
-group_raw(txhousing, month)       # Sum of sales per month
+# Sum of sales per year
+group_raw(txhousing, year)
+
+# Sum of sales per month
+group_raw(txhousing, month)       
 ```
 
 ### Passing multiple raw names using the `...` operator
@@ -340,8 +377,10 @@ group_raw_multiple <- function(df, ...) {
     head(n = 5)
 }
 
-group_raw_multiple(txhousing, year)              # Sum of sales per year
-group_raw_multiple(txhousing, year, month)       # Sum of sales per month
+# Sum of sales per year
+group_raw_multiple(txhousing, year)
+# Sum of sales per month
+group_raw_multiple(txhousing, year, month)     
 ```
 
 ### Passing single or multiple column names as character string
@@ -355,8 +394,10 @@ group_str <- function(df, grp) {
     head(n=5)
 }
 
-group_str(txhousing, "year")                   # Sum of sales per year
-group_str(txhousing, c("year", "month"))       # Sum of sales per month
+# Sum of sales per year
+group_str(txhousing, "year")
+# Sum of sales per month
+group_str(txhousing, c("year", "month"))       
 
 
 # The same column names can be passed as variables containing the character names
@@ -369,7 +410,7 @@ group_str(txhousing, yrmon)
 
 ```
 
-If you want the summarise column to have a custom name like `total_<sumvar>`, then you can wrap the value in quotes as below. This method uses the `glue` syntax enabled by the `:=` walrus operator. The walrus operator takes either a raw name or a character string on its LHS.
+If you want the summarised column to have a custom name like `total_<sumvar>`, then you can wrap the value in quotes as below. This method uses the `glue` syntax enabled by the `:=` walrus operator. The walrus operator takes either a raw name or a character string on its LHS.
 
 ```{r group_raw2}
 group_raw2 <- function(df, grp, sumvar) {
@@ -380,8 +421,10 @@ group_raw2 <- function(df, grp, sumvar) {
     head(n=5)
 }
 
-group_raw2(txhousing, year, sales)            # Sum of sales per year
-group_raw2(txhousing, month, listings)        # Sum of listings per month
+# Sum of sales per year
+group_raw2(txhousing, year, sales)
+# Sum of listings per month
+group_raw2(txhousing, month, listings)
 ```
 
 After writing so many examples, I see a pattern. `group_by()` works with techniques similar to `select()` while `summarise()` works with techniques similar to `mutate()`.
@@ -403,7 +446,7 @@ Now let us create the `create_ymq()` function. This function would take 2 argume
 
 ```{r}
 #| Label: create_ymq
-#| column: body-outset-right
+
 create_ymq <- function(df, date_col) {
   stopifnot(inherits(df, "data.frame"))
   stopifnot(class(df %>% dplyr::pull({{date_col}})) == 'Date')
@@ -430,7 +473,7 @@ Now that we have a function that creates various date-related columns, let us cr
 
 ```{r}
 #| Label: tx_summary
-#| column: body-outset-right
+
 tx_summary <- function(df, grp_col, sum_col) {
   df %>% 
     group_by(city, {{grp_col}}) %>% 
@@ -441,19 +484,24 @@ tx_summary <- function(df, grp_col, sum_col) {
 Using these 2 functions, we can now create multiple summary tables
 
 ```{r}
-small_df_with_date_cols <- small_df %>% create_ymq(date_col = date)
+small_df_with_date_cols <- small_df %>% 
+  create_ymq(date_col = date)
 
 # Annual Sales per city
-small_df_with_date_cols %>% tx_summary(grp_col = Year, sum_col = sales)
+small_df_with_date_cols %>% 
+  tx_summary(grp_col = Year, sum_col = sales)
 
 # Half Yearly volumes per city
-small_df_with_date_cols %>% tx_summary(grp_col = yHalf, sum_col = volume)
+small_df_with_date_cols %>% 
+  tx_summary(grp_col = yHalf, sum_col = volume)
 
 # Quarterly Sales per city
-small_df_with_date_cols %>% tx_summary(grp_col = yQtr, sum_col = sales)
+small_df_with_date_cols %>% 
+  tx_summary(grp_col = yQtr, sum_col = sales)
 
 # Monthly Volumes per city
-small_df_with_date_cols %>% tx_summary(grp_col = yMonth, sum_col = volume)
+small_df_with_date_cols %>% 
+  tx_summary(grp_col = yMonth, sum_col = volume)
 ```
 
 ### More ideas
