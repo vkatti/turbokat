@@ -6,7 +6,20 @@ author: Vishal Katti
 date: 2021-12-29
 image: images/R2XL2PPT_logo.png
 categories: [R, Excel, VBA, PowerPoint, openxlsx, RDCOMClient]
-format: html
+citation: true
+license: "CC BY"
+filters:
+  - social-share
+share:
+  permalink: "https://vishalkatti.com/posts/R2VBA2PPT2"
+  description: "Check out Part 2 on running VBA Macros in Excel from R"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
 ---
 
 ```{r setup, include=FALSE}
@@ -25,13 +38,17 @@ given data using VBA.
 
 The report we want to automate is...
 
+::: {style="text-align:center;"}
 ![The Gapminder Report : The PowerPoint presentation we want to
-automate](https://i.imgur.com/LL6UwWH.gif "The Gapminder Report")
+automate](https://i.imgur.com/LL6UwWH.gif "The Gapminder Report"){#fig-gapminder}
+:::
 
-...and the Excel and PowerPoint template we created are shown below.
+...and the Excel and PowerPoint template we created are shown in @fig-excel-with-macro.
 
+::: {style="text-align:center;"}
 ![Excel Template with VBA
-macro](https://i.imgur.com/tB3QxhJ.png "Excel Template with VBA macro")
+macro](https://i.imgur.com/tB3QxhJ.png "Excel Template with VBA macro"){#fig-excel-with-macro}
+:::
 
 In this post, we will write the R script that will first massage the
 data into desired format and then load the data for one region into the
@@ -73,15 +90,17 @@ Yes, we have Oceania with only Australia and New Zealand. For ease of
 use, let us include these countries along with Asian countries in a new
 `Region` variable.
 
-![02_chart](https://i.imgur.com/KvGxnyt.png "02_chart")
+::: {style="text-align:center;"}
+![02_chart](https://i.imgur.com/KvGxnyt.png "02_chart"){#fig-slide2}
+:::
 
 We will create the `region` variable in the gapminder data. But first,
 let us load some relevant packages.
 
-```{r load-packages}
+```{r load-packages, warning=FALSE}
 options(tidyverse.quiet = TRUE)
 library(tidyverse) # duh!
-library(reactable) # to display the tables interactively in this post. Not really needed for the final solution.
+library(rmarkdown) # to display the tables interactively in this post. Not really needed for the final solution.
 library(openxlsx) # to write the data to the Excel Template.
 # library(RDCOMClient) # to load and run the Excel macro post data load.
 ```
@@ -109,13 +128,12 @@ Now that we have the source data available, we must now create the
 datasets we need that we can write to the Excel template for each
 region.
 
-The required table shows the top 4 countries (based on 2007 population)
+The required table in @fig-slide2 shows the top 4 countries (based on 2007 population)
 and all other countries clubbed into 'others' in a given region and then
 the total population of the region on a yearly basis. This table has to
 be created for all 4 regions.
 
 ```{r 02_chart}
-#| column: body-outset-right
 pop_trend <- gp %>%
   group_by(region, country, year) %>% 
   summarise(pop = sum(pop, na.rm = TRUE),
@@ -124,8 +142,7 @@ pop_trend <- gp %>%
   pivot_wider(names_from = year, values_from = pop, names_sort = TRUE) %>% 
   arrange(desc(`2007`)) # sort by max pop to min pop in latest year i.e. 2007
 
-reactable(pop_trend, compact=TRUE,
-                     style = "font-size:12px")
+paged_table(pop_trend)
 ```
 
 Now that we have the required columns, let's plan the row order. We
@@ -133,20 +150,18 @@ notice that, for each region, we have the top 4 countries (as per 2007)
 , followed by 'Others'. Let's create the `top-4` dataset.
 
 ```{r top-4}
-#| column: body-outset-right
 top4 <- pop_trend %>% 
   group_by(region) %>% 
   slice_max(`2007`, n = 4, with_ties = FALSE) %>% 
   ungroup()
 
-reactable(top4, compact=TRUE, style = "font-size:12px")
+paged_table(top4)
 ```
 
 To create the `others` dataset, we exclude all countries that are
 present in the `top-4`.
 
 ```{r others}
-#| column: body-outset-right
 others <- pop_trend %>% 
   filter(!country %in% top4$country) %>% 
   group_by(region) %>% 
@@ -155,7 +170,7 @@ others <- pop_trend %>%
   mutate(country = "Others") %>% 
   select(region, country, everything())
 
-reactable(others, compact=TRUE, style = "font-size:12px")
+paged_table(others)
 ```
 
 While we create the `top-4` and `others` datasets separately, we will
@@ -166,7 +181,9 @@ Now that we have the datasets needed for `02_chart`, let's proceed to
 the create `02_table` . This table gives you the count of countries that
 fall under various population ranges.
 
-![02_table on Slide 2](https://i.imgur.com/uf3flVN.png "02_table"){width="250"}
+::: {style="text-align:center;"}
+![02_table on Slide 2](https://i.imgur.com/uf3flVN.png "02_table"){#fig-slide22 width=60%}
+:::
 
 Let's create `02_table`. To create this table, we first create a new
 variable called `pop_range`.
@@ -194,7 +211,7 @@ pop_groups <- gp2007 %>%
   arrange(region, pop_range) %>% 
   rename(`Population Category` = pop_range)
 
-reactable(pop_groups, compact=TRUE, style = "font-size:12px")
+paged_table(pop_groups)
 ```
 
 ### Slide 3
@@ -202,13 +219,14 @@ reactable(pop_groups, compact=TRUE, style = "font-size:12px")
 Slide 3 contains 2 strings and one chart. The data for the chart looks
 as shown below.
 
-![03_chart table for Slide 3](https://i.imgur.com/kDAbook.png "Slide 3")
+::: {style="text-align:center;"}
+![03_chart table for Slide 3](https://i.imgur.com/kDAbook.png "Slide 3"){#fig-slide3}
+:::
 
 The data for `03_chart` is the list of top 10 countries in each region
 as per latest record i.e. 2007. Let's create the `top10` table.
 
 ```{r top10}
-#| column: body-outset-right
 top10 <- gp %>% 
   filter(year == 2007) %>% 
   group_by(region) %>% 
@@ -218,7 +236,7 @@ top10 <- gp %>%
   mutate(pop = round(pop/1E6, 4)) %>% # population in millions
   set_names(c("region","country","population"))
 
-reactable(top10, compact=TRUE, style = "font-size:12px")
+paged_table(top10)
 ```
 
 ## The `for` loop!
@@ -325,7 +343,9 @@ for (curr_region in unique_regions) {
 Once the code runs completely, you will see 4 new PowerPoint
 Presentations in your working folder.
 
-![Output Files](https://i.imgur.com/Pe8yyxI.png "Output Files")
+::: {style="text-align:center;"}
+![Output Files](https://i.imgur.com/Pe8yyxI.png "Output Files"){#fig-output-files}
+:::
 
 You can download the full R script from
 [here](https://gist.github.com/vkatti/cc95c56e11c1b8985bbd288f353c7386 "Navigate to Github Gist").

@@ -6,7 +6,20 @@ author: Vishal Katti
 date: 2022-07-08
 image: https://i.imgur.com/0qMbFC1.gif
 categories: [R, functions, tidyr, pivot]
-format: html
+citation: true
+license: "CC BY"
+filters:
+  - social-share
+share:
+  permalink: "https://vishalkatti.com/posts/tidyr-pivot-longer"
+  description: "Check out this article on reshaping data.frames using {tidyr} in R"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +36,7 @@ The idea is to make your tabular data "tidy" i.e.
 -   Every row is an observation.
 -   Every cell is a single value.
 
-In other words, every column contains just one type of information, every row in the table is a snapshot or a version of the information your table captures and every cell contains just one piece of information. Read more about wide vs. long formats [here](https://www.statology.org/long-vs-wide-data/).
+In other words, every column contains just one type of information, every row in the table is a snapshot or a version of the information your table captures and every cell contains just one piece of information.[^1]
 
 While the wide format is more human-readable, the long format is preferred and is desirable for data and plotting operations using R, Python or other data processing programming languages. The {tidyr} R package has functions that allow you to transform your tabular data between the two formats.
 
@@ -33,17 +46,24 @@ In this post, we will see how to convert a wide dataframe to long format using t
 
 Consider the following data table. It has been created from the famous Gapminder dataset. This table shows the average life expectancy in each continent for 2 years. While some of you may say that Gapminder data contains records for a lot more number of years, here we consider just the latest 2 years for ease of explanation and visual purposes.
 
-![Continent-wise Average Life Expectancy over last 2 years](https://i.imgur.com/sMJDveZ.png)
+::: {style="text-align:center;"}
+![Continent-wise Average Life Expectancy over last 2 years](https://i.imgur.com/sMJDveZ.png){#fig-wide}
+:::
 
-`my_data` is in the wide format as we have continent names in column headers and average life expectancy values in each of those columns. To convert this tibble to the long format, we need to pull together the continent names in one column and their corresponding values into another column.
+::: {style="text-align:center;"}
+![The wide one](https://i.imgur.com/kbMDurH.png){#fig-wide2}
+:::
 
-![](https://i.imgur.com/kbMDurH.png)
+`my_data` is in the wide format as we have continent names in column headers and average life expectancy values in each of those columns. To convert this tibble to the long format, we need to pull together the continent names in one column and their corresponding values into another column. See @fig-wide2
+
 
 # The long one
 
 The long format of this table would ideally have only `year`, `continent` and `average_life_expectancy` columns and look something like the table below.
 
-![](https://i.imgur.com/63PMzJ3.png){width="60%"}
+::: {style="text-align:center;"}
+![The long one](https://i.imgur.com/63PMzJ3.png){#fig-long width="60%"}
+:::
 
 The long format has repeated values of the column that are not gathered/collected. In this case, the `year` column gets its values repeated for each row.
 
@@ -102,7 +122,9 @@ knitr::kable(my_data_longer)
 
 If you are a visual person like me and wish to see this transformation with explanations, check out this GIF I made using good ol' Powerpoint.
 
-![{tidyr} pivot_longer() explained](https://i.imgur.com/0qMbFC1.gif)
+::: {style="text-align:center;"}
+![{tidyr} pivot_longer() explained](https://i.imgur.com/0qMbFC1.gif){#fig-gif}
+:::
 
 # Conclusion
 
@@ -112,6 +134,8 @@ Happy Gathering!
 
 # References
 
--   [Long vs. Wide Data: What's the Difference?](https://www.statology.org/long-vs-wide-data/)
 -   Hadley Wickham and Maximilian Girlich (2022). tidyr: Tidy Messy Data. R package version 1.2.0. <https://CRAN.R-project.org/package=tidyr>
 -   Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in R. R package version 1.39.
+
+[^1]: **Long vs. Wide Data: What’s the Difference?**
+    https://www.statology.org/long-vs-wide-data/

@@ -6,17 +6,31 @@ author: Vishal Katti
 date: 07-17-2021
 categories: [R, dplyr, functions]
 image: https://i.imgur.com/H9jo8OB.gif
-format: html
+citation: true
+license: "CC BY"
+filters:
+  - social-share
+share:
+  permalink: "https://vishalkatti.com/posts/programming-with-dplyr"
+  description: "Check out this article on how to create dynamic functions using {dplyr} in R"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
     
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE, comments = '')
 knitr::knit_hooks$set(error = function(x, options) {
   paste0("<pre style=\"color: red;\"><code>", x, "</code></pre>")
 })
 
-suppressWarnings(suppressPackageStartupMessages(library(tidyverse)))
+options(tidyverse.quiet=TRUE)
+library(tidyverse)
 ```
 
 # Introduction
@@ -25,7 +39,7 @@ The purpose of this article is to act as a quick guide for myself and others to 
 
 ### Inspiration
 
-I regularly deal with event-related information with event date and few other columns like event type, root cause etc. Most reports usually involve calculating number of events that took place on a monthly, quarterly or annual basis, sometimes split by event type, root cause and other columns. After a few reports I realized that I am basically writing the same code over and over again to calculate these KPIs. Keeping the `DRY (Don't Repeat Yourself)` principle in mind, I managed to write a few functions to calculate these KPIs with a few dynamic variables. Following is an attempt to articulate what I learnt while creating those functions.
+I regularly deal with event-related information with event date and few other columns like event type, root cause etc. Most reports usually involve calculating number of events that took place on a monthly, quarterly or annual basis, sometimes split by event type, root cause and other columns. After a few reports I realized that I am basically writing the same code over and over again to calculate these KPIs. Keeping the `DRY`^[**D**on't **R**epeat **Y**ourself] principle in mind, I managed to write a few functions to calculate these KPIs with a few dynamic variables. Following is an attempt to articulate what I learnt while creating those functions.
 
 ### Data
 
@@ -65,9 +79,9 @@ select_raw(txhousing, c(sales, volume))
 
 If passing multiple raw names as vector as in the `select_raw()` feels like an unnecessary complication, try the next method.
 
-### Passing multiple raw column names using ... argument
+### Passing multiple raw column names using `...` argument
 
-In this method, we use the `.` argument to pass the raw names of the columns we want to select.
+In this method, we use the `...` argument to pass the raw names of the columns we want to select.
 
 ```{r}
 #| Label: my_select
@@ -511,7 +525,9 @@ You could further extend this by creating a custom filtering function that gives
 
 The ability to create such dynamic functions, enabled by the wonderful {dplyr} package, allows us to level-up in terms of programming with R and helps make our code neat and tidy.
 
+::: {style="text-align:center;"}
 ![How I feel while creating custom functions with {dplyr}! I can almost hear the music! Source: imgur.com](https://i.imgur.com/H9jo8OB.gif)
+:::
 
 # References
 

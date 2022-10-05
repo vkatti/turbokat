@@ -6,7 +6,20 @@ author: Vishal Katti
 date: 2022-08-29
 image: https://i.imgur.com/A9SfEdJ.gif
 categories: [R, functions, tidyr, pivot]
-format: html
+citation: true
+license: "CC BY"
+filters:
+  - social-share
+share:
+  permalink: "https://vishalkatti.com/posts/tidyr-pivot-wider"
+  description: "Check out this article on reshaping data.frames using {tidyr} in R"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +42,10 @@ In this post, we will see how to convert a long dataframe to wide format using t
 
 Consider the following data table. It has been created from the famous Gapminder dataset. This table shows the average life expectancy in each continent for 2 years. While some of you may say that Gapminder data contains records for a lot more number of years, here we consider just the latest 2 years for ease of explanation and visual purposes. We have added an extra `id` column for teaching purpose.
 
-![Continent-wise Average Life-expectancy over last 2 years](https://i.imgur.com/pV7FveQ.png "Ha"){fig-align="left"}
+::: {style="text-align:center;"}
+![Continent-wise Average Life-expectancy over last 2 years, in Long format](https://i.imgur.com/pV7FveQ.png "The Long One"){#fig-long width="70%"}
+:::
+
 
 `my_data` is in the long format as we have continent names and year in their own column and average life expectancy values for each unique combination of year and continent. If we want to compare life expectancy across years for each continent, we need to have the life expectancy values for each continent side-by-side for easier viewing i.e. we need to convert to the wide format. To convert this tibble to the wide format, we need to push the `year` values into the headers and the `average_life_expectancy` values under the corresponding year column.
 
@@ -37,7 +53,9 @@ Consider the following data table. It has been created from the famous Gapminder
 
 The wide format of this table would ideally have only `continent` and columns having each unique value in the `year` column as a header. In this case, the wide one would look something like the table below.
 
-![](https://i.imgur.com/KUS6maA.png "HA"){width="60%"}
+::: {style="text-align:center;"}
+![Same as @fig-long but in Wide format](https://i.imgur.com/KUS6maA.png "The Wide One"){#fig-wide width="70%"}
+:::
 
 The wide format has unique values of the column that are not pushed into headers. In this case, the `continent` column becomes unique for each row.
 
@@ -100,7 +118,9 @@ knitr::kable(my_data_longer)
 
 If you are a visual person like me and wish to see this transformation with explanations, check out this GIF I made using good ol' PowerPoint.
 
+::: {style="text-align:center;"}
 ![{tidyr} pivot_wider() explained](https://i.imgur.com/A9SfEdJ.gif)
+:::
 
 # Conclusion
 

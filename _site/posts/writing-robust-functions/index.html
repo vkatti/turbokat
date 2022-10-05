@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-0.9.649">
+<meta name="generator" content="quarto-1.1.251">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Vishal Katti">
 <meta name="dcterms.date" content="2022-01-18">
@@ -10,10 +10,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -52,7 +57,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -65,7 +70,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -95,8 +100,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -116,12 +125,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script><link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Vishal Katti - Writing Robust R Functions">
-<meta property="og:description" content="This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages.">
+<meta property="og:description" content="This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, incorrect data type or just down-right invalid values and how to return meaningful error messages.">
 <meta property="og:image" content="https://i.imgur.com/hbjbLMN.gif">
 <meta property="og:site-name" content="Vishal Katti">
-<meta name="twitter:title" content="Vishal Katti - Writing Robust R Functions">
-<meta name="twitter:description" content="This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages.">
+<meta name="twitter:title" content="Katti’s Blog">
+<meta name="twitter:description" content="This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, incorrect data type or just down-right invalid values and how to return meaningful error messages.">
 <meta name="twitter:image" content="https://vishalkatti.com/profile-pic.png">
+<meta name="twitter:creator" content="@vishal_katti">
 <meta name="twitter:image-height" content="612">
 <meta name="twitter:image-width" content="612">
 <meta name="twitter:card" content="summary_large_image">
@@ -130,9 +140,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vishal Katti</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -204,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <div>
     <div class="abstract">
       <div class="abstract-title">Abstract</div>
-      This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, not the right data type or just down-right wrong and returning meaningful error messages.
+      This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, incorrect data type or just down-right invalid values and how to return meaningful error messages.
     </div>
   </div>
   
@@ -212,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
 <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
@@ -241,21 +253,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Functions in R ( or any other programming language in general) allow us to encapsulate some lines of code that we want to run again and again. Functions are the natural outcome of the <strong>DRY</strong> (Don’t Repeat Yourself!) principle. Functions group together a couple of lines of consistent logic making our code modular and consequently, easy to manage. However, when we write functions, we need to ensure that they behave exactly as we want them to and are able to handle whatever we throw at them. By whatever, I mean any and all kinds of inputs. The idea of creating unbreakable code is idealistic. I say this since creating robust functions requires additional code to handle the unwanted inputs and most useRs write functions during some one-time analysis. Hence we need to be pragmatic about how much time and effort we spend trying to make our functions robust. Maybe, we need our functions to be just robust enough! All I am saying is, if you are creating functions that will be used by you and only you i.e.&nbsp;if you have absolute control over what inputs would be provided to your functions, then you can forego certain checks and the functions need not be unbreakable. But, if you intend to write functions that will be used by a larger audience, you need to ensure that such functions are able to handle all kinds of innocent and malicious intents.</p>
+<p>Functions in R ( or any other programming language in general) allow us to encapsulate some lines of code that we want to run again and again. Functions are the natural outcome of the <strong>DRY</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> principle. Functions group together a couple of lines of consistent logic making our code modular and consequently, easy to manage. However, when we write functions, we need to ensure that they behave exactly as we want them to and are able to handle whatever we throw at them. By whatever, I mean any and all kinds of inputs. The idea of creating unbreakable code is idealistic. I say this since creating robust functions requires additional code to handle the unwanted inputs and most useRs write functions during some one-time analysis. Hence we need to be pragmatic about how much time and effort we spend trying to make our functions robust. Maybe, we need our functions to be just robust enough! All I am saying is, if you are creating functions that will be used by you and only you i.e.&nbsp;if you have absolute control over what inputs would be provided to your functions, then you can forego certain checks and the functions need not be unbreakable. But, if you intend to write functions that will be used by a larger audience, you need to ensure that such functions are able to handle all kinds of innocent and malicious intents.</p>
 </section><section id="what-do-we-mean-by-robust-functions" class="level2"><h2 class="anchored" data-anchor-id="what-do-we-mean-by-robust-functions">What do we mean by Robust Functions?</h2>
 <p>You must be familiar with the <em>Garbage-In-Garbage-Out</em> philosophy of Software engineering. We can think of it in terms of functions, that, given garbage or bad input, you get garbage or bad output. For a function to be robust, it must behave in a consistent manner for known and correct inputs, however, more importantly, it mustn’t give us garbage for bad inputs. Rather, it must provide useful output (as messages or instructions) which can be further used to inform the end-user about possible problems in the inputs to drive proper usage. The useful output/s in case of bad inputs would ideally be a combination of clean early exit and easy-to-understand error messages. So we shall try to implement <em>Garbage-In-Useful-Info-Out</em> by looking at some ways we can build well-behaved and reliable functions.</p>
 <p>Input values passed to a function are more popularly known as arguments or parameters. A robust function must validate the function arguments before proceeding to implement the function logic. If this is not done, then the bad arguments will cause some errors in the logic and display error messages that the end-user may not be familiar with. Worst-case scenario is when the function doesn’t encounter any errors and just gives bad results!! Surely, we do not want this unpredictable behavior.</p>
+<div style="text-align:center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="https://i.imgflip.com/28bxz3.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">Enough Talk, Let’s Fight! - Kungfu Panda @imgflip.com</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Source: imgflip.com</figcaption><p></p>
 </figure>
 </div>
+</div>
 </section><section id="our-sweet-innocent-and-naive-function" class="level2"><h2 class="anchored" data-anchor-id="our-sweet-innocent-and-naive-function">Our sweet, innocent and naive Function</h2>
-<p>Consider the following function <code>make_date</code> that takes 3 numeric inputs <code>yyyy</code>, <code>mm</code> and <code>dd</code> and returns a single ’Date` object.</p>
+<p>Consider the following function <code>make_date</code> that takes 3 numeric inputs <code>yyyy</code>, <code>mm</code> and <code>dd</code> and returns a single `Date` object.</p>
 <div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>make_date <span class="ot">&lt;-</span>  <span class="cf">function</span>(yyyy, mm, dd) {</span>
 <span id="cb1-2"><a href="#cb1-2"></a>  </span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="co"># main logic</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="co"># main logic : Concatenate the values and convert to Date</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(yyyy, mm, dd, <span class="at">sep =</span> <span class="st">"-"</span>), <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
 <span id="cb1-5"><a href="#cb1-5"></a>}</span>
 <span id="cb1-6"><a href="#cb1-6"></a></span>
@@ -360,7 +374,7 @@ dd = 1 instead
 <pre><code>[1] NA</code></pre>
 </div>
 </div>
-<p>In this case, all the arguments pass the checks but the output is <code>NA</code> since we pass <code>2022-May-1</code> to <code>as.Date</code> which doesn’t match the <code>format = '%Y-%m-%d'</code>.</p>
+<p>In this case, all the arguments pass the checks but since we pass <code>2022-May-1</code> to <code>as.Date</code> which doesn’t match the <code>format = '%Y-%m-%d'</code> thus giving <code>NA</code>.</p>
 <p>How do we check if the values provided to the arguments are numbers or number-like? If the values are numbers, we let them pass. But if they are non-numeric, we must check if they can be converted to numbers i.e. we must check if they are number-like. By number-like, I mean, will coercing the value using <code>as.numeric</code> give us a numeric value or <code>NA</code> ? You guessed it right, we will pass the values through <code>as.numeric</code> and check if the output is <code>NA</code> or not.</p>
 <p>What are the various data types in R that are not <code>numeric</code> but can look like numbers? We have <code>character</code>, <code>factor</code> and <code>boolean</code> data types which can behave like numbers sometimes. Let’s see a few scenarios.</p>
 <section id="character-arguments" class="level3"><h3 class="anchored" data-anchor-id="character-arguments">Character arguments</h3>
@@ -441,12 +455,14 @@ coercion
 <details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># This function check if value is number or number-like.</span></span>
 <span id="cb27-2"><a href="#cb27-2"></a>is_numberlike <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb27-3"><a href="#cb27-3"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.character</span>(x)) {</span>
-<span id="cb27-4"><a href="#cb27-4"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>) <span class="co"># Early Exit 1 if value is neither numeric nor character</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.character</span>(x) <span class="sc">&amp;</span> <span class="fu">is.na</span>(<span class="fu">as.numeric</span>(x))) {</span>
-<span id="cb27-6"><a href="#cb27-6"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>) <span class="co"># Early Exit 2 if character value is not number-like.</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a>  }</span>
-<span id="cb27-8"><a href="#cb27-8"></a>  <span class="fu">return</span>(<span class="cn">TRUE</span>)</span>
-<span id="cb27-9"><a href="#cb27-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-4"><a href="#cb27-4"></a>    <span class="co"># Early Exit 1 if value is neither numeric nor character</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>) </span>
+<span id="cb27-6"><a href="#cb27-6"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.character</span>(x) <span class="sc">&amp;</span> <span class="fu">is.na</span>(<span class="fu">as.numeric</span>(x))) {</span>
+<span id="cb27-7"><a href="#cb27-7"></a>    <span class="co"># Early Exit 2 if character value is not number-like.</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a>    <span class="fu">return</span>(<span class="cn">FALSE</span>) </span>
+<span id="cb27-9"><a href="#cb27-9"></a>  }</span>
+<span id="cb27-10"><a href="#cb27-10"></a>  <span class="fu">return</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb27-11"><a href="#cb27-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Thus our <code>make_date</code> function with data types check will look as below.</p>
@@ -543,7 +559,7 @@ length &gt; 1 and only the first element will be used
 </section><section id="a-little-detour" class="level2"><h2 class="anchored" data-anchor-id="a-little-detour">A little detour…</h2>
 <p>So far we checked for missing arguments, arguments with bad data types and arguments with incorrect sizes. We’ve used the <code>stop</code> function along with <code>if</code> to check for all failure conditions and show appropriate error messages. When we use <code>stop</code>, we must specify all the failure conditions and the number of specific error messages goes up as number of arguments increases.</p>
 <p>In case of our <code>make_date</code>, if an argument is not missing, it must be a number-like value of length 1. To reduce the number of error messages, we can combine the error messages for data type and length. for eg, the error message could be <em>argument <code>yyyy</code> must be a number-like value of length 1.</em></p>
-<p>Wouldn’t it be easier if we just specify what is the success condition aka the “happy path”, and show error for all other conditions? To do this, we can use the <code>stopifnot</code> function that let’s us specify all the happy paths. See example below.</p>
+<p>Wouldn’t it be easier if we just specify what is the success condition aka the <strong>“happy path”</strong>, and show error for all other conditions? To do this, we can use the <code>stopifnot</code> function that let’s us specify all the happy paths. See example below.</p>
 <div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>dummy_sum <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b, c){</span>
 <span id="cb38-2"><a href="#cb38-2"></a>  </span>
@@ -682,10 +698,12 @@ default value mm = 1 instead
 </code></pre>
 </div>
 <p>Do you think our function <code>make_date</code> is robust enough?</p>
+<div style="text-align:center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="https://i.imgur.com/hbjbLMN.gif" class="img-fluid figure-img"></p>
-<p></p><figcaption aria-hidden="true" class="figure-caption">As robust as Superman! Source: Imgur</figcaption><p></p>
+<p></p><figcaption class="figure-caption">As robust as Superman! Source: Imgur</figcaption><p></p>
 </figure>
+</div>
 </div>
 </section><section id="conclusion" class="level2"><h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Making functions robust requires some prior thought about its intended use and audience. Based on this, we can decide what checks to implement, what to skip, whether to stop execution using error messages or to use default values with warnings. Checking for “happy paths” is simpler compared to checking each and every bad input and providing specific error messages. Too many different error messages for the same argument could become a source of frustration of the end user, so consider combining some checks and their error messages to be informative and precise. Robustness, like everything else, in moderation, is good and getting it “just right” takes time and dedicated effort. Happy Coding!</p>
@@ -697,8 +715,45 @@ default value mm = 1 instead
 </ul>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p><strong>D</strong>on’t <strong>R</strong>epeat <strong>Y</strong>ourself!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2022,
+  author = {Vishal Katti},
+  editor = {},
+  title = {Writing {Robust} {R} {Functions}},
+  date = {2022-01-18},
+  url = {https://vishalkatti.com/posts/writing-robust-functions},
+  langid = {en},
+  abstract = {This post demonstrates some techniques to make your R
+    user-defined functions unbreakable (well, almost!) by checking if
+    function arguments are missing, incorrect data type or just
+    down-right invalid values and how to return meaningful error
+    messages.}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Vishal Katti. 2022. <span>“Writing Robust R Functions.”</span> January
+18, 2022. <a href="https://vishalkatti.com/posts/writing-robust-functions">https://vishalkatti.com/posts/writing-robust-functions</a>.
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
   const disableStylesheet = (stylesheets) => {
     for (let i=0; i < stylesheets.length; i++) {
       const stylesheet = stylesheets[i];
@@ -728,8 +783,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     manageTransitions('#quarto-margin-sidebar .nav-link', false);
     if (alternate) {
       enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
     } else {
       disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
     }
     manageTransitions('#quarto-margin-sidebar .nav-link', true);
     // Switch the toggles
@@ -743,6 +804,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
           toggle.classList.remove("alternate");
         }
       }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
     }
   }
   const isFileUrl = () => { 
@@ -896,7 +967,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
@@ -927,7 +999,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">Vishal Katti ©️ 2022<br>made with 💖, R and <a href="https://quarto.org">Quarto</a></div>   
+    <div class="nav-footer-left">Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2022<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></div>   
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
 <li class="nav-item compact">
@@ -945,7 +1017,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </ul>
 </div>
   </div>
-</footer>
+</footer><div class="page-columns page-rows-contents page-layout-article"><div class="social-share">
+<a href="https://twitter.com/share?url=https://vishalkatti.com/posts/writing-robust-functions&amp;text=Check%20out%20this%20article%20on%20writing%20robust%20functions%20in%20R" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://vishalkatti.com/posts/writing-robust-functions&amp;title=Check%20out%20this%20article%20on%20writing%20robust%20functions%20in%20R" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Check%20out%20this%20article%20on%20writing%20robust%20functions%20in%20R&amp;body=Check%20out%20this%20link:https://vishalkatti.com/posts/writing-robust-functions" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://vishalkatti.com/posts/writing-robust-functions" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="https://reddit.com/submit?url=https://vishalkatti.com/posts/writing-robust-functions&amp;title=Check%20out%20this%20article%20on%20writing%20robust%20functions%20in%20R" target="_blank" class="reddit">   <i class="fa-brands fa-reddit-alien fa-fw fa-lg"></i></a>
+</div></div>
+
 
 
 </body></html>

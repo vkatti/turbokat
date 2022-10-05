@@ -6,7 +6,8 @@ author: Vishal Katti
 date: 2021-07-27
 image: https://i.imgur.com/Zzk5SWf.gif
 categories: [R, reactable, drill-down]
-format: html
+citation: true
+license: "CC BY"
 ---
 
 ```{r setup, include=FALSE}

@@ -1,5 +1,6 @@
 ---
 title: "Katti's Blog"
+comments: false
 listing:
   contents: posts
   feed: 

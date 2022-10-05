@@ -23,8 +23,11 @@ website:
         href: https://www.linkedin.com/in/vishalkatti
       - icon: rss
         file: index.xml
+  comments: 
+    utterances:
+      repo: vkatti/turbokat
   page-footer: 
-    left: Vishal Katti ©️ 2022<br>made with 💖, R and [Quarto](https://quarto.org)
+    left: Vishal Katti {{< fa regular copyright >}} 2022<br>made with 💖, {{< fa brands r-project >}} and [Quarto](https://quarto.org)
     right: 
       - icon: github
         href: https://github.com/vkatti
@@ -34,18 +37,17 @@ website:
   twitter-card: 
     title: "Katti's Blog"
     image: "profile-pic.png"
+    creator: "@vishal_katti"
     site: "@vishal_katti"
     
   open-graph: true
-  comments: 
-    utterances:
-      repo: vkatti/turbokat
 format:
   html:
     theme: 
       light: litera
       dark: superhero
     code-link: true
+    code-copy: true
     code-fold: show
     code-tools: 
       toggle: true

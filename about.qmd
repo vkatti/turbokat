@@ -1,8 +1,9 @@
 ---
 title: "Vishal Katti"
+comments: false
 image: profile-pic.png
 about:
-  template: trestles
+  template: jolla
   links:
     - icon: twitter
       text: Twitter
