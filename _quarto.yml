@@ -13,6 +13,8 @@ website:
     right:
       - text: "About"
         file: about.qmd
+      - text: "Blog"
+        file: index.qmd
       - icon: github
         href: https://github.com/vkatti
       - icon: twitter
@@ -22,7 +24,7 @@ website:
       - icon: rss
         file: index.xml
   page-footer: 
-    left: Vishal Katti ©️ 2022<br>made with 💖, R and [quarto](https://quarto.org)
+    left: Vishal Katti ©️ 2022<br>made with 💖, R and [Quarto](https://quarto.org)
     right: 
       - icon: github
         href: https://github.com/vkatti
@@ -30,7 +32,10 @@ website:
         href: https://twitter.com/vishal_katti
   
   twitter-card: 
+    title: "Katti's Blog"
+    image: "profile-pic.png"
     site: "@vishal_katti"
+    
   open-graph: true
   comments: 
     utterances:
