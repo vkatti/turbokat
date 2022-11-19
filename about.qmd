@@ -8,6 +8,9 @@ about:
     - icon: twitter
       text: Twitter
       href: https://twitter.com/vishal_katti
+    - icon: mastodon
+      text: Fosstodon
+      href: https://fosstodon.org/@vishalkatti 
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/vishalkatti
@@ -28,7 +31,7 @@ H.S.S.C. in Physics, Chemistry and Mathematics \| Jun 2003 - Apr 2005
 
 ## Work
 
-**Mindtree Ltd.** *Bengaluru, India*  
+**LTIMindtree Ltd.** *Bengaluru, India*  
 Business Data Analyst \| Sep 2021 to Present
 
 **ExxonMobil Services & Technology Pvt. Ltd.** *Bengaluru, India*  

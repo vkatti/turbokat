@@ -19,6 +19,8 @@ website:
         href: https://github.com/vkatti
       - icon: twitter
         href: https://twitter.com/vishal_katti
+      - icon: mastodon
+        href: https://fosstodon.org/@vishalkatti
       - icon: linkedin
         href: https://www.linkedin.com/in/vishalkatti
       - icon: rss
@@ -33,7 +35,11 @@ website:
         href: https://github.com/vkatti
       - icon: twitter 
         href: https://twitter.com/vishal_katti
-  
+      - icon: mastodon
+        href: https://fosstodon.org/@vishalkatti
+      - icon: linkedin
+        href: https://www.linkedin.com/in/vishalkatti
+        
   twitter-card: 
     title: "Katti's Blog"
     image: "profile-pic.png"
