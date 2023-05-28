@@ -29,7 +29,7 @@ website:
     utterances:
       repo: vkatti/turbokat
   page-footer: 
-    left: Vishal Katti {{< fa regular copyright >}} 2022<br>made with 💖, {{< fa brands r-project >}} and [Quarto](https://quarto.org)
+    left: Vishal Katti {{< fa regular copyright >}} 2023<br>made with 💖, {{< fa brands r-project >}} and [Quarto](https://quarto.org)
     right: 
       - icon: github
         href: https://github.com/vkatti
