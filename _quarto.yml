@@ -15,6 +15,8 @@ website:
         file: about.qmd
       - text: "Blog"
         file: index.qmd
+      - text: "Hire Me!"
+        href: https://www.dropbox.com/scl/fi/pdr1h2e5i1pgrqkqzlk6p/2024-01-01_Vishal_Katti_Resume.pdf?rlkey=0ctlhdm0addzt5416k8592qrq&dl=0
       - icon: github
         href: https://github.com/vkatti
       - icon: twitter
@@ -29,7 +31,7 @@ website:
     utterances:
       repo: vkatti/turbokat
   page-footer: 
-    left: Vishal Katti {{< fa regular copyright >}} 2023<br>made with 💖, {{< fa brands r-project >}} and [Quarto](https://quarto.org)
+    left: Vishal Katti {{< fa regular copyright >}} 2024<br>made with 💖, {{< fa brands r-project >}} and [Quarto](https://quarto.org)
     right: 
       - icon: github
         href: https://github.com/vkatti
