@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/python-list-comprehension/index.html",
       "/posts/tidyr-pivot-wider/index.html",
       "/posts/tidyr-pivot-longer/index.html",
       "/posts/writing-robust-functions/index.html",

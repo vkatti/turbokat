@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vishalkatti.com/about.html</loc>
-    <lastmod>2023-12-31T14:25:18.754Z</lastmod>
+    <lastmod>2024-01-06T19:37:09.148Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/index.html</loc>
-    <lastmod>2023-12-31T14:25:19.691Z</lastmod>
+    <lastmod>2024-01-06T19:36:48.675Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/drilldown-with-reactable/index.html</loc>
-    <lastmod>2023-12-31T14:25:22.030Z</lastmod>
+    <lastmod>2024-01-06T19:36:51.449Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/programming-with-dplyr/index.html</loc>
-    <lastmod>2023-12-31T14:25:24.565Z</lastmod>
+    <lastmod>2024-01-06T19:36:54.914Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/python-list-comprehension/index.html</loc>
+    <lastmod>2024-01-06T19:36:55.990Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/R2VBA2PPT1/index.html</loc>
-    <lastmod>2023-12-31T14:25:25.857Z</lastmod>
+    <lastmod>2024-01-06T19:36:57.409Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/R2VBA2PPT2/index.html</loc>
-    <lastmod>2023-12-31T14:25:27.638Z</lastmod>
+    <lastmod>2024-01-06T19:36:59.214Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/tidyr-pivot-longer/index.html</loc>
-    <lastmod>2023-12-31T14:25:29.110Z</lastmod>
+    <lastmod>2024-01-06T19:37:00.729Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/tidyr-pivot-wider/index.html</loc>
-    <lastmod>2023-12-31T14:25:30.516Z</lastmod>
+    <lastmod>2024-01-06T19:37:02.191Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/writing-robust-functions/index.html</loc>
-    <lastmod>2023-12-31T14:25:32.389Z</lastmod>
+    <lastmod>2024-01-06T19:37:03.980Z</lastmod>
   </url>
 </urlset>

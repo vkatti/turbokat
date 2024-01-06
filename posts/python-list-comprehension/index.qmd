@@ -1,0 +1,258 @@
+---
+title: "Python - List Comprehension"
+subtitle: "Crafting Concise Lists with Python's List Comprehensions"
+abstract: "This post demonstrates Python's List Comprehension compared with the `for` loop and its usage." 
+author: Vishal Katti
+date: 2024-01-06
+image: https://i.imgur.com/JIedILu.gif
+categories: [Python, List]
+citation: true
+license: "CC BY"
+filters:
+  - social-share
+share:
+  permalink: "https://vishalkatti.com/posts/python-list-comprehension"
+  description: "Check out this article on List Comprehension in Python"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+---
+
+# Intro
+
+In the world of Python, lists are the most versatile containers for managing data. While `for` loops offer a traditional approach to creating and manipulating lists, Python offers a more elegant and efficient alternative: list comprehensions. Let's dive into this concise syntax and explore its advantages over traditional for loops.
+
+# Basic Syntax
+
+List comprehensions pack a powerful punch in a compact syntax. They allow you to create lists in a single line, combining iteration and expression evaluation within square brackets. Here's the most basic structure:
+
+``` python
+new_list = [expression for item in iterable]
+```
+
+where
+
+-   `expression` is the value or logic applied to each item, which will create the items of the new list
+-   `item` is the variable that represents each element of the iterable
+-   `iterable` is the variable over which we iterate or 'loop'. This could be a list, tuple, dictionary, string or anything which can be considered an `iterable` in Python.
+
+The equivalent `for` loop for the above operation is as follows:
+
+```python
+new_list = []
+for item in iterable:
+    new_list.append(expression)
+```
+
+
+Let's understand this with some working code. Suppose I have a list of numbers and I want a list that contains the same numbers multipled by 2 i.e. doubled.
+
+```{python}
+my_nums = [1, 2, 3, 4, 5]
+doubled_nums = [num*2 for num in my_nums]
+
+# Same operation using `for` loop
+doubled_nums_for = []
+for num in my_nums:
+  doubled_nums_for.append(num*2)
+
+
+print(doubled_nums)
+print(doubled_nums_for) # identical to `doubled_nums`
+```
+
+In the above Python code, `my_nums` is the iterable, the `num` variable in 2nd line represents each item in `my_nums` and `num*2` is the expression or logic that we apply to each `num`.
+
+let's take one more example with a `dictionary`.
+
+```{python}
+my_dict = {'Actor':'Tom', 'Director':'Tony', 'Writer':'Jim'}  
+# Bonus for guessing the movie!
+
+# new_list = [expression for item in iterable]
+roles = [role for role in my_dict.keys()]
+people = [person for person in my_dict.values()]
+
+print(roles)
+print(people)
+```
+
+As you can see, the `item` variable can be named anything as this variable is active only within the scope of the list comprehension.
+
+# Advanced Syntax: Filtering
+
+We use the following syntax when we want to create a new list with items that satisfy some condition.
+
+``` python
+filtered_list = [expression for item in iterable if condition]
+```
+
+where
+
+-   `condition` is any logical expression that return `True` or `False`
+
+Let's see an example. Suppose I have a list of sentences and I want to filtered list which has the word 'whisper' in them.
+
+```{python}
+sentence_list = [
+   "Sunrise paints the clouds in fiery hues, a silent alarm",
+   "Raindrops pitter-patter on cobblestones, a playful melo",
+   "Ocean waves whisper secrets to the sandy shore, tales o",
+   "Owl's amber eyes pierce the moonlit forest, a silent gu",
+   "Butterfly wings, stained glass windows fluttering throu",
+   "Laughter spills from a cozy cafe window, a warm invitat",
+   "Cracked pavement whispers forgotten stories, echoes of ",
+   "Starry sky, a canvas splashed with diamonds, whispers o",
+   "Spice-laden wind dances through the market, teasing the",
+   "Tiny snail embarks on a grand journey, a blade of grass"
+]
+
+
+filtered_list = [sen for sen in sentence_list if 'whisper' in sen]
+
+# Same operation using `for` loop
+filtered_list_for = []
+for sen in sentence_list:
+  if 'whisper' in sen:
+    filtered_list_for.append(sen)
+
+
+print(filtered_list)
+print(filtered_list_for) # identical to `filtered_list`
+```
+
+In the above code, the `condition` is `'whisper' in sen` which returns True or False for every `sen` sentence.
+
+Let's look at a more useful example. Here we create a JSON-formatted string using List Comprehension
+
+```{python}
+import pandas as pd
+import json
+
+# Sample DataFrame
+data = {'name': ['Alice', 'Bob', 'Charlie'], 
+        'age': [25, 30, 20], 
+        'city': ['New York', 'London', 'Paris']
+        }
+df = pd.DataFrame(data)
+
+# Convert DataFrame to JSON using list comprehension
+json_list = [row.to_json() for index, row in df.iterrows()]
+
+# Convert list to JSON and print
+for json_string in json_list:
+  print(json.dumps(json.loads(json_string), indent=4))
+
+
+```
+
+Here's what is happening in the code above.
+
+1.  Import Libraries:\
+    `import pandas as pd`: Imports the pandas library for working with DataFrames.\
+    `import json`: Imports the json library for working with JSON data.
+
+2.  Create DataFrame:\
+    `data = {...}`: Creates a dictionary containing data for three columns: 'name', 'age', and 'city'.\
+    `df = pd.DataFrame(data)`: Creates a DataFrame `df` from the dictionary `data.`
+
+3.  Convert DataFrame to JSON List:\
+    `json_list = [row.to_json() for index, row in df.iterrows()]`: This line uses list comprehension to convert each row of the DataFrame into a JSON string and stores them in a list called `json_list.`\
+    `iterrows()` iterates over the DataFrame, yielding index and row pairs.\
+    `row.to_json()` converts each row into a JSON string.
+
+4.  Print Pretty-Printed JSON:\
+    `for json_string in json_list:`: This loop iterates over each JSON string in the `json_list.`\
+    `print(json.dumps(json.loads(json_string), indent=4))`: This line prints the JSON string with proper indentation:\
+    `json.loads(json_string)` parses the JSON string into a Python dictionary.\
+    `json.dumps()` re-serializes the dictionary back into a JSON string, applying indentation for readability.
+
+# Advanced Syntax: If-Else
+
+The If-Else syntax allows us to take one action if the item satisfies a condition and another action if it does not. The syntax is as follows:
+
+``` python
+new_list = [true_expr if condition else false_expr for item in iterable] 
+```
+
+where
+
+-   `true_expr` is the expression which is evaluated when the `item` satisfies the `condition`
+-   `false_expr` is the expression which is evaluated when the `item` does not satisfy the `condition`
+
+Let's look at an example of this If-Else syntax. Suppose I have list of numbers with missing values. I want replace the missing values with the average value of the numbers.
+
+```{python}
+import statistics
+
+num_list = [10, 20, None, 40, None, 20, 10]
+
+# Filtering Syntax: Calculate mean with only the numbers which are not None
+mean = statistics.mean(num for num in num_list if num is not None)
+print(f"{mean=}")
+
+# If-Else Syntax
+clean_list = [num if num is not None else mean for num in num_list]
+
+# This can also be written as
+clean_list2 = [mean if num is None else num for num in num_list]
+
+
+# Same operation using `for` loop
+clean_list_for = []
+for num in num_list:
+  if num is None:
+    clean_list_for.append(mean)
+  else:
+    clean_list_for.append(num)
+
+print(clean_list)
+print(clean_list2)
+print(clean_list_for) # Identical to `clean_list` and `clean_list2`
+
+```
+
+# Real-world Usage
+
+I have personally encountered various scenarios in my data journey where I have come across List of Lists! List comprehension is a great way to quickly flatten list of lists in one line of code.
+
+```{python}
+# Create a list of lists containing strings
+words = [["hello", "world"], ["how", "are", "you"], ["today"]]
+
+# Nested Syntax
+flattened_words = [word for sublist in words for word in sublist]
+
+# Same Operation using `for` loop
+flattened_words_for = []
+for sublist in words:
+  for word in sublist:
+    flattened_words_for.append(word)
+
+print(flattened_words)
+print(flattened_words_for) # Identical to `flattened_words`
+```
+
+# So what's best?
+
+List comprehensions are ideal when:
+
+-   Creating a new list based on an existing iterable.
+-   Applying simple transformations or filtering to elements.
+-   Prioritizing concise and readable code.
+
+For loops are preferable when:
+
+-   Performing complex operations within the loop.
+-   Needing more control over the iteration process.
+-   Requiring side effects beyond list creation (e.g., printing, modifying variables).
+
+# Conclusion
+
+While list comprehensions offer a concise approach to list creation, for loops remain essential for broader iteration tasks in Python. For new developers, for loops are easier to understand and make far more sense than list comprehensions. They provide greater flexibility and control, allowing for complex operations, multiple statements within each iteration, and handling side effects (like printing, logging) that go beyond mere list creation. However, when the goal is straightforward list generation with simple transformations or filtering, list comprehensions often deliver a more elegant and efficient solution.
+
+# References
