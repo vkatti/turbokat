@@ -10,7 +10,299 @@
 <atom:link href="https://vishalkatti.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>Vishal Katti's Blog</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Sun, 28 Aug 2022 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 05 Jan 2024 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>Python - List Comprehension</title>
+  <dc:creator>Vishal Katti</dc:creator>
+  <link>https://vishalkatti.com/posts/python-list-comprehension/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>In the world of Python, lists are the most versatile containers for managing data. While <code>for</code> loops offer a traditional approach to creating and manipulating lists, Python offers a more elegant and efficient alternative: list comprehensions. Let’s dive into this concise syntax and explore its advantages over traditional for loops.</p>
+</section>
+<section id="basic-syntax" class="level1">
+<h1>Basic Syntax</h1>
+<p>List comprehensions pack a powerful punch in a compact syntax. They allow you to create lists in a single line, combining iteration and expression evaluation within square brackets. Here’s the most basic structure:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1">new_list <span class="op" style="color: #5E5E5E;">=</span> [expression <span class="cf" style="color: #003B4F;">for</span> item <span class="kw" style="color: #003B4F;">in</span> iterable]</span></code></pre></div>
+<p>where</p>
+<ul>
+<li><code>expression</code> is the value or logic applied to each item, which will create the items of the new list</li>
+<li><code>item</code> is the variable that represents each element of the iterable</li>
+<li><code>iterable</code> is the variable over which we iterate or ‘loop’. This could be a list, tuple, dictionary, string or anything which can be considered an <code>iterable</code> in Python.</li>
+</ul>
+<p>The equivalent <code>for</code> loop for the above operation is as follows:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1">new_list <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb2-2"><span class="cf" style="color: #003B4F;">for</span> item <span class="kw" style="color: #003B4F;">in</span> iterable:</span>
+<span id="cb2-3">    new_list.append(expression)</span></code></pre></div>
+<p>Let’s understand this with some working code. Suppose I have a list of numbers and I want a list that contains the same numbers multipled by 2 i.e.&nbsp;doubled.</p>
+<div class="cell" data-execution_count="1">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1">my_nums <span class="op" style="color: #5E5E5E;">=</span> [<span class="dv" style="color: #AD0000;">1</span>, <span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">4</span>, <span class="dv" style="color: #AD0000;">5</span>]</span>
+<span id="cb3-2">doubled_nums <span class="op" style="color: #5E5E5E;">=</span> [num<span class="op" style="color: #5E5E5E;">*</span><span class="dv" style="color: #AD0000;">2</span> <span class="cf" style="color: #003B4F;">for</span> num <span class="kw" style="color: #003B4F;">in</span> my_nums]</span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;"># Same operation using `for` loop</span></span>
+<span id="cb3-5">doubled_nums_for <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb3-6"><span class="cf" style="color: #003B4F;">for</span> num <span class="kw" style="color: #003B4F;">in</span> my_nums:</span>
+<span id="cb3-7">  doubled_nums_for.append(num<span class="op" style="color: #5E5E5E;">*</span><span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"></span>
+<span id="cb3-10"><span class="bu" style="color: null;">print</span>(doubled_nums)</span>
+<span id="cb3-11"><span class="bu" style="color: null;">print</span>(doubled_nums_for) <span class="co" style="color: #5E5E5E;"># identical to `doubled_nums`</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2, 4, 6, 8, 10]
+[2, 4, 6, 8, 10]</code></pre>
+</div>
+</div>
+<p>In the above Python code, <code>my_nums</code> is the iterable, the <code>num</code> variable in 2nd line represents each item in <code>my_nums</code> and <code>num*2</code> is the expression or logic that we apply to each <code>num</code>.</p>
+<p>let’s take one more example with a <code>dictionary</code>.</p>
+<div class="cell" data-execution_count="2">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1">my_dict <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">'Actor'</span>:<span class="st" style="color: #20794D;">'Tom'</span>, <span class="st" style="color: #20794D;">'Director'</span>:<span class="st" style="color: #20794D;">'Tony'</span>, <span class="st" style="color: #20794D;">'Writer'</span>:<span class="st" style="color: #20794D;">'Jim'</span>}  </span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;"># Bonus for guessing the movie!</span></span>
+<span id="cb5-3"></span>
+<span id="cb5-4"><span class="co" style="color: #5E5E5E;"># new_list = [expression for item in iterable]</span></span>
+<span id="cb5-5">roles <span class="op" style="color: #5E5E5E;">=</span> [role <span class="cf" style="color: #003B4F;">for</span> role <span class="kw" style="color: #003B4F;">in</span> my_dict.keys()]</span>
+<span id="cb5-6">people <span class="op" style="color: #5E5E5E;">=</span> [person <span class="cf" style="color: #003B4F;">for</span> person <span class="kw" style="color: #003B4F;">in</span> my_dict.values()]</span>
+<span id="cb5-7"></span>
+<span id="cb5-8"><span class="bu" style="color: null;">print</span>(roles)</span>
+<span id="cb5-9"><span class="bu" style="color: null;">print</span>(people)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Actor', 'Director', 'Writer']
+['Tom', 'Tony', 'Jim']</code></pre>
+</div>
+</div>
+<p>As you can see, the <code>item</code> variable can be named anything as this variable is active only within the scope of the list comprehension.</p>
+</section>
+<section id="advanced-syntax-filtering" class="level1">
+<h1>Advanced Syntax: Filtering</h1>
+<p>We use the following syntax when we want to create a new list with items that satisfy some condition.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1">filtered_list <span class="op" style="color: #5E5E5E;">=</span> [expression <span class="cf" style="color: #003B4F;">for</span> item <span class="kw" style="color: #003B4F;">in</span> iterable <span class="cf" style="color: #003B4F;">if</span> condition]</span></code></pre></div>
+<p>where</p>
+<ul>
+<li><code>condition</code> is any logical expression that return <code>True</code> or <code>False</code></li>
+</ul>
+<p>Let’s see an example. Suppose I have a list of sentences and I want to filtered list which has the word ‘whisper’ in them.</p>
+<div class="cell" data-execution_count="3">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1">sentence_list <span class="op" style="color: #5E5E5E;">=</span> [</span>
+<span id="cb8-2">   <span class="st" style="color: #20794D;">"Sunrise paints the clouds in fiery hues, a silent alarm"</span>,</span>
+<span id="cb8-3">   <span class="st" style="color: #20794D;">"Raindrops pitter-patter on cobblestones, a playful melo"</span>,</span>
+<span id="cb8-4">   <span class="st" style="color: #20794D;">"Ocean waves whisper secrets to the sandy shore, tales o"</span>,</span>
+<span id="cb8-5">   <span class="st" style="color: #20794D;">"Owl's amber eyes pierce the moonlit forest, a silent gu"</span>,</span>
+<span id="cb8-6">   <span class="st" style="color: #20794D;">"Butterfly wings, stained glass windows fluttering throu"</span>,</span>
+<span id="cb8-7">   <span class="st" style="color: #20794D;">"Laughter spills from a cozy cafe window, a warm invitat"</span>,</span>
+<span id="cb8-8">   <span class="st" style="color: #20794D;">"Cracked pavement whispers forgotten stories, echoes of "</span>,</span>
+<span id="cb8-9">   <span class="st" style="color: #20794D;">"Starry sky, a canvas splashed with diamonds, whispers o"</span>,</span>
+<span id="cb8-10">   <span class="st" style="color: #20794D;">"Spice-laden wind dances through the market, teasing the"</span>,</span>
+<span id="cb8-11">   <span class="st" style="color: #20794D;">"Tiny snail embarks on a grand journey, a blade of grass"</span></span>
+<span id="cb8-12">]</span>
+<span id="cb8-13"></span>
+<span id="cb8-14"></span>
+<span id="cb8-15">filtered_list <span class="op" style="color: #5E5E5E;">=</span> [sen <span class="cf" style="color: #003B4F;">for</span> sen <span class="kw" style="color: #003B4F;">in</span> sentence_list <span class="cf" style="color: #003B4F;">if</span> <span class="st" style="color: #20794D;">'whisper'</span> <span class="kw" style="color: #003B4F;">in</span> sen]</span>
+<span id="cb8-16"></span>
+<span id="cb8-17"><span class="co" style="color: #5E5E5E;"># Same operation using `for` loop</span></span>
+<span id="cb8-18">filtered_list_for <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb8-19"><span class="cf" style="color: #003B4F;">for</span> sen <span class="kw" style="color: #003B4F;">in</span> sentence_list:</span>
+<span id="cb8-20">  <span class="cf" style="color: #003B4F;">if</span> <span class="st" style="color: #20794D;">'whisper'</span> <span class="kw" style="color: #003B4F;">in</span> sen:</span>
+<span id="cb8-21">    filtered_list_for.append(sen)</span>
+<span id="cb8-22"></span>
+<span id="cb8-23"></span>
+<span id="cb8-24"><span class="bu" style="color: null;">print</span>(filtered_list)</span>
+<span id="cb8-25"><span class="bu" style="color: null;">print</span>(filtered_list_for) <span class="co" style="color: #5E5E5E;"># identical to `filtered_list`</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Ocean waves whisper secrets to the sandy shore, tales o', 'Cracked pavement whispers forgotten stories, echoes of ', 'Starry sky, a canvas splashed with diamonds, whispers o']
+['Ocean waves whisper secrets to the sandy shore, tales o', 'Cracked pavement whispers forgotten stories, echoes of ', 'Starry sky, a canvas splashed with diamonds, whispers o']</code></pre>
+</div>
+</div>
+<p>In the above code, the <code>condition</code> is <code>'whisper' in sen</code> which returns True or False for every <code>sen</code> sentence.</p>
+<p>Let’s look at a more useful example. Here we create a JSON-formatted string using List Comprehension</p>
+<div class="cell" data-execution_count="4">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="im" style="color: #00769E;">import</span> pandas <span class="im" style="color: #00769E;">as</span> pd</span>
+<span id="cb10-2"><span class="im" style="color: #00769E;">import</span> json</span>
+<span id="cb10-3"></span>
+<span id="cb10-4"><span class="co" style="color: #5E5E5E;"># Sample DataFrame</span></span>
+<span id="cb10-5">data <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">'name'</span>: [<span class="st" style="color: #20794D;">'Alice'</span>, <span class="st" style="color: #20794D;">'Bob'</span>, <span class="st" style="color: #20794D;">'Charlie'</span>], </span>
+<span id="cb10-6">        <span class="st" style="color: #20794D;">'age'</span>: [<span class="dv" style="color: #AD0000;">25</span>, <span class="dv" style="color: #AD0000;">30</span>, <span class="dv" style="color: #AD0000;">20</span>], </span>
+<span id="cb10-7">        <span class="st" style="color: #20794D;">'city'</span>: [<span class="st" style="color: #20794D;">'New York'</span>, <span class="st" style="color: #20794D;">'London'</span>, <span class="st" style="color: #20794D;">'Paris'</span>]</span>
+<span id="cb10-8">        }</span>
+<span id="cb10-9">df <span class="op" style="color: #5E5E5E;">=</span> pd.DataFrame(data)</span>
+<span id="cb10-10"></span>
+<span id="cb10-11"><span class="co" style="color: #5E5E5E;"># Convert DataFrame to JSON using list comprehension</span></span>
+<span id="cb10-12">json_list <span class="op" style="color: #5E5E5E;">=</span> [row.to_json() <span class="cf" style="color: #003B4F;">for</span> index, row <span class="kw" style="color: #003B4F;">in</span> df.iterrows()]</span>
+<span id="cb10-13"></span>
+<span id="cb10-14"><span class="co" style="color: #5E5E5E;"># Convert list to JSON and print</span></span>
+<span id="cb10-15"><span class="cf" style="color: #003B4F;">for</span> json_string <span class="kw" style="color: #003B4F;">in</span> json_list:</span>
+<span id="cb10-16">  <span class="bu" style="color: null;">print</span>(json.dumps(json.loads(json_string), indent<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">4</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+    "name": "Alice",
+    "age": 25,
+    "city": "New York"
+}
+{
+    "name": "Bob",
+    "age": 30,
+    "city": "London"
+}
+{
+    "name": "Charlie",
+    "age": 20,
+    "city": "Paris"
+}</code></pre>
+</div>
+</div>
+<p>Here’s what is happening in the code above.</p>
+<ol type="1">
+<li><p>Import Libraries:<br>
+<code>import pandas as pd</code>: Imports the pandas library for working with DataFrames.<br>
+<code>import json</code>: Imports the json library for working with JSON data.</p></li>
+<li><p>Create DataFrame:<br>
+<code>data = {...}</code>: Creates a dictionary containing data for three columns: ‘name’, ‘age’, and ‘city’.<br>
+<code>df = pd.DataFrame(data)</code>: Creates a DataFrame <code>df</code> from the dictionary <code>data.</code></p></li>
+<li><p>Convert DataFrame to JSON List:<br>
+<code>json_list = [row.to_json() for index, row in df.iterrows()]</code>: This line uses list comprehension to convert each row of the DataFrame into a JSON string and stores them in a list called <code>json_list.</code><br>
+<code>iterrows()</code> iterates over the DataFrame, yielding index and row pairs.<br>
+<code>row.to_json()</code> converts each row into a JSON string.</p></li>
+<li><p>Print Pretty-Printed JSON:<br>
+<code>for json_string in json_list:</code>: This loop iterates over each JSON string in the <code>json_list.</code><br>
+<code>print(json.dumps(json.loads(json_string), indent=4))</code>: This line prints the JSON string with proper indentation:<br>
+<code>json.loads(json_string)</code> parses the JSON string into a Python dictionary.<br>
+<code>json.dumps()</code> re-serializes the dictionary back into a JSON string, applying indentation for readability.</p></li>
+</ol>
+</section>
+<section id="advanced-syntax-if-else" class="level1">
+<h1>Advanced Syntax: If-Else</h1>
+<p>The If-Else syntax allows us to take one action if the item satisfies a condition and another action if it does not. The syntax is as follows:</p>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1">new_list <span class="op" style="color: #5E5E5E;">=</span> [true_expr <span class="cf" style="color: #003B4F;">if</span> condition <span class="cf" style="color: #003B4F;">else</span> false_expr <span class="cf" style="color: #003B4F;">for</span> item <span class="kw" style="color: #003B4F;">in</span> iterable] </span></code></pre></div>
+<p>where</p>
+<ul>
+<li><code>true_expr</code> is the expression which is evaluated when the <code>item</code> satisfies the <code>condition</code></li>
+<li><code>false_expr</code> is the expression which is evaluated when the <code>item</code> does not satisfy the <code>condition</code></li>
+</ul>
+<p>Let’s look at an example of this If-Else syntax. Suppose I have list of numbers with missing values. I want replace the missing values with the average value of the numbers.</p>
+<div class="cell" data-execution_count="5">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="im" style="color: #00769E;">import</span> statistics</span>
+<span id="cb13-2"></span>
+<span id="cb13-3">num_list <span class="op" style="color: #5E5E5E;">=</span> [<span class="dv" style="color: #AD0000;">10</span>, <span class="dv" style="color: #AD0000;">20</span>, <span class="va" style="color: #111111;">None</span>, <span class="dv" style="color: #AD0000;">40</span>, <span class="va" style="color: #111111;">None</span>, <span class="dv" style="color: #AD0000;">20</span>, <span class="dv" style="color: #AD0000;">10</span>]</span>
+<span id="cb13-4"></span>
+<span id="cb13-5"><span class="co" style="color: #5E5E5E;"># Filtering Syntax: Calculate mean with only the numbers which are not None</span></span>
+<span id="cb13-6">mean <span class="op" style="color: #5E5E5E;">=</span> statistics.mean(num <span class="cf" style="color: #003B4F;">for</span> num <span class="kw" style="color: #003B4F;">in</span> num_list <span class="cf" style="color: #003B4F;">if</span> num <span class="kw" style="color: #003B4F;">is</span> <span class="kw" style="color: #003B4F;">not</span> <span class="va" style="color: #111111;">None</span>)</span>
+<span id="cb13-7"><span class="bu" style="color: null;">print</span>(<span class="ss" style="color: #20794D;">f"</span><span class="sc" style="color: #5E5E5E;">{</span>mean<span class="op" style="color: #5E5E5E;">=</span><span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">"</span>)</span>
+<span id="cb13-8"></span>
+<span id="cb13-9"><span class="co" style="color: #5E5E5E;"># If-Else Syntax</span></span>
+<span id="cb13-10">clean_list <span class="op" style="color: #5E5E5E;">=</span> [num <span class="cf" style="color: #003B4F;">if</span> num <span class="kw" style="color: #003B4F;">is</span> <span class="kw" style="color: #003B4F;">not</span> <span class="va" style="color: #111111;">None</span> <span class="cf" style="color: #003B4F;">else</span> mean <span class="cf" style="color: #003B4F;">for</span> num <span class="kw" style="color: #003B4F;">in</span> num_list]</span>
+<span id="cb13-11"></span>
+<span id="cb13-12"><span class="co" style="color: #5E5E5E;"># This can also be written as</span></span>
+<span id="cb13-13">clean_list2 <span class="op" style="color: #5E5E5E;">=</span> [mean <span class="cf" style="color: #003B4F;">if</span> num <span class="kw" style="color: #003B4F;">is</span> <span class="va" style="color: #111111;">None</span> <span class="cf" style="color: #003B4F;">else</span> num <span class="cf" style="color: #003B4F;">for</span> num <span class="kw" style="color: #003B4F;">in</span> num_list]</span>
+<span id="cb13-14"></span>
+<span id="cb13-15"></span>
+<span id="cb13-16"><span class="co" style="color: #5E5E5E;"># Same operation using `for` loop</span></span>
+<span id="cb13-17">clean_list_for <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb13-18"><span class="cf" style="color: #003B4F;">for</span> num <span class="kw" style="color: #003B4F;">in</span> num_list:</span>
+<span id="cb13-19">  <span class="cf" style="color: #003B4F;">if</span> num <span class="kw" style="color: #003B4F;">is</span> <span class="va" style="color: #111111;">None</span>:</span>
+<span id="cb13-20">    clean_list_for.append(mean)</span>
+<span id="cb13-21">  <span class="cf" style="color: #003B4F;">else</span>:</span>
+<span id="cb13-22">    clean_list_for.append(num)</span>
+<span id="cb13-23"></span>
+<span id="cb13-24"><span class="bu" style="color: null;">print</span>(clean_list)</span>
+<span id="cb13-25"><span class="bu" style="color: null;">print</span>(clean_list2)</span>
+<span id="cb13-26"><span class="bu" style="color: null;">print</span>(clean_list_for) <span class="co" style="color: #5E5E5E;"># Identical to `clean_list` and `clean_list2`</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>mean=20
+[10, 20, 20, 40, 20, 20, 10]
+[10, 20, 20, 40, 20, 20, 10]
+[10, 20, 20, 40, 20, 20, 10]</code></pre>
+</div>
+</div>
+</section>
+<section id="real-world-usage" class="level1">
+<h1>Real-world Usage</h1>
+<p>I have personally encountered various scenarios in my data journey where I have come across List of Lists! List comprehension is a great way to quickly flatten list of lists in one line of code.</p>
+<div class="cell" data-execution_count="6">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="co" style="color: #5E5E5E;"># Create a list of lists containing strings</span></span>
+<span id="cb15-2">words <span class="op" style="color: #5E5E5E;">=</span> [[<span class="st" style="color: #20794D;">"hello"</span>, <span class="st" style="color: #20794D;">"world"</span>], [<span class="st" style="color: #20794D;">"how"</span>, <span class="st" style="color: #20794D;">"are"</span>, <span class="st" style="color: #20794D;">"you"</span>], [<span class="st" style="color: #20794D;">"today"</span>]]</span>
+<span id="cb15-3"></span>
+<span id="cb15-4"><span class="co" style="color: #5E5E5E;"># Nested Syntax</span></span>
+<span id="cb15-5">flattened_words <span class="op" style="color: #5E5E5E;">=</span> [word <span class="cf" style="color: #003B4F;">for</span> sublist <span class="kw" style="color: #003B4F;">in</span> words <span class="cf" style="color: #003B4F;">for</span> word <span class="kw" style="color: #003B4F;">in</span> sublist]</span>
+<span id="cb15-6"></span>
+<span id="cb15-7"><span class="co" style="color: #5E5E5E;"># Same Operation using `for` loop</span></span>
+<span id="cb15-8">flattened_words_for <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb15-9"><span class="cf" style="color: #003B4F;">for</span> sublist <span class="kw" style="color: #003B4F;">in</span> words:</span>
+<span id="cb15-10">  <span class="cf" style="color: #003B4F;">for</span> word <span class="kw" style="color: #003B4F;">in</span> sublist:</span>
+<span id="cb15-11">    flattened_words_for.append(word)</span>
+<span id="cb15-12"></span>
+<span id="cb15-13"><span class="bu" style="color: null;">print</span>(flattened_words)</span>
+<span id="cb15-14"><span class="bu" style="color: null;">print</span>(flattened_words_for) <span class="co" style="color: #5E5E5E;"># Identical to `flattened_words`</span></span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['hello', 'world', 'how', 'are', 'you', 'today']
+['hello', 'world', 'how', 'are', 'you', 'today']</code></pre>
+</div>
+</div>
+</section>
+<section id="so-whats-best" class="level1">
+<h1>So what’s best?</h1>
+<p>List comprehensions are ideal when:</p>
+<ul>
+<li>Creating a new list based on an existing iterable.</li>
+<li>Applying simple transformations or filtering to elements.</li>
+<li>Prioritizing concise and readable code.</li>
+</ul>
+<p>For loops are preferable when:</p>
+<ul>
+<li>Performing complex operations within the loop.</li>
+<li>Needing more control over the iteration process.</li>
+<li>Requiring side effects beyond list creation (e.g., printing, modifying variables).</li>
+</ul>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>While list comprehensions offer a concise approach to list creation, for loops remain essential for broader iteration tasks in Python. For new developers, for loops are easier to understand and make far more sense than list comprehensions. They provide greater flexibility and control, allowing for complex operations, multiple statements within each iteration, and handling side effects (like printing, logging) that go beyond mere list creation. However, when the goal is straightforward list generation with simple transformations or filtering, list comprehensions often deliver a more elegant and efficient solution.</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2024,
+  author = {Vishal Katti},
+  editor = {},
+  title = {Python - {List} {Comprehension}},
+  date = {2024-01-06},
+  url = {https://vishalkatti.com/posts/python-list-comprehension},
+  langid = {en},
+  abstract = {This post demonstrates Python’s List Comprehension
+    compared with the `for` loop and its usage.}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2024" class="csl-entry quarto-appendix-citeas">
+Vishal Katti. 2024. <span>“Python - List Comprehension.”</span> January
+6, 2024. <a href="https://vishalkatti.com/posts/python-list-comprehension">https://vishalkatti.com/posts/python-list-comprehension</a>.
+</div></div></section></div> ]]></description>
+  <category>Python</category>
+  <category>List</category>
+  <guid>https://vishalkatti.com/posts/python-list-comprehension/index.html</guid>
+  <pubDate>Fri, 05 Jan 2024 18:30:00 GMT</pubDate>
+  <media:content url="https://i.imgur.com/JIedILu.gif" medium="image" type="image/gif"/>
+</item>
 <item>
   <title>Pivoting your tables with Tidyr: Part II</title>
   <dc:creator>Vishal Katti</dc:creator>

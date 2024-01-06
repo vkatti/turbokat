@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vishal Katti">
+<meta name="dcterms.date" content="2024-01-06">
+
+<title>Vishal Katti - Python - List Comprehension</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Vishal Katti - Python - List Comprehension">
+<meta property="og:description" content="This post demonstrates Python’s List Comprehension compared with the for loop and its usage.">
+<meta property="og:image" content="https://i.imgur.com/JIedILu.gif">
+<meta property="og:site-name" content="Vishal Katti">
+<meta name="twitter:title" content="Katti’s Blog">
+<meta name="twitter:description" content="This post demonstrates Python’s List Comprehension compared with the for loop and its usage.">
+<meta name="twitter:image" content="https://vishalkatti.com/profile-pic.png">
+<meta name="twitter:creator" content="@vishal_katti">
+<meta name="twitter:image-height" content="612">
+<meta name="twitter:image-width" content="612">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Vishal Katti</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/pdr1h2e5i1pgrqkqzlk6p/2024-01-01_Vishal_Katti_Resume.pdf?rlkey=0ctlhdm0addzt5416k8592qrq&amp;dl=0">Hire Me!</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"><i class="bi bi-mastodon" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Python - List Comprehension</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+            <p class="subtitle lead">Crafting Concise Lists with Python’s List Comprehensions</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">List</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vishal Katti </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 6, 2024</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="abstract-title">Abstract</div>
+      This post demonstrates Python’s List Comprehension compared with the <code>for</code> loop and its usage.
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
+  <li><a href="#basic-syntax" id="toc-basic-syntax" class="nav-link" data-scroll-target="#basic-syntax">Basic Syntax</a></li>
+  <li><a href="#advanced-syntax-filtering" id="toc-advanced-syntax-filtering" class="nav-link" data-scroll-target="#advanced-syntax-filtering">Advanced Syntax: Filtering</a></li>
+  <li><a href="#advanced-syntax-if-else" id="toc-advanced-syntax-if-else" class="nav-link" data-scroll-target="#advanced-syntax-if-else">Advanced Syntax: If-Else</a></li>
+  <li><a href="#real-world-usage" id="toc-real-world-usage" class="nav-link" data-scroll-target="#real-world-usage">Real-world Usage</a></li>
+  <li><a href="#so-whats-best" id="toc-so-whats-best" class="nav-link" data-scroll-target="#so-whats-best">So what’s best?</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>In the world of Python, lists are the most versatile containers for managing data. While <code>for</code> loops offer a traditional approach to creating and manipulating lists, Python offers a more elegant and efficient alternative: list comprehensions. Let’s dive into this concise syntax and explore its advantages over traditional for loops.</p>
+</section>
+<section id="basic-syntax" class="level1">
+<h1>Basic Syntax</h1>
+<p>List comprehensions pack a powerful punch in a compact syntax. They allow you to create lists in a single line, combining iteration and expression evaluation within square brackets. Here’s the most basic structure:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>new_list <span class="op">=</span> [expression <span class="cf">for</span> item <span class="kw">in</span> iterable]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>where</p>
+<ul>
+<li><code>expression</code> is the value or logic applied to each item, which will create the items of the new list</li>
+<li><code>item</code> is the variable that represents each element of the iterable</li>
+<li><code>iterable</code> is the variable over which we iterate or ‘loop’. This could be a list, tuple, dictionary, string or anything which can be considered an <code>iterable</code> in Python.</li>
+</ul>
+<p>The equivalent <code>for</code> loop for the above operation is as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>new_list <span class="op">=</span> []</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="cf">for</span> item <span class="kw">in</span> iterable:</span>
+<span id="cb2-3"><a href="#cb2-3"></a>    new_list.append(expression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s understand this with some working code. Suppose I have a list of numbers and I want a list that contains the same numbers multipled by 2 i.e.&nbsp;doubled.</p>
+<div class="cell" data-execution_count="1">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>my_nums <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb3-2"><a href="#cb3-2"></a>doubled_nums <span class="op">=</span> [num<span class="op">*</span><span class="dv">2</span> <span class="cf">for</span> num <span class="kw">in</span> my_nums]</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Same operation using `for` loop</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>doubled_nums_for <span class="op">=</span> []</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="cf">for</span> num <span class="kw">in</span> my_nums:</span>
+<span id="cb3-7"><a href="#cb3-7"></a>  doubled_nums_for.append(num<span class="op">*</span><span class="dv">2</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="bu">print</span>(doubled_nums)</span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="bu">print</span>(doubled_nums_for) <span class="co"># identical to `doubled_nums`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2, 4, 6, 8, 10]
+[2, 4, 6, 8, 10]</code></pre>
+</div>
+</div>
+<p>In the above Python code, <code>my_nums</code> is the iterable, the <code>num</code> variable in 2nd line represents each item in <code>my_nums</code> and <code>num*2</code> is the expression or logic that we apply to each <code>num</code>.</p>
+<p>let’s take one more example with a <code>dictionary</code>.</p>
+<div class="cell" data-execution_count="2">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>my_dict <span class="op">=</span> {<span class="st">'Actor'</span>:<span class="st">'Tom'</span>, <span class="st">'Director'</span>:<span class="st">'Tony'</span>, <span class="st">'Writer'</span>:<span class="st">'Jim'</span>}  </span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Bonus for guessing the movie!</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># new_list = [expression for item in iterable]</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>roles <span class="op">=</span> [role <span class="cf">for</span> role <span class="kw">in</span> my_dict.keys()]</span>
+<span id="cb5-6"><a href="#cb5-6"></a>people <span class="op">=</span> [person <span class="cf">for</span> person <span class="kw">in</span> my_dict.values()]</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="bu">print</span>(roles)</span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="bu">print</span>(people)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Actor', 'Director', 'Writer']
+['Tom', 'Tony', 'Jim']</code></pre>
+</div>
+</div>
+<p>As you can see, the <code>item</code> variable can be named anything as this variable is active only within the scope of the list comprehension.</p>
+</section>
+<section id="advanced-syntax-filtering" class="level1">
+<h1>Advanced Syntax: Filtering</h1>
+<p>We use the following syntax when we want to create a new list with items that satisfy some condition.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>filtered_list <span class="op">=</span> [expression <span class="cf">for</span> item <span class="kw">in</span> iterable <span class="cf">if</span> condition]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>where</p>
+<ul>
+<li><code>condition</code> is any logical expression that return <code>True</code> or <code>False</code></li>
+</ul>
+<p>Let’s see an example. Suppose I have a list of sentences and I want to filtered list which has the word ‘whisper’ in them.</p>
+<div class="cell" data-execution_count="3">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>sentence_list <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2"></a>   <span class="st">"Sunrise paints the clouds in fiery hues, a silent alarm"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>   <span class="st">"Raindrops pitter-patter on cobblestones, a playful melo"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>   <span class="st">"Ocean waves whisper secrets to the sandy shore, tales o"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>   <span class="st">"Owl's amber eyes pierce the moonlit forest, a silent gu"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6"></a>   <span class="st">"Butterfly wings, stained glass windows fluttering throu"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7"></a>   <span class="st">"Laughter spills from a cozy cafe window, a warm invitat"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8"></a>   <span class="st">"Cracked pavement whispers forgotten stories, echoes of "</span>,</span>
+<span id="cb8-9"><a href="#cb8-9"></a>   <span class="st">"Starry sky, a canvas splashed with diamonds, whispers o"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10"></a>   <span class="st">"Spice-laden wind dances through the market, teasing the"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11"></a>   <span class="st">"Tiny snail embarks on a grand journey, a blade of grass"</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>]</span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>filtered_list <span class="op">=</span> [sen <span class="cf">for</span> sen <span class="kw">in</span> sentence_list <span class="cf">if</span> <span class="st">'whisper'</span> <span class="kw">in</span> sen]</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co"># Same operation using `for` loop</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>filtered_list_for <span class="op">=</span> []</span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="cf">for</span> sen <span class="kw">in</span> sentence_list:</span>
+<span id="cb8-20"><a href="#cb8-20"></a>  <span class="cf">if</span> <span class="st">'whisper'</span> <span class="kw">in</span> sen:</span>
+<span id="cb8-21"><a href="#cb8-21"></a>    filtered_list_for.append(sen)</span>
+<span id="cb8-22"><a href="#cb8-22"></a></span>
+<span id="cb8-23"><a href="#cb8-23"></a></span>
+<span id="cb8-24"><a href="#cb8-24"></a><span class="bu">print</span>(filtered_list)</span>
+<span id="cb8-25"><a href="#cb8-25"></a><span class="bu">print</span>(filtered_list_for) <span class="co"># identical to `filtered_list`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Ocean waves whisper secrets to the sandy shore, tales o', 'Cracked pavement whispers forgotten stories, echoes of ', 'Starry sky, a canvas splashed with diamonds, whispers o']
+['Ocean waves whisper secrets to the sandy shore, tales o', 'Cracked pavement whispers forgotten stories, echoes of ', 'Starry sky, a canvas splashed with diamonds, whispers o']</code></pre>
+</div>
+</div>
+<p>In the above code, the <code>condition</code> is <code>'whisper' in sen</code> which returns True or False for every <code>sen</code> sentence.</p>
+<p>Let’s look at a more useful example. Here we create a JSON-formatted string using List Comprehension</p>
+<div class="cell" data-execution_count="4">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="im">import</span> json</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># Sample DataFrame</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>data <span class="op">=</span> {<span class="st">'name'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>], </span>
+<span id="cb10-6"><a href="#cb10-6"></a>        <span class="st">'age'</span>: [<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">20</span>], </span>
+<span id="cb10-7"><a href="#cb10-7"></a>        <span class="st">'city'</span>: [<span class="st">'New York'</span>, <span class="st">'London'</span>, <span class="st">'Paris'</span>]</span>
+<span id="cb10-8"><a href="#cb10-8"></a>        }</span>
+<span id="cb10-9"><a href="#cb10-9"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co"># Convert DataFrame to JSON using list comprehension</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>json_list <span class="op">=</span> [row.to_json() <span class="cf">for</span> index, row <span class="kw">in</span> df.iterrows()]</span>
+<span id="cb10-13"><a href="#cb10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co"># Convert list to JSON and print</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="cf">for</span> json_string <span class="kw">in</span> json_list:</span>
+<span id="cb10-16"><a href="#cb10-16"></a>  <span class="bu">print</span>(json.dumps(json.loads(json_string), indent<span class="op">=</span><span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+    "name": "Alice",
+    "age": 25,
+    "city": "New York"
+}
+{
+    "name": "Bob",
+    "age": 30,
+    "city": "London"
+}
+{
+    "name": "Charlie",
+    "age": 20,
+    "city": "Paris"
+}</code></pre>
+</div>
+</div>
+<p>Here’s what is happening in the code above.</p>
+<ol type="1">
+<li><p>Import Libraries:<br>
+<code>import pandas as pd</code>: Imports the pandas library for working with DataFrames.<br>
+<code>import json</code>: Imports the json library for working with JSON data.</p></li>
+<li><p>Create DataFrame:<br>
+<code>data = {...}</code>: Creates a dictionary containing data for three columns: ‘name’, ‘age’, and ‘city’.<br>
+<code>df = pd.DataFrame(data)</code>: Creates a DataFrame <code>df</code> from the dictionary <code>data.</code></p></li>
+<li><p>Convert DataFrame to JSON List:<br>
+<code>json_list = [row.to_json() for index, row in df.iterrows()]</code>: This line uses list comprehension to convert each row of the DataFrame into a JSON string and stores them in a list called <code>json_list.</code><br>
+<code>iterrows()</code> iterates over the DataFrame, yielding index and row pairs.<br>
+<code>row.to_json()</code> converts each row into a JSON string.</p></li>
+<li><p>Print Pretty-Printed JSON:<br>
+<code>for json_string in json_list:</code>: This loop iterates over each JSON string in the <code>json_list.</code><br>
+<code>print(json.dumps(json.loads(json_string), indent=4))</code>: This line prints the JSON string with proper indentation:<br>
+<code>json.loads(json_string)</code> parses the JSON string into a Python dictionary.<br>
+<code>json.dumps()</code> re-serializes the dictionary back into a JSON string, applying indentation for readability.</p></li>
+</ol>
+</section>
+<section id="advanced-syntax-if-else" class="level1">
+<h1>Advanced Syntax: If-Else</h1>
+<p>The If-Else syntax allows us to take one action if the item satisfies a condition and another action if it does not. The syntax is as follows:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>new_list <span class="op">=</span> [true_expr <span class="cf">if</span> condition <span class="cf">else</span> false_expr <span class="cf">for</span> item <span class="kw">in</span> iterable] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>where</p>
+<ul>
+<li><code>true_expr</code> is the expression which is evaluated when the <code>item</code> satisfies the <code>condition</code></li>
+<li><code>false_expr</code> is the expression which is evaluated when the <code>item</code> does not satisfy the <code>condition</code></li>
+</ul>
+<p>Let’s look at an example of this If-Else syntax. Suppose I have list of numbers with missing values. I want replace the missing values with the average value of the numbers.</p>
+<div class="cell" data-execution_count="5">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">import</span> statistics</span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>num_list <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="va">None</span>, <span class="dv">40</span>, <span class="va">None</span>, <span class="dv">20</span>, <span class="dv">10</span>]</span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co"># Filtering Syntax: Calculate mean with only the numbers which are not None</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>mean <span class="op">=</span> statistics.mean(num <span class="cf">for</span> num <span class="kw">in</span> num_list <span class="cf">if</span> num <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>)</span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>mean<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co"># If-Else Syntax</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>clean_list <span class="op">=</span> [num <span class="cf">if</span> num <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> mean <span class="cf">for</span> num <span class="kw">in</span> num_list]</span>
+<span id="cb13-11"><a href="#cb13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="co"># This can also be written as</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>clean_list2 <span class="op">=</span> [mean <span class="cf">if</span> num <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> num <span class="cf">for</span> num <span class="kw">in</span> num_list]</span>
+<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a></span>
+<span id="cb13-16"><a href="#cb13-16"></a><span class="co"># Same operation using `for` loop</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a>clean_list_for <span class="op">=</span> []</span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="cf">for</span> num <span class="kw">in</span> num_list:</span>
+<span id="cb13-19"><a href="#cb13-19"></a>  <span class="cf">if</span> num <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb13-20"><a href="#cb13-20"></a>    clean_list_for.append(mean)</span>
+<span id="cb13-21"><a href="#cb13-21"></a>  <span class="cf">else</span>:</span>
+<span id="cb13-22"><a href="#cb13-22"></a>    clean_list_for.append(num)</span>
+<span id="cb13-23"><a href="#cb13-23"></a></span>
+<span id="cb13-24"><a href="#cb13-24"></a><span class="bu">print</span>(clean_list)</span>
+<span id="cb13-25"><a href="#cb13-25"></a><span class="bu">print</span>(clean_list2)</span>
+<span id="cb13-26"><a href="#cb13-26"></a><span class="bu">print</span>(clean_list_for) <span class="co"># Identical to `clean_list` and `clean_list2`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>mean=20
+[10, 20, 20, 40, 20, 20, 10]
+[10, 20, 20, 40, 20, 20, 10]
+[10, 20, 20, 40, 20, 20, 10]</code></pre>
+</div>
+</div>
+</section>
+<section id="real-world-usage" class="level1">
+<h1>Real-world Usage</h1>
+<p>I have personally encountered various scenarios in my data journey where I have come across List of Lists! List comprehension is a great way to quickly flatten list of lists in one line of code.</p>
+<div class="cell" data-execution_count="6">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Create a list of lists containing strings</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>words <span class="op">=</span> [[<span class="st">"hello"</span>, <span class="st">"world"</span>], [<span class="st">"how"</span>, <span class="st">"are"</span>, <span class="st">"you"</span>], [<span class="st">"today"</span>]]</span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># Nested Syntax</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>flattened_words <span class="op">=</span> [word <span class="cf">for</span> sublist <span class="kw">in</span> words <span class="cf">for</span> word <span class="kw">in</span> sublist]</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co"># Same Operation using `for` loop</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>flattened_words_for <span class="op">=</span> []</span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="cf">for</span> sublist <span class="kw">in</span> words:</span>
+<span id="cb15-10"><a href="#cb15-10"></a>  <span class="cf">for</span> word <span class="kw">in</span> sublist:</span>
+<span id="cb15-11"><a href="#cb15-11"></a>    flattened_words_for.append(word)</span>
+<span id="cb15-12"><a href="#cb15-12"></a></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="bu">print</span>(flattened_words)</span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="bu">print</span>(flattened_words_for) <span class="co"># Identical to `flattened_words`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['hello', 'world', 'how', 'are', 'you', 'today']
+['hello', 'world', 'how', 'are', 'you', 'today']</code></pre>
+</div>
+</div>
+</section>
+<section id="so-whats-best" class="level1">
+<h1>So what’s best?</h1>
+<p>List comprehensions are ideal when:</p>
+<ul>
+<li>Creating a new list based on an existing iterable.</li>
+<li>Applying simple transformations or filtering to elements.</li>
+<li>Prioritizing concise and readable code.</li>
+</ul>
+<p>For loops are preferable when:</p>
+<ul>
+<li>Performing complex operations within the loop.</li>
+<li>Needing more control over the iteration process.</li>
+<li>Requiring side effects beyond list creation (e.g., printing, modifying variables).</li>
+</ul>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>While list comprehensions offer a concise approach to list creation, for loops remain essential for broader iteration tasks in Python. For new developers, for loops are easier to understand and make far more sense than list comprehensions. They provide greater flexibility and control, allowing for complex operations, multiple statements within each iteration, and handling side effects (like printing, logging) that go beyond mere list creation. However, when the goal is straightforward list generation with simple transformations or filtering, list comprehensions often deliver a more elegant and efficient solution.</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2024,
+  author = {Vishal Katti},
+  editor = {},
+  title = {Python - {List} {Comprehension}},
+  date = {2024-01-06},
+  url = {https://vishalkatti.com/posts/python-list-comprehension},
+  langid = {en},
+  abstract = {This post demonstrates Python’s List Comprehension
+    compared with the `for` loop and its usage.}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2024" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Vishal Katti. 2024. <span>“Python - List Comprehension.”</span> January
+6, 2024. <a href="https://vishalkatti.com/posts/python-list-comprehension">https://vishalkatti.com/posts/python-list-comprehension</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/vkatti">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/vishal_katti">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@vishalkatti">
+      <i class="bi bi-mastodon" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://vishalkatti.com/posts/python-list-comprehension&amp;text=Check out this article on List Comprehension in Python" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://vishalkatti.com/posts/python-list-comprehension&amp;title=Check out this article on List Comprehension in Python" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Check out this article on List Comprehension in Python&amp;body=Check out this link:https://vishalkatti.com/posts/python-list-comprehension" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://vishalkatti.com/posts/python-list-comprehension" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="https://reddit.com/submit?url=https://vishalkatti.com/posts/python-list-comprehension&amp;title=Check out this article on List Comprehension in Python" target="_blank" class="reddit">   <i class="fa-brands fa-reddit-alien fa-fw fa-lg"></i></a></div></div>
+
+
+
+</body></html>
