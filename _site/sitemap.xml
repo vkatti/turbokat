@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vishalkatti.com/about.html</loc>
-    <lastmod>2024-01-06T19:37:09.148Z</lastmod>
+    <lastmod>2024-02-20T06:29:55.807Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/index.html</loc>
-    <lastmod>2024-01-06T19:36:48.675Z</lastmod>
+    <lastmod>2024-02-20T07:55:09.004Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vishalkatti.com/posts/date-format/index.html</loc>
+    <lastmod>2024-02-20T07:55:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/drilldown-with-reactable/index.html</loc>
-    <lastmod>2024-01-06T19:36:51.449Z</lastmod>
+    <lastmod>2024-02-20T06:30:00.923Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/programming-with-dplyr/index.html</loc>
-    <lastmod>2024-01-06T19:36:54.914Z</lastmod>
+    <lastmod>2024-02-20T06:30:03.558Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/python-list-comprehension/index.html</loc>
-    <lastmod>2024-01-06T19:36:55.990Z</lastmod>
+    <lastmod>2024-02-20T06:30:04.604Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/R2VBA2PPT1/index.html</loc>
-    <lastmod>2024-01-06T19:36:57.409Z</lastmod>
+    <lastmod>2024-02-20T06:30:05.939Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/R2VBA2PPT2/index.html</loc>
-    <lastmod>2024-01-06T19:36:59.214Z</lastmod>
+    <lastmod>2024-02-20T06:30:07.674Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/tidyr-pivot-longer/index.html</loc>
-    <lastmod>2024-01-06T19:37:00.729Z</lastmod>
+    <lastmod>2024-02-20T06:30:09.086Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/tidyr-pivot-wider/index.html</loc>
-    <lastmod>2024-01-06T19:37:02.191Z</lastmod>
+    <lastmod>2024-02-20T06:30:10.589Z</lastmod>
   </url>
   <url>
     <loc>https://vishalkatti.com/posts/writing-robust-functions/index.html</loc>
-    <lastmod>2024-01-06T19:37:03.980Z</lastmod>
+    <lastmod>2024-02-20T06:30:12.423Z</lastmod>
   </url>
 </urlset>

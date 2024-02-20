@@ -15,8 +15,8 @@ website:
         file: about.qmd
       - text: "Blog"
         file: index.qmd
-      - text: "Hire Me!"
-        href: https://www.dropbox.com/scl/fi/pdr1h2e5i1pgrqkqzlk6p/2024-01-01_Vishal_Katti_Resume.pdf?rlkey=0ctlhdm0addzt5416k8592qrq&dl=0
+      - text: "CV"
+        href: https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&dl=0
       - icon: github
         href: https://github.com/vkatti
       - icon: twitter
