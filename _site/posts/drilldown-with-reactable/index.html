@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Vishal Katti">
 <meta name="dcterms.date" content="2021-07-27">
@@ -16,11 +16,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -45,43 +46,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -91,6 +62,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../VK Logo.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -109,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -118,77 +96,81 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="../../site_libs/core-js-2.5.3/shim.min.js"></script><script src="../../site_libs/react-17.0.0/react.min.js"></script><script src="../../site_libs/react-17.0.0/react-dom.min.js"></script><script src="../../site_libs/reactwidget-1.0.0/react-tools.js"></script><script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="../../site_libs/reactable-binding-0.3.0/reactable.js"></script><link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Vishal Katti - Interactive Drill-down Tables using {reactable}">
 <meta property="og:description" content="This post demonstrates how to use the {reactable} package to create multi-level drill-down tables having hidden rows">
 <meta property="og:image" content="https://i.imgur.com/Zzk5SWf.gif">
-<meta property="og:site-name" content="Vishal Katti">
+<meta property="og:site_name" content="Vishal Katti">
 <meta name="twitter:title" content="Katti’s Blog">
 <meta name="twitter:description" content="This post demonstrates how to use the {reactable} package to create multi-level drill-down tables having hidden rows">
-<meta name="twitter:image" content="https://vishalkatti.com/profile-pic.png">
+<meta name="twitter:image" content="https://i.imgur.com/Zzk5SWf.gif">
 <meta name="twitter:creator" content="@vishal_katti">
-<meta name="twitter:image-height" content="612">
-<meta name="twitter:image-width" content="612">
+<meta name="twitter:site" content="@vishal_katti">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vishal Katti</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">Blog</a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0">CV</a>
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0"> 
+<span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"> <i class="bi bi-twitter" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"> <i class="bi bi-mastodon" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"> <i class="bi bi-linkedin" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-<div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
@@ -218,12 +200,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <p class="date">July 27, 2021</p>
       </div>
     </div>
+    
       
     </div>
     
   <div>
     <div class="abstract">
-      <div class="abstract-title">Abstract</div>
+      <div class="block-title">Abstract</div>
       This post demonstrates how to use the {reactable} package to create multi-level drill-down tables having hidden rows
     </div>
   </div>
@@ -247,12 +230,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><p>We often come across denormalized data that has 2 or more levels of information. For example, top-level info like course info with data fields like course id, course name, description, start/end date and second-level info like student info with data fields like with student id, student name, age and gender. We may also have these two groups of data as separate tables with a primary-key foreign-key design, usually from a well-designed SQL database.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -264,7 +247,7 @@ Note
 <section id="top-level-data-course" class="level2"><h2 class="anchored" data-anchor-id="top-level-data-course">Top-Level data: <strong>course</strong>
 </h2>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(dplyr, <span class="at">quietly =</span> <span class="cn">TRUE</span>, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(dplyr, <span class="at">quietly =</span> <span class="cn">TRUE</span>, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(rmarkdown, <span class="at">quietly =</span> <span class="cn">TRUE</span>, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
 <span id="cb1-4"><a href="#cb1-4"></a>course <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">course_id   =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
@@ -274,7 +257,6 @@ Note
 <span id="cb1-8"><a href="#cb1-8"></a></span>
 <span id="cb1-9"><a href="#cb1-9"></a><span class="fu">paged_table</span>(course)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["course_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["course_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["start_date"],"name":[3],"type":["date"],"align":["right"]},{"label":["end_date"],"name":[4],"type":["date"],"align":["right"]}],"data":[{"1":"1","2":"Course A","3":"2021-01-01","4":"2021-01-31"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28"},{"1":"3","2":"Course C","3":"2021-03-01","4":"2021-03-31"},{"1":"4","2":"Course D","3":"2021-04-01","4":"2021-04-30"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -285,7 +267,7 @@ Note
 </section><section id="second-level-data-student" class="level2"><h2 class="anchored" data-anchor-id="second-level-data-student">Second Level Data: <strong>student</strong>
 </h2>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>student <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">s_id      =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
 <span id="cb2-3"><a href="#cb2-3"></a>                  <span class="at">s_name    =</span> <span class="fu">paste</span>(<span class="st">"Student"</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]),</span>
 <span id="cb2-4"><a href="#cb2-4"></a>                  <span class="at">gender    =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"X"</span>,<span class="st">"Y"</span>,<span class="st">"Z"</span>), <span class="dv">20</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
@@ -294,7 +276,6 @@ Note
 <span id="cb2-7"><a href="#cb2-7"></a></span>
 <span id="cb2-8"><a href="#cb2-8"></a><span class="fu">paged_table</span>(student)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["s_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["s_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[3],"type":["chr"],"align":["left"]},{"label":["age"],"name":[4],"type":["int"],"align":["right"]},{"label":["course_id"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"Student A","3":"X","4":"21","5":"3"},{"1":"2","2":"Student B","3":"X","4":"22","5":"4"},{"1":"3","2":"Student C","3":"X","4":"30","5":"3"},{"1":"4","2":"Student D","3":"X","4":"22","5":"1"},{"1":"5","2":"Student E","3":"Y","4":"19","5":"1"},{"1":"6","2":"Student F","3":"Y","4":"25","5":"2"},{"1":"7","2":"Student G","3":"Y","4":"20","5":"2"},{"1":"8","2":"Student H","3":"X","4":"18","5":"2"},{"1":"9","2":"Student I","3":"Z","4":"27","5":"2"},{"1":"10","2":"Student J","3":"Z","4":"28","5":"2"},{"1":"11","2":"Student K","3":"X","4":"32","5":"4"},{"1":"12","2":"Student L","3":"X","4":"25","5":"3"},{"1":"13","2":"Student M","3":"Y","4":"21","5":"2"},{"1":"14","2":"Student N","3":"Y","4":"21","5":"1"},{"1":"15","2":"Student O","3":"Y","4":"35","5":"2"},{"1":"16","2":"Student P","3":"Z","4":"30","5":"3"},{"1":"17","2":"Student Q","3":"Z","4":"22","5":"2"},{"1":"18","2":"Student R","3":"X","4":"21","5":"2"},{"1":"19","2":"Student S","3":"X","4":"19","5":"2"},{"1":"20","2":"Student T","3":"Z","4":"35","5":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -305,11 +286,10 @@ Note
 <p>If we are sourcing data from a database, it is probable that you would see these 2 levels of data in 2 separate tables/views, but most business users are comfortable with MS Excel and want <strong>all the data in one sheet</strong>!!</p>
 <p>So the data actually looks something like this.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(course, student, <span class="at">by =</span> <span class="st">"course_id"</span>)</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(course, student, <span class="at">by =</span> <span class="st">"course_id"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="fu">paged_table</span>(combined_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["course_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["course_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["start_date"],"name":[3],"type":["date"],"align":["right"]},{"label":["end_date"],"name":[4],"type":["date"],"align":["right"]},{"label":["s_id"],"name":[5],"type":["int"],"align":["right"]},{"label":["s_name"],"name":[6],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[7],"type":["chr"],"align":["left"]},{"label":["age"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"Course A","3":"2021-01-01","4":"2021-01-31","5":"4","6":"Student D","7":"X","8":"22"},{"1":"1","2":"Course A","3":"2021-01-01","4":"2021-01-31","5":"5","6":"Student E","7":"Y","8":"19"},{"1":"1","2":"Course A","3":"2021-01-01","4":"2021-01-31","5":"14","6":"Student N","7":"Y","8":"21"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"6","6":"Student F","7":"Y","8":"25"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"7","6":"Student G","7":"Y","8":"20"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"8","6":"Student H","7":"X","8":"18"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"9","6":"Student I","7":"Z","8":"27"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"10","6":"Student J","7":"Z","8":"28"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"13","6":"Student M","7":"Y","8":"21"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"15","6":"Student O","7":"Y","8":"35"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"17","6":"Student Q","7":"Z","8":"22"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"18","6":"Student R","7":"X","8":"21"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"19","6":"Student S","7":"X","8":"19"},{"1":"3","2":"Course C","3":"2021-03-01","4":"2021-03-31","5":"1","6":"Student A","7":"X","8":"21"},{"1":"3","2":"Course C","3":"2021-03-01","4":"2021-03-31","5":"3","6":"Student C","7":"X","8":"30"},{"1":"3","2":"Course C","3":"2021-03-01","4":"2021-03-31","5":"12","6":"Student L","7":"X","8":"25"},{"1":"3","2":"Course C","3":"2021-03-01","4":"2021-03-31","5":"16","6":"Student P","7":"Z","8":"30"},{"1":"4","2":"Course D","3":"2021-04-01","4":"2021-04-30","5":"2","6":"Student B","7":"X","8":"22"},{"1":"4","2":"Course D","3":"2021-04-01","4":"2021-04-30","5":"11","6":"Student K","7":"X","8":"32"},{"1":"4","2":"Course D","3":"2021-04-01","4":"2021-04-30","5":"20","6":"Student T","7":"Z","8":"35"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -323,11 +303,10 @@ Note
 </h2>
 <p>One of my favorite R packages is <a href="https://glin.github.io/reactable/">reactable</a>. The default output creates a neat interactive table with pagination (if data has more than 10 rows) and ability to sort columns.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(reactable, <span class="at">quietly =</span> <span class="cn">TRUE</span>, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(reactable, <span class="at">quietly =</span> <span class="cn">TRUE</span>, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="fu">reactable</span>(<span class="at">data =</span> combined_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div id="htmlwidget-0420b066e36ce9489c4b" class="reactable html-widget" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-0420b066e36ce9489c4b">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"course_id":[1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4],"course_name":["Course A","Course A","Course A","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course C","Course C","Course C","Course C","Course D","Course D","Course D"],"start_date":["2021-01-01","2021-01-01","2021-01-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-03-01","2021-03-01","2021-03-01","2021-03-01","2021-04-01","2021-04-01","2021-04-01"],"end_date":["2021-01-31","2021-01-31","2021-01-31","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-03-31","2021-03-31","2021-03-31","2021-03-31","2021-04-30","2021-04-30","2021-04-30"],"s_id":[4,5,14,6,7,8,9,10,13,15,17,18,19,1,3,12,16,2,11,20],"s_name":["Student D","Student E","Student N","Student F","Student G","Student H","Student I","Student J","Student M","Student O","Student Q","Student R","Student S","Student A","Student C","Student L","Student P","Student B","Student K","Student T"],"gender":["X","Y","Y","Y","Y","X","Z","Z","Y","Y","Z","X","X","X","X","X","Z","X","X","Z"],"age":[22,19,21,25,20,18,27,28,21,35,22,21,19,21,30,25,30,22,32,35]},"columns":[{"accessor":"course_id","name":"course_id","type":"numeric"},{"accessor":"course_name","name":"course_name","type":"character"},{"accessor":"start_date","name":"start_date","type":"Date"},{"accessor":"end_date","name":"end_date","type":"Date"},{"accessor":"s_id","name":"s_id","type":"numeric"},{"accessor":"s_name","name":"s_name","type":"character"},{"accessor":"gender","name":"gender","type":"character"},{"accessor":"age","name":"age","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"413c1f3c101a174f7070712d78c69feb"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -335,7 +314,7 @@ Note
 </section><section id="basic-formatting" class="level2"><h2 class="anchored" data-anchor-id="basic-formatting">Basic Formatting</h2>
 <p>With some additional tweaks, we can make it look better.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">reactable</span>(</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">reactable</span>(</span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="at">data       =</span> combined_df,</span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="at">compact    =</span> <span class="cn">TRUE</span>, <span class="co"># for minimum row height</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a>  <span class="at">filterable =</span> <span class="cn">TRUE</span>, <span class="co"># for individual column filters</span></span>
@@ -353,7 +332,6 @@ Note
 <span id="cb5-16"><a href="#cb5-16"></a>  )</span>
 <span id="cb5-17"><a href="#cb5-17"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div id="htmlwidget-d308ea22dc0f64dbf7ed" class="reactable html-widget" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-d308ea22dc0f64dbf7ed">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"course_id":[1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4],"course_name":["Course A","Course A","Course A","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course C","Course C","Course C","Course C","Course D","Course D","Course D"],"start_date":["2021-01-01","2021-01-01","2021-01-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-03-01","2021-03-01","2021-03-01","2021-03-01","2021-04-01","2021-04-01","2021-04-01"],"end_date":["2021-01-31","2021-01-31","2021-01-31","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-03-31","2021-03-31","2021-03-31","2021-03-31","2021-04-30","2021-04-30","2021-04-30"],"s_id":[4,5,14,6,7,8,9,10,13,15,17,18,19,1,3,12,16,2,11,20],"s_name":["Student D","Student E","Student N","Student F","Student G","Student H","Student I","Student J","Student M","Student O","Student Q","Student R","Student S","Student A","Student C","Student L","Student P","Student B","Student K","Student T"],"gender":["X","Y","Y","Y","Y","X","Z","Z","Y","Y","Z","X","X","X","X","X","Z","X","X","Z"],"age":[22,19,21,25,20,18,27,28,21,35,22,21,19,21,30,25,30,22,32,35]},"columns":[{"accessor":"course_id","name":"CID","type":"numeric","width":50,"align":"center"},{"accessor":"course_name","name":"Course Name","type":"character","width":140},{"accessor":"start_date","name":"Start Date","type":"Date","width":120,"align":"center"},{"accessor":"end_date","name":"End Date","type":"Date","width":120,"align":"center"},{"accessor":"s_id","name":"SID","type":"numeric","width":70,"align":"center"},{"accessor":"s_name","name":"Student Name","type":"character"},{"accessor":"gender","name":"Gender","type":"character","width":80,"align":"center"},{"accessor":"age","name":"Age","type":"numeric","width":50}],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"compact":true,"dataKey":"37ac57f783425a81c3f289334adfb3a2"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -362,7 +340,7 @@ Note
 </section><section id="grouping-and-aggregating" class="level2"><h2 class="anchored" data-anchor-id="grouping-and-aggregating">Grouping and Aggregating</h2>
 <p><a href="https://glin.github.io/reactable/">reactable</a> has a <strong>groupBy</strong> argument which lets us combined rows with common data fields and the <strong>aggregate</strong> argument inside <code>colDef</code> lets us define what aggregation to be used for each column of the top-level data.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">reactable</span>(</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">reactable</span>(</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">data       =</span> combined_df,</span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">compact    =</span> <span class="cn">TRUE</span>, <span class="co"># for minimum row height</span></span>
 <span id="cb6-4"><a href="#cb6-4"></a>  <span class="at">filterable =</span> <span class="cn">TRUE</span>, <span class="co"># for individual column filters</span></span>
@@ -385,7 +363,6 @@ Note
 <span id="cb6-21"><a href="#cb6-21"></a>  )</span>
 <span id="cb6-22"><a href="#cb6-22"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div id="htmlwidget-44db758151977091446d" class="reactable html-widget" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-44db758151977091446d">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"course_id":[1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4],"course_name":["Course A","Course A","Course A","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course C","Course C","Course C","Course C","Course D","Course D","Course D"],"start_date":["2021-01-01","2021-01-01","2021-01-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-03-01","2021-03-01","2021-03-01","2021-03-01","2021-04-01","2021-04-01","2021-04-01"],"end_date":["2021-01-31","2021-01-31","2021-01-31","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-03-31","2021-03-31","2021-03-31","2021-03-31","2021-04-30","2021-04-30","2021-04-30"],"s_id":[4,5,14,6,7,8,9,10,13,15,17,18,19,1,3,12,16,2,11,20],"s_name":["Student D","Student E","Student N","Student F","Student G","Student H","Student I","Student J","Student M","Student O","Student Q","Student R","Student S","Student A","Student C","Student L","Student P","Student B","Student K","Student T"],"gender":["X","Y","Y","Y","Y","X","Z","Z","Y","Y","Z","X","X","X","X","X","Z","X","X","Z"],"age":[22,19,21,25,20,18,27,28,21,35,22,21,19,21,30,25,30,22,32,35]},"columns":[{"accessor":"course_id","name":"CID","type":"numeric","aggregate":"count","width":100,"align":"left"},{"accessor":"course_name","name":"Course Name","type":"character","aggregate":"unique","width":140},{"accessor":"start_date","name":"Start Date","type":"Date","aggregate":"unique","width":120,"align":"center"},{"accessor":"end_date","name":"End Date","type":"Date","aggregate":"unique","width":120,"align":"center"},{"accessor":"s_id","name":"SID","type":"numeric","width":70,"align":"center"},{"accessor":"s_name","name":"Student Name","type":"character"},{"accessor":"gender","name":"Gender","type":"character","width":80,"align":"center"},{"accessor":"age","name":"Age","type":"numeric","width":50}],"pivotBy":["course_id"],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"compact":true,"dataKey":"e9fc15f3a53a06ad3569f7b3f70a31cd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -393,7 +370,7 @@ Note
 <p>In this case, all the columns which are not <code>aggregate</code>d remain hidden. Clicking the little triangle in the <code>CID</code> column displays the hidden rows. Looks better, but again, the issue of duplicated data remains.</p>
 <p>You can aggregate the second-level columns too, but this distorts the table and frankly, looks ugly. Here I aggregate the <code>SID</code> column in addition to all the other top-level columns.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">reactable</span>(</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">reactable</span>(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">data       =</span> combined_df,</span>
 <span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">compact    =</span> <span class="cn">TRUE</span>, <span class="co"># for minimum row height</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a>  <span class="at">filterable =</span> <span class="cn">TRUE</span>, <span class="co"># for individual column filters</span></span>
@@ -413,7 +390,6 @@ Note
 <span id="cb7-18"><a href="#cb7-18"></a>  )</span>
 <span id="cb7-19"><a href="#cb7-19"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div id="htmlwidget-67b62794e33863e62991" class="reactable html-widget" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-67b62794e33863e62991">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"course_id":[1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4],"course_name":["Course A","Course A","Course A","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course B","Course C","Course C","Course C","Course C","Course D","Course D","Course D"],"start_date":["2021-01-01","2021-01-01","2021-01-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-02-01","2021-03-01","2021-03-01","2021-03-01","2021-03-01","2021-04-01","2021-04-01","2021-04-01"],"end_date":["2021-01-31","2021-01-31","2021-01-31","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-02-28","2021-03-31","2021-03-31","2021-03-31","2021-03-31","2021-04-30","2021-04-30","2021-04-30"],"s_id":[4,5,14,6,7,8,9,10,13,15,17,18,19,1,3,12,16,2,11,20],"s_name":["Student D","Student E","Student N","Student F","Student G","Student H","Student I","Student J","Student M","Student O","Student Q","Student R","Student S","Student A","Student C","Student L","Student P","Student B","Student K","Student T"],"gender":["X","Y","Y","Y","Y","X","Z","Z","Y","Y","Z","X","X","X","X","X","Z","X","X","Z"],"age":[22,19,21,25,20,18,27,28,21,35,22,21,19,21,30,25,30,22,32,35]},"columns":[{"accessor":"course_id","name":"CID","type":"numeric","aggregate":"count","width":100,"align":"left"},{"accessor":"course_name","name":"Course Name","type":"character","aggregate":"unique","width":140},{"accessor":"start_date","name":"Start Date","type":"Date","aggregate":"unique","width":120,"align":"center"},{"accessor":"end_date","name":"End Date","type":"Date","aggregate":"unique","width":120,"align":"center"},{"accessor":"s_id","name":"SID","type":"numeric","aggregate":"unique","width":70,"align":"center"},{"accessor":"s_name","name":"Student Name","type":"character"},{"accessor":"gender","name":"Gender","type":"character","width":80,"align":"center"},{"accessor":"age","name":"Age","type":"numeric","width":50}],"pivotBy":["course_id"],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"compact":true,"dataKey":"51a6dfecd993aea3dbb11e027155fa81"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -423,13 +399,12 @@ Note
 <p>I want to demonstrate how we go from the combined data to the 2 tables. Hence I will not use the <code>course</code> and <code>student</code> tables created earlier.</p>
 <p>Creating the <code>top_level</code> table using just the columns in <code>course</code>. Let’s also create a new column <code>n_students</code> depicting count of students in each course.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>top_level <span class="ot">&lt;-</span> combined_df <span class="sc">%&gt;%</span> </span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>top_level <span class="ot">&lt;-</span> combined_df <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="co"># Only course info columns</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">count</span>(course_id, course_name, start_date, end_date, <span class="at">name =</span> <span class="st">"n_students"</span>) </span>
 <span id="cb8-4"><a href="#cb8-4"></a></span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="fu">paged_table</span>(top_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["course_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["course_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["start_date"],"name":[3],"type":["date"],"align":["right"]},{"label":["end_date"],"name":[4],"type":["date"],"align":["right"]},{"label":["n_students"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"Course A","3":"2021-01-01","4":"2021-01-31","5":"3"},{"1":"2","2":"Course B","3":"2021-02-01","4":"2021-02-28","5":"10"},{"1":"3","2":"Course C","3":"2021-03-01","4":"2021-03-31","5":"4"},{"1":"4","2":"Course D","3":"2021-04-01","4":"2021-04-30","5":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -438,14 +413,13 @@ Note
 </div>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>second_level <span class="ot">&lt;-</span> combined_df <span class="sc">%&gt;%</span> </span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>second_level <span class="ot">&lt;-</span> combined_df <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2"></a>  <span class="co"># Only Student info columns with unique identifier for Course</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">select</span>(course_id, s_id, s_name, gender, age) <span class="sc">%&gt;%</span> </span>
 <span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">arrange</span>(s_id)</span>
 <span id="cb9-5"><a href="#cb9-5"></a></span>
 <span id="cb9-6"><a href="#cb9-6"></a><span class="fu">paged_table</span>(second_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["course_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["s_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["s_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[4],"type":["chr"],"align":["left"]},{"label":["age"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"3","2":"1","3":"Student A","4":"X","5":"21"},{"1":"4","2":"2","3":"Student B","4":"X","5":"22"},{"1":"3","2":"3","3":"Student C","4":"X","5":"30"},{"1":"1","2":"4","3":"Student D","4":"X","5":"22"},{"1":"1","2":"5","3":"Student E","4":"Y","5":"19"},{"1":"2","2":"6","3":"Student F","4":"Y","5":"25"},{"1":"2","2":"7","3":"Student G","4":"Y","5":"20"},{"1":"2","2":"8","3":"Student H","4":"X","5":"18"},{"1":"2","2":"9","3":"Student I","4":"Z","5":"27"},{"1":"2","2":"10","3":"Student J","4":"Z","5":"28"},{"1":"4","2":"11","3":"Student K","4":"X","5":"32"},{"1":"3","2":"12","3":"Student L","4":"X","5":"25"},{"1":"2","2":"13","3":"Student M","4":"Y","5":"21"},{"1":"1","2":"14","3":"Student N","4":"Y","5":"21"},{"1":"2","2":"15","3":"Student O","4":"Y","5":"35"},{"1":"3","2":"16","3":"Student P","4":"Z","5":"30"},{"1":"2","2":"17","3":"Student Q","4":"Z","5":"22"},{"1":"2","2":"18","3":"Student R","4":"X","5":"21"},{"1":"2","2":"19","3":"Student S","4":"X","5":"19"},{"1":"4","2":"20","3":"Student T","4":"Z","5":"35"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -456,7 +430,7 @@ Note
 </section><section id="the-final-drill-down-table" class="level2"><h2 class="anchored" data-anchor-id="the-final-drill-down-table">The final Drill-down Table</h2>
 <p>Now that we have the 2 tables ready, let us now create the final <a href="https://glin.github.io/reactable/">reactable</a>. The trick here is to use the <strong>details</strong> argument to which we pass another <a href="https://glin.github.io/reactable/">reactable</a> of just the rows with students data corresponding to given course.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">reactable</span>(</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">reactable</span>(</span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="at">data       =</span> top_level,</span>
 <span id="cb10-3"><a href="#cb10-3"></a>  <span class="at">compact    =</span> <span class="cn">TRUE</span>, <span class="co"># for minimum row height</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a>  <span class="at">filterable =</span> <span class="cn">TRUE</span>, <span class="co"># for individual column filters</span></span>
@@ -488,7 +462,6 @@ Note
 <span id="cb10-30"><a href="#cb10-30"></a>  }</span>
 <span id="cb10-31"><a href="#cb10-31"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div id="htmlwidget-5a0cb435521fcff53b1c" class="reactable html-widget" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-5a0cb435521fcff53b1c">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"course_id":[1,2,3,4],"course_name":["Course A","Course B","Course C","Course D"],"start_date":["2021-01-01","2021-02-01","2021-03-01","2021-04-01"],"end_date":["2021-01-31","2021-02-28","2021-03-31","2021-04-30"],"n_students":[3,10,4,3]},"columns":[{"accessor":".details","name":"","type":"NULL","sortable":false,"resizable":false,"filterable":false,"searchable":false,"width":45,"align":"center","details":[{"name":"Reactable","attribs":{"data":{"course_id":[1,1,1],"s_id":[4,5,14],"s_name":["Student D","Student E","Student N"],"gender":["X","Y","Y"],"age":[22,19,21]},"columns":[{"accessor":"course_id","name":"course_id","type":"numeric","show":false},{"accessor":"s_id","name":"SID","type":"numeric","width":70,"align":"center"},{"accessor":"s_name","name":"Student Name","type":"character"},{"accessor":"gender","name":"Gender","type":"character","width":90,"align":"center"},{"accessor":"age","name":"Age","type":"numeric","width":50,"align":"center"}],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"compact":true,"dataKey":"12036566002706ab50f66831a92eae32","nested":true},"children":[]},{"name":"Reactable","attribs":{"data":{"course_id":[2,2,2,2,2,2,2,2,2,2],"s_id":[6,7,8,9,10,13,15,17,18,19],"s_name":["Student F","Student G","Student H","Student I","Student J","Student M","Student O","Student Q","Student R","Student S"],"gender":["Y","Y","X","Z","Z","Y","Y","Z","X","X"],"age":[25,20,18,27,28,21,35,22,21,19]},"columns":[{"accessor":"course_id","name":"course_id","type":"numeric","show":false},{"accessor":"s_id","name":"SID","type":"numeric","width":70,"align":"center"},{"accessor":"s_name","name":"Student Name","type":"character"},{"accessor":"gender","name":"Gender","type":"character","width":90,"align":"center"},{"accessor":"age","name":"Age","type":"numeric","width":50,"align":"center"}],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"compact":true,"dataKey":"6587f2ad3dcb0fcc5216bf4473c986a0","nested":true},"children":[]},{"name":"Reactable","attribs":{"data":{"course_id":[3,3,3,3],"s_id":[1,3,12,16],"s_name":["Student A","Student C","Student L","Student P"],"gender":["X","X","X","Z"],"age":[21,30,25,30]},"columns":[{"accessor":"course_id","name":"course_id","type":"numeric","show":false},{"accessor":"s_id","name":"SID","type":"numeric","width":70,"align":"center"},{"accessor":"s_name","name":"Student Name","type":"character"},{"accessor":"gender","name":"Gender","type":"character","width":90,"align":"center"},{"accessor":"age","name":"Age","type":"numeric","width":50,"align":"center"}],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"compact":true,"dataKey":"e3963514a17cdadfff8af46fde214632","nested":true},"children":[]},{"name":"Reactable","attribs":{"data":{"course_id":[4,4,4],"s_id":[2,11,20],"s_name":["Student B","Student K","Student T"],"gender":["X","X","Z"],"age":[22,32,35]},"columns":[{"accessor":"course_id","name":"course_id","type":"numeric","show":false},{"accessor":"s_id","name":"SID","type":"numeric","width":70,"align":"center"},{"accessor":"s_name","name":"Student Name","type":"character"},{"accessor":"gender","name":"Gender","type":"character","width":90,"align":"center"},{"accessor":"age","name":"Age","type":"numeric","width":50,"align":"center"}],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"compact":true,"dataKey":"5a3a2a276df6d52409d68b95331871bb","nested":true},"children":[]}]},{"accessor":"course_id","name":"CID","type":"numeric","width":50,"align":"center"},{"accessor":"course_name","name":"Course Name","type":"character"},{"accessor":"start_date","name":"Start Date","type":"Date","width":120,"align":"center"},{"accessor":"end_date","name":"End Date","type":"Date","width":120,"align":"center"},{"accessor":"n_students","name":"No. of Students","type":"numeric","width":130,"align":"center"}],"resizable":true,"filterable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"striped":true,"compact":true,"dataKey":"4234130aace77d06280744fa5876f205"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -502,9 +475,8 @@ Note
 </ul>
 
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2021,
-  author = {Vishal Katti},
-  editor = {},
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2021,
+  author = {Katti, Vishal},
   title = {Interactive {Drill-down} {Tables} Using \{Reactable\}},
   date = {2021-07-27},
   url = {https://vishalkatti.com/posts/drilldown-with-reactable},
@@ -512,8 +484,8 @@ Note
   abstract = {This post demonstrates how to use the \{reactable\}
     package to create multi-level drill-down tables having hidden rows}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Vishal Katti. 2021. <span>“Interactive Drill-down Tables Using
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas" role="listitem">
+Katti, Vishal. 2021. <span>“Interactive Drill-down Tables Using
 {Reactable}.”</span> July 27, 2021. <a href="https://vishalkatti.com/posts/drilldown-with-reactable">https://vishalkatti.com/posts/drilldown-with-reactable</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -556,6 +528,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -624,13 +623,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -647,7 +648,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   // Switch to dark mode if need be
   if (hasAlternateSentinel()) {
     toggleColorMode(true);
-  } 
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -655,9 +658,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -669,7 +686,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -727,10 +761,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -740,8 +773,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -756,31 +798,286 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></div>   
+    <div class="nav-footer-left">
+<p>Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
 <li class="nav-item compact">

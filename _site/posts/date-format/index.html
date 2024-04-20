@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,7 +19,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -32,6 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../VK Logo.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -53,7 +54,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -62,8 +69,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -71,73 +80,75 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Vishal Katti - Beyond 01/31/2024">
 <meta property="og:description" content="This post talks about the superiority of ISO 8601 Date format and why it matters in our day-to-day life.">
-<meta property="og:image" content="https://vishalkatti.com/posts\date-format\choose-choice.gif">
-<meta property="og:site-name" content="Vishal Katti">
+<meta property="og:image" content="https://vishalkatti.com/posts/date-format/choose-choice.gif">
+<meta property="og:site_name" content="Vishal Katti">
 <meta name="twitter:title" content="Katti’s Blog">
 <meta name="twitter:description" content="This post talks about the superiority of ISO 8601 Date format and why it matters in our day-to-day life.">
-<meta name="twitter:image" content="https://vishalkatti.com/profile-pic.png">
+<meta name="twitter:image" content="https://vishalkatti.com/posts/date-format/choose-choice.gif">
 <meta name="twitter:creator" content="@vishal_katti">
-<meta name="twitter:image-height" content="612">
-<meta name="twitter:image-width" content="612">
+<meta name="twitter:site" content="@vishal_katti">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vishal Katti</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">Blog</a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0">CV</a>
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0"> 
+<span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"> <i class="bi bi-twitter" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"> <i class="bi bi-mastodon" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"> <i class="bi bi-linkedin" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -173,12 +184,13 @@ ul.task-list li input[type="checkbox"] {
         <p class="date">February 20, 2024</p>
       </div>
     </div>
+    
       
     </div>
     
   <div>
     <div class="abstract">
-      <div class="abstract-title">Abstract</div>
+      <div class="block-title">Abstract</div>
       This post talks about the superiority of ISO 8601 Date format and why it matters in our day-to-day life.
     </div>
   </div>
@@ -208,12 +220,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <section id="intro" class="level1">
 <h1>Intro</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://imgs.xkcd.com/comics/iso_8601.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: XKCD</figcaption><p></p>
+<p><img src="https://imgs.xkcd.com/comics/iso_8601.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figcaption>Source: XKCD</figcaption>
 </figure>
 </div>
 <p>Dates are everywhere!!! They appear in documents, digital displays, our phones and conversations. In day-to-day life, outside of work, most of us are usually aware of which month and year is going on. However, at work, for communication, file-management, meeting scheduling, reporting, especially with International clients and MNCs, choosing the right date format can make a significant difference in clarity, consistency, and ease of use. Among various formats like MM/DD/YYYY, DD/MM/YYYY, and others, the <strong>YYYY-MM-DD</strong> format stands out as the best choice. While some might argue it’s just a matter of preference, there’s actually a strong case for one format reigning supreme.</p>
@@ -223,8 +236,8 @@ ul.task-list li input[type="checkbox"] {
 <p>Formats like DD/MM/YYYY and MM/DD/YYYY cause confusion, especially in Orgs. that operate across geographies and multi-national companies (MNC) At a smaller scale, individual gig-workers working with MS Excel files from different clients get confused if the date format is different.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://i.redd.it/5ck7dzvzp3721.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: Reddit</figcaption><p></p>
+<p><img src="https://i.redd.it/5ck7dzvzp3721.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figcaption>Source: Reddit</figcaption>
 </figure>
 </div>
 <p>The YYYY-MM-DD format follows a logical order: Year, &gt; Month &gt; Day, from largest to smallest unit. The logic is similar to geographical hierarchy i.e.&nbsp;Earth (Planet) &gt; Asia (Continent) &gt; India (Country) &gt; Karnataka (State) &gt; Bengaluru (City). Largest to Smallest!</p>
@@ -242,14 +255,14 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Other formats may pose challenges in sorting, especially when combining different date formats within the same dataset. Ambiguities arise, leading to errors and confusion during analysis.</p></li>
 </ul>
 <p>Sorting is done based on the Alphabetical order of the characters in the filenames. Let’s evaluate each format on the basis of sorting.</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">MM-DD-YYYY</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">DD-MM-YYYY</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">MMM-DD-YYYY</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">DD-MMM-YYYY</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">👑 YYYY-MM-DD 👑</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>The MM-DD-YYYY format in filenames pulls Month and Days for different years together.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="sorting_MMDDYYYY.png" class="img-fluid figure-img"></p>
+<p><img src="sorting_MMDDYYYY.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
@@ -261,7 +274,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Month Names cause bigger problems due to Alphabetical ordering. Shows all days of April first followed by all days of August, December, February and so on...</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="sorting_MMMDDYYYY.png" class="img-fluid figure-img"></p>
+<p><img src="sorting_MMMDDYYYY.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
@@ -269,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Month Names cause bigger problems due to Alphabetical ordering. Shows same day of April first followed by same of August, December, February and so on...</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="sorting_DDMMMYYYY.png" class="img-fluid figure-img"></p>
+<p><img src="sorting_DDMMMYYYY.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
@@ -277,7 +290,7 @@ ul.task-list li input[type="checkbox"] {
 <p>YYYY-MM-DD gives the best sorting as per chronological order. No other format gives this order.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="sorting_best.png" class="img-fluid figure-img"></p>
+<p><img src="sorting_best.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 </div>
@@ -295,8 +308,8 @@ ul.task-list li input[type="checkbox"] {
 <p>Spreadsheet applications like MS Excel store Dates as numbers behind the scenes and display them as per the system’s Locale. An Excel file containing Dates (formatted as proper Dates, not dates stored as Text!!! 😱 ) will change the date format accordingly because the underlying number doesn’t change. However, at one glance, it is not possible to guess if a date-like text is a proper Date or Text. Dates stored as text will not change as per system’s Locale and hence may cause errors in calculations and sorting issues. While the YYYY-MM-DD format will resolve sorting issues (due to its inherent alphabetical order) even if stored as text, calculation errors will still occur if dates are stored as text.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="excel-dates.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Excel stores dates as numbers!! A date 20th Feb 2024 represented by the number 45342 means it is 45342 days since 1st Jan 1900.</figcaption><p></p>
+<p><img src="excel-dates.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figcaption>Excel stores dates as numbers!! A date 20th Feb 2024 represented by the number 45342 means it is 45342 days since 1st Jan 1900.</figcaption>
 </figure>
 </div>
 <p>Exploring date-related horrors in MS Excel is a topic for a whole other post, which will come soon!</p>
@@ -326,9 +339,8 @@ ul.task-list li input[type="checkbox"] {
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2024,
-  author = {Vishal Katti},
-  editor = {},
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2024,
+  author = {Katti, Vishal},
   title = {Beyond 01/31/2024},
   date = {2024-02-20},
   url = {https://vishalkatti.com/posts/date-format},
@@ -336,9 +348,9 @@ ul.task-list li input[type="checkbox"] {
   abstract = {This post talks about the superiority of ISO 8601 Date
     format and why it matters in our day-to-day life.}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2024" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Vishal Katti. 2024. <span>“Beyond 01/31/2024.”</span> February 20, 2024.
-<a href="https://vishalkatti.com/posts/date-format">https://vishalkatti.com/posts/date-format</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Katti, Vishal. 2024. <span>“Beyond 01/31/2024.”</span> February 20,
+2024. <a href="https://vishalkatti.com/posts/date-format">https://vishalkatti.com/posts/date-format</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -381,6 +393,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -449,13 +488,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -472,7 +513,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   // Switch to dark mode if need be
   if (hasAlternateSentinel()) {
     toggleColorMode(true);
-  } 
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -480,9 +523,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -494,7 +551,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -552,10 +626,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -565,8 +638,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -581,24 +663,274 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
@@ -607,7 +939,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></div>   
+    <div class="nav-footer-left">
+<p>Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -639,6 +976,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </footer>
 <div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://vishalkatti.com/posts/date-format&amp;text=Check out this article on Date Formats and why YYYY-MM-DD is the Goat!!" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://vishalkatti.com/posts/date-format&amp;title=Check out this article on Date Formats and why YYYY-MM-DD is the Goat!!" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Check out this article on Date Formats and why YYYY-MM-DD is the Goat!!&amp;body=Check out this link:https://vishalkatti.com/posts/date-format" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://vishalkatti.com/posts/date-format" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="https://reddit.com/submit?url=https://vishalkatti.com/posts/date-format&amp;title=Check out this article on Date Formats and why YYYY-MM-DD is the Goat!!" target="_blank" class="reddit">   <i class="fa-brands fa-reddit-alien fa-fw fa-lg"></i></a></div></div>
+
 
 
 

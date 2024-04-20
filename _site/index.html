@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./VK Logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-listing/list.min.js"></script>
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -51,7 +52,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -60,8 +67,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -94,75 +103,110 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Vishal Katti's Blog" href="index.xml"><meta property="og:title" content="Vishal Katti - Katti’s Blog">
-<meta property="og:site-name" content="Vishal Katti">
+<link rel="alternate" type="application/rss+xml" title="Vishal Katti's Blog" href="index.xml" data-external="1"><meta property="og:title" content="Vishal Katti - Katti’s Blog">
+<meta property="og:image" content="https://vishalkatti.com/VK Logo.png">
+<meta property="og:site_name" content="Vishal Katti">
+<meta property="og:image:height" content="500">
+<meta property="og:image:width" content="500">
 <meta name="twitter:title" content="Katti’s Blog">
-<meta name="twitter:image" content="https://vishalkatti.com/profile-pic.png">
+<meta name="twitter:image" content="https://vishalkatti.com/VK Logo.png">
 <meta name="twitter:creator" content="@vishal_katti">
-<meta name="twitter:image-height" content="612">
-<meta name="twitter:image-width" content="612">
+<meta name="twitter:site" content="@vishal_katti">
+<meta name="twitter:image-height" content="500">
+<meta name="twitter:image-width" content="500">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Vishal Katti</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">Blog</a>
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0">CV</a>
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0"> 
+<span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"> <i class="bi bi-twitter" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"> <i class="bi bi-mastodon" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"> <i class="bi bi-linkedin" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -175,9 +219,10 @@ ul.task-list li input[type="checkbox"] {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       
+    
       
     </div>
     
@@ -190,6 +235,7 @@ ul.task-list li input[type="checkbox"] {
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(9)</span></div><div class="category" data-category="Date">Date <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Excel">Excel <span class="quarto-category-count">(3)</span></div><div class="category" data-category="ISO8601">ISO8601 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="List">List <span class="quarto-category-count">(1)</span></div><div class="category" data-category="PowerPoint">PowerPoint <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(2)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(8)</span></div><div class="category" data-category="RDCOMClient">RDCOMClient <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VBA">VBA <span class="quarto-category-count">(2)</span></div><div class="category" data-category="dplyr">dplyr <span class="quarto-category-count">(1)</span></div><div class="category" data-category="drill-down">drill-down <span class="quarto-category-count">(1)</span></div><div class="category" data-category="functions">functions <span class="quarto-category-count">(4)</span></div><div class="category" data-category="openxlsx">openxlsx <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pivot">pivot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="reactable">reactable <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tidyr">tidyr <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
 
 
 
@@ -221,19 +267,19 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Date,ISO8601,R,Python,Excel" data-listing-date-sort="1708367400000" data-listing-file-modified-sort="1708415706623" data-listing-reading-time-sort="5.48">
+<div class="quarto-post image-right" data-index="0" data-categories="Date,ISO8601,R,Python,Excel" data-listing-date-sort="1708367400000" data-listing-file-modified-sort="1708415706623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1096">
 <div class="thumbnail">
-<p><a href="./posts/date-format/index.html"> <img src="./posts/date-format/choose-choice.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/date-format/index.html" class="no-external"></a></p><a href="./posts/date-format/index.html" class="no-external">
+<p><img src="./posts/date-format/choose-choice.gif" class="thumbnail-image"></p>
+</a><p><a href="./posts/date-format/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/date-format/index.html">
 <h3 class="no-anchor listing-title">
-Beyond 01/31/2024
+<a href="./posts/date-format/index.html" class="no-external">Beyond 01/31/2024</a>
 </h3>
 <div class="listing-subtitle">
-Date Formats and why YYYY-MM-DD is the Goat!!
+<a href="./posts/date-format/index.html" class="no-external">Date Formats and why YYYY-MM-DD is the Goat!!</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Date'); return false;">
 Date
@@ -251,14 +297,12 @@ Python
 Excel
 </div>
 </div>
-<a href="./posts/date-format/index.html">
 <div class="listing-description">
-<p>This post talks about the superiority of ISO 8601 Date format and why it matters in our day-to-day life.</p>
+<a href="./posts/date-format/index.html" class="no-external">This post talks about the superiority of ISO 8601 Date format and why it matters in our day-to-day life.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/date-format/index.html">
+<a href="./posts/date-format/index.html" class="no-external">
 <div class="listing-date">
 Feb 20, 2024
 </div>
@@ -268,19 +312,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Python,List" data-listing-date-sort="1704479400000" data-listing-file-modified-sort="1704570147927" data-listing-reading-time-sort="6.395">
+<div class="quarto-post image-right" data-index="1" data-categories="Python,List" data-listing-date-sort="1704479400000" data-listing-file-modified-sort="1704570147927" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1279">
 <div class="thumbnail">
-<p><a href="./posts/python-list-comprehension/index.html"> <img src="https://i.imgur.com/JIedILu.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/python-list-comprehension/index.html" class="no-external"></a></p><a href="./posts/python-list-comprehension/index.html" class="no-external">
+<p><img src="https://i.imgur.com/JIedILu.gif" class="thumbnail-image"></p>
+</a><p><a href="./posts/python-list-comprehension/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/python-list-comprehension/index.html">
 <h3 class="no-anchor listing-title">
-Python - List Comprehension
+<a href="./posts/python-list-comprehension/index.html" class="no-external">Python - List Comprehension</a>
 </h3>
 <div class="listing-subtitle">
-Crafting Concise Lists with Python’s List Comprehensions
+<a href="./posts/python-list-comprehension/index.html" class="no-external">Crafting Concise Lists with Python’s List Comprehensions</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -289,14 +333,12 @@ Python
 List
 </div>
 </div>
-<a href="./posts/python-list-comprehension/index.html">
 <div class="listing-description">
-<p>This post demonstrates Python’s List Comprehension compared with the <code>for</code> loop and its usage.</p>
+<a href="./posts/python-list-comprehension/index.html" class="no-external">This post demonstrates Python’s List Comprehension compared with the <code>for</code> loop and its usage.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/python-list-comprehension/index.html">
+<a href="./posts/python-list-comprehension/index.html" class="no-external">
 <div class="listing-date">
 Jan 6, 2024
 </div>
@@ -306,19 +348,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="R,functions,tidyr,pivot" data-listing-date-sort="1661711400000" data-listing-file-modified-sort="1664987328447" data-listing-reading-time-sort="5.345">
+<div class="quarto-post image-right" data-index="2" data-categories="R,functions,tidyr,pivot" data-listing-date-sort="1661711400000" data-listing-file-modified-sort="1664987328447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1069">
 <div class="thumbnail">
-<p><a href="./posts/tidyr-pivot-wider/index.html"> <img src="https://i.imgur.com/A9SfEdJ.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/tidyr-pivot-wider/index.html" class="no-external"></a></p><a href="./posts/tidyr-pivot-wider/index.html" class="no-external">
+<p><img src="https://i.imgur.com/A9SfEdJ.gif" class="thumbnail-image"></p>
+</a><p><a href="./posts/tidyr-pivot-wider/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/tidyr-pivot-wider/index.html">
 <h3 class="no-anchor listing-title">
-Pivoting your tables with Tidyr: Part II
+<a href="./posts/tidyr-pivot-wider/index.html" class="no-external">Pivoting your tables with Tidyr: Part II</a>
 </h3>
 <div class="listing-subtitle">
-Converting “long” to “wide” format
+<a href="./posts/tidyr-pivot-wider/index.html" class="no-external">Converting “long” to “wide” format</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -333,14 +375,12 @@ tidyr
 pivot
 </div>
 </div>
-<a href="./posts/tidyr-pivot-wider/index.html">
 <div class="listing-description">
-<p>This post demonstrates how to use <code>pivot_wider()</code> to convert your long data to wide data. This is part 2 of the Pivoting your tables with Tidyr series.</p>
+<a href="./posts/tidyr-pivot-wider/index.html" class="no-external">This post demonstrates how to use <code>pivot_wider()</code> to convert your long data to wide data. This is part 2 of the Pivoting your tables with Tidyr series.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/tidyr-pivot-wider/index.html">
+<a href="./posts/tidyr-pivot-wider/index.html" class="no-external">
 <div class="listing-date">
 Aug 29, 2022
 </div>
@@ -350,19 +390,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="R,functions,tidyr,pivot" data-listing-date-sort="1657218600000" data-listing-file-modified-sort="1664987247912" data-listing-reading-time-sort="4.7">
+<div class="quarto-post image-right" data-index="3" data-categories="R,functions,tidyr,pivot" data-listing-date-sort="1657218600000" data-listing-file-modified-sort="1664987247912" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="940">
 <div class="thumbnail">
-<p><a href="./posts/tidyr-pivot-longer/index.html"> <img src="https://i.imgur.com/0qMbFC1.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/tidyr-pivot-longer/index.html" class="no-external"></a></p><a href="./posts/tidyr-pivot-longer/index.html" class="no-external">
+<p><img src="https://i.imgur.com/0qMbFC1.gif" class="thumbnail-image"></p>
+</a><p><a href="./posts/tidyr-pivot-longer/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/tidyr-pivot-longer/index.html">
 <h3 class="no-anchor listing-title">
-Pivoting your tables with Tidyr: Part I
+<a href="./posts/tidyr-pivot-longer/index.html" class="no-external">Pivoting your tables with Tidyr: Part I</a>
 </h3>
 <div class="listing-subtitle">
-Converting “wide” to “long” format
+<a href="./posts/tidyr-pivot-longer/index.html" class="no-external">Converting “wide” to “long” format</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -377,14 +417,12 @@ tidyr
 pivot
 </div>
 </div>
-<a href="./posts/tidyr-pivot-longer/index.html">
 <div class="listing-description">
-<p>This post demonstrates how to use <code>pivot_longer()</code> to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series.</p>
+<a href="./posts/tidyr-pivot-longer/index.html" class="no-external">This post demonstrates how to use <code>pivot_longer()</code> to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/tidyr-pivot-longer/index.html">
+<a href="./posts/tidyr-pivot-longer/index.html" class="no-external">
 <div class="listing-date">
 Jul 8, 2022
 </div>
@@ -394,19 +432,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="R,functions" data-listing-date-sort="1642444200000" data-listing-file-modified-sort="1664987535684" data-listing-reading-time-sort="17.125">
+<div class="quarto-post image-right" data-index="4" data-categories="R,functions" data-listing-date-sort="1642444200000" data-listing-file-modified-sort="1664987535684" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3425">
 <div class="thumbnail">
-<p><a href="./posts/writing-robust-functions/index.html"> <img src="https://i.imgur.com/hbjbLMN.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/writing-robust-functions/index.html" class="no-external"></a></p><a href="./posts/writing-robust-functions/index.html" class="no-external">
+<p><img src="https://i.imgur.com/hbjbLMN.gif" class="thumbnail-image"></p>
+</a><p><a href="./posts/writing-robust-functions/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/writing-robust-functions/index.html">
 <h3 class="no-anchor listing-title">
-Writing Robust R Functions
+<a href="./posts/writing-robust-functions/index.html" class="no-external">Writing Robust R Functions</a>
 </h3>
 <div class="listing-subtitle">
-Some designs to validate function arguments.
+<a href="./posts/writing-robust-functions/index.html" class="no-external">Some designs to validate function arguments.</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -415,14 +453,12 @@ R
 functions
 </div>
 </div>
-<a href="./posts/writing-robust-functions/index.html">
 <div class="listing-description">
-<p>This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, incorrect data type or just down-right invalid values and how to return meaningful error messages.</p>
+<a href="./posts/writing-robust-functions/index.html" class="no-external">This post demonstrates some techniques to make your R user-defined functions unbreakable (well, almost!) by checking if function arguments are missing, incorrect data type or just down-right invalid values and how to return meaningful error messages.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/writing-robust-functions/index.html">
+<a href="./posts/writing-robust-functions/index.html" class="no-external">
 <div class="listing-date">
 Jan 18, 2022
 </div>
@@ -432,19 +468,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="R,Excel,VBA,PowerPoint,openxlsx,RDCOMClient" data-listing-date-sort="1640716200000" data-listing-file-modified-sort="1664987144598" data-listing-reading-time-sort="10.305">
+<div class="quarto-post image-right" data-index="5" data-categories="R,Excel,VBA,PowerPoint,openxlsx,RDCOMClient" data-listing-date-sort="1640716200000" data-listing-file-modified-sort="1664987144598" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2061">
 <div class="thumbnail">
-<p><a href="./posts/R2VBA2PPT2/index.html"> <img src="./posts/R2VBA2PPT2/images/R2XL2PPT_logo.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/R2VBA2PPT2/index.html" class="no-external"></a></p><a href="./posts/R2VBA2PPT2/index.html" class="no-external">
+<p><img src="./posts/R2VBA2PPT2/images/R2XL2PPT_logo.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/R2VBA2PPT2/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/R2VBA2PPT2/index.html">
 <h3 class="no-anchor listing-title">
-Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2
+<a href="./posts/R2VBA2PPT2/index.html" class="no-external">Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2</a>
 </h3>
 <div class="listing-subtitle">
-Using R to trigger Excel VBA macros to create PowerPoint presentations
+<a href="./posts/R2VBA2PPT2/index.html" class="no-external">Using R to trigger Excel VBA macros to create PowerPoint presentations</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -465,14 +501,12 @@ openxlsx
 RDCOMClient
 </div>
 </div>
-<a href="./posts/R2VBA2PPT2/index.html">
 <div class="listing-description">
-<p>This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.</p>
+<a href="./posts/R2VBA2PPT2/index.html" class="no-external">This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/R2VBA2PPT2/index.html">
+<a href="./posts/R2VBA2PPT2/index.html" class="no-external">
 <div class="listing-date">
 Dec 29, 2021
 </div>
@@ -482,19 +516,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="R,Excel,VBA,PowerPoint" data-listing-date-sort="1634581800000" data-listing-file-modified-sort="1664986725063" data-listing-reading-time-sort="5.56">
+<div class="quarto-post image-right" data-index="6" data-categories="R,Excel,VBA,PowerPoint" data-listing-date-sort="1634581800000" data-listing-file-modified-sort="1664986725063" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1112">
 <div class="thumbnail">
-<p><a href="./posts/R2VBA2PPT1/index.html"> <img src="./posts/R2VBA2PPT1/images/R2XL2PPT_logo.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/R2VBA2PPT1/index.html" class="no-external"></a></p><a href="./posts/R2VBA2PPT1/index.html" class="no-external">
+<p><img src="./posts/R2VBA2PPT1/images/R2XL2PPT_logo.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/R2VBA2PPT1/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/R2VBA2PPT1/index.html">
 <h3 class="no-anchor listing-title">
-Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2
+<a href="./posts/R2VBA2PPT1/index.html" class="no-external">Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2</a>
 </h3>
 <div class="listing-subtitle">
-Using R to trigger Excel VBA macros to create PowerPoint presentations!
+<a href="./posts/R2VBA2PPT1/index.html" class="no-external">Using R to trigger Excel VBA macros to create PowerPoint presentations!</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -509,14 +543,12 @@ VBA
 PowerPoint
 </div>
 </div>
-<a href="./posts/R2VBA2PPT1/index.html">
 <div class="listing-description">
-<p>This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.</p>
+<a href="./posts/R2VBA2PPT1/index.html" class="no-external">This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/R2VBA2PPT1/index.html">
+<a href="./posts/R2VBA2PPT1/index.html" class="no-external">
 <div class="listing-date">
 Oct 19, 2021
 </div>
@@ -526,19 +558,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="R,reactable,drill-down" data-listing-date-sort="1627324200000" data-listing-file-modified-sort="1664942741647" data-listing-reading-time-sort="11.65">
+<div class="quarto-post image-right" data-index="7" data-categories="R,reactable,drill-down" data-listing-date-sort="1627324200000" data-listing-file-modified-sort="1664942741647" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2330">
 <div class="thumbnail">
-<p><a href="./posts/drilldown-with-reactable/index.html"> <img src="https://i.imgur.com/Zzk5SWf.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/drilldown-with-reactable/index.html" class="no-external"></a></p><a href="./posts/drilldown-with-reactable/index.html" class="no-external">
+<p><img src="https://i.imgur.com/Zzk5SWf.gif" class="thumbnail-image"></p>
+</a><p><a href="./posts/drilldown-with-reactable/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/drilldown-with-reactable/index.html">
 <h3 class="no-anchor listing-title">
-Interactive Drill-down Tables using {reactable}
+<a href="./posts/drilldown-with-reactable/index.html" class="no-external">Interactive Drill-down Tables using {reactable}</a>
 </h3>
 <div class="listing-subtitle">
-How to create multi-level tables with hidden rows
+<a href="./posts/drilldown-with-reactable/index.html" class="no-external">How to create multi-level tables with hidden rows</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -550,14 +582,12 @@ reactable
 drill-down
 </div>
 </div>
-<a href="./posts/drilldown-with-reactable/index.html">
 <div class="listing-description">
-<p>This post demonstrates how to use the {reactable} package to create multi-level drill-down tables having hidden rows</p>
+<a href="./posts/drilldown-with-reactable/index.html" class="no-external">This post demonstrates how to use the {reactable} package to create multi-level drill-down tables having hidden rows</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/drilldown-with-reactable/index.html">
+<a href="./posts/drilldown-with-reactable/index.html" class="no-external">
 <div class="listing-date">
 Jul 27, 2021
 </div>
@@ -567,19 +597,19 @@ Vishal Katti
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="R,dplyr,functions" data-listing-date-sort="1626460200000" data-listing-file-modified-sort="1664986603626" data-listing-reading-time-sort="12.715">
+<div class="quarto-post image-right" data-index="8" data-categories="R,dplyr,functions" data-listing-date-sort="1626460200000" data-listing-file-modified-sort="1664986603626" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2543">
 <div class="thumbnail">
-<p><a href="./posts/programming-with-dplyr/index.html"> <img src="https://i.imgur.com/H9jo8OB.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/programming-with-dplyr/index.html" class="no-external"></a></p><a href="./posts/programming-with-dplyr/index.html" class="no-external">
+<p><img src="https://i.imgur.com/H9jo8OB.gif" class="thumbnail-image"></p>
+</a><p><a href="./posts/programming-with-dplyr/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/programming-with-dplyr/index.html">
 <h3 class="no-anchor listing-title">
-Programming with R {dplyr} - As I Understand It!!
+<a href="./posts/programming-with-dplyr/index.html" class="no-external">Programming with R {dplyr} - As I Understand It!!</a>
 </h3>
 <div class="listing-subtitle">
-How to create your own functions using {dplyr}
+<a href="./posts/programming-with-dplyr/index.html" class="no-external">How to create your own functions using {dplyr}</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -591,14 +621,12 @@ dplyr
 functions
 </div>
 </div>
-<a href="./posts/programming-with-dplyr/index.html">
 <div class="listing-description">
-<p>This post demonstrates how to write your own dynamic functions using popular <code>dplyr</code> verbs like <code>select()</code>, <code>filter()</code>, <code>mutate()</code>, <code>arrange()</code> and <code>group_by()</code> with <code>summarise()</code>.</p>
+<a href="./posts/programming-with-dplyr/index.html" class="no-external">This post demonstrates how to write your own dynamic functions using popular <code>dplyr</code> verbs like <code>select()</code>, <code>filter()</code>, <code>mutate()</code>, <code>arrange()</code> and <code>group_by()</code> with <code>summarise()</code>. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/programming-with-dplyr/index.html">
+<a href="./posts/programming-with-dplyr/index.html" class="no-external">
 <div class="listing-date">
 Jul 17, 2021
 </div>
@@ -654,6 +682,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -722,13 +777,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -745,7 +802,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   // Switch to dark mode if need be
   if (hasAlternateSentinel()) {
     toggleColorMode(true);
-  } 
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -753,9 +812,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -767,7 +840,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -825,10 +915,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -838,8 +927,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -854,31 +952,286 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></div>   
+    <div class="nav-footer-left">
+<p>Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -909,6 +1262,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Vishal Katti">
 <meta name="dcterms.date" content="2021-12-29">
@@ -16,11 +16,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -45,43 +46,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -91,6 +62,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../VK Logo.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -111,7 +83,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -120,79 +98,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script><link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 2 of 2">
 <meta property="og:description" content="This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.">
-<meta property="og:image" content="https://vishalkatti.com/posts\R2VBA2PPT2\images\R2XL2PPT_logo.png">
-<meta property="og:site-name" content="Vishal Katti">
+<meta property="og:image" content="https://vishalkatti.com/posts/R2VBA2PPT2/images/R2XL2PPT_logo.png">
+<meta property="og:site_name" content="Vishal Katti">
 <meta property="og:image:height" content="619">
 <meta property="og:image:width" content="1500">
 <meta name="twitter:title" content="Katti’s Blog">
 <meta name="twitter:description" content="This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.">
-<meta name="twitter:image" content="https://vishalkatti.com/profile-pic.png">
+<meta name="twitter:image" content="https://vishalkatti.com/posts/R2VBA2PPT2/images/R2XL2PPT_logo.png">
 <meta name="twitter:creator" content="@vishal_katti">
-<meta name="twitter:image-height" content="612">
-<meta name="twitter:image-width" content="612">
+<meta name="twitter:site" content="@vishal_katti">
+<meta name="twitter:image-height" content="619">
+<meta name="twitter:image-width" content="1500">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vishal Katti</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">Blog</a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0">CV</a>
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0"> 
+<span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"> <i class="bi bi-twitter" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"> <i class="bi bi-mastodon" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"> <i class="bi bi-linkedin" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-<div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
@@ -225,12 +209,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <p class="date">December 29, 2021</p>
       </div>
     </div>
+    
       
     </div>
     
   <div>
     <div class="abstract">
-      <div class="abstract-title">Abstract</div>
+      <div class="block-title">Abstract</div>
       This post demonstrates how to run VBA macros in Excel which in turn creates Presentations based off PowerPoint Templates.
     </div>
   </div>
@@ -262,16 +247,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the previous post, we create the <code>.potx</code> template from the <code>.pptx</code> file we wanted to automate and the Excel template with the macro <code>.xlsm</code> that uses the PowerPoint template to create a new <code>.pptx</code> file with given data using VBA.</p>
 <p>The report we want to automate is…</p>
 <div style="text-align:center;">
-<div id="fig-gapminder" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder Report" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;1: The Gapminder Report : The PowerPoint presentation we want to automate</figcaption><p></p>
-</figure>
+<div id="fig-gapminder" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder Report" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The Gapminder Report : The PowerPoint presentation we want to automate
+</figcaption></figure>
 </div>
 </div>
-<p>…and the Excel and PowerPoint template we created are shown in <a href="#fig-excel-with-macro">Figure&nbsp;2</a>.</p>
+<p>…and the Excel and PowerPoint template we created are shown in <a href="#fig-excel-with-macro" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <div style="text-align:center;">
-<div id="fig-excel-with-macro" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/tB3QxhJ.png" title="Excel Template with VBA macro" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;2: Excel Template with VBA macro</figcaption><p></p>
-</figure>
+<div id="fig-excel-with-macro" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-excel-with-macro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/tB3QxhJ.png" title="Excel Template with VBA macro" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-excel-with-macro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Excel Template with VBA macro
+</figcaption></figure>
 </div>
 </div>
 <p>In this post, we will write the R script that will first massage the data into desired format and then load the data for one region into the Excel template and execute the VBA macro that will create the PowerPoint file with that data.</p>
@@ -284,14 +277,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section><section id="slide-2" class="level3"><h3 class="anchored" data-anchor-id="slide-2">Slide 2</h3>
 <p>The chart on slide 2 needs raw data structured as below. You will notice that at a continent-level, this table needs a minimum of 5 countries. Do we have any continents in the Gapminder data with less than 5 countries? Yes, we have Oceania with only Australia and New Zealand. For ease of use, let us include these countries along with Asian countries in a new <code>Region</code> variable.</p>
 <div style="text-align:center;">
-<div id="fig-slide2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/KvGxnyt.png" title="02_chart" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;3: 02_chart</figcaption><p></p>
-</figure>
+<div id="fig-slide2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-slide2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/KvGxnyt.png" title="02_chart" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-slide2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: 02_chart
+</figcaption></figure>
 </div>
 </div>
 <p>We will create the <code>region</code> variable in the gapminder data. But first, let us load some relevant packages.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">options</span>(<span class="at">tidyverse.quiet =</span> <span class="cn">TRUE</span>)</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">options</span>(<span class="at">tidyverse.quiet =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse) <span class="co"># duh!</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(rmarkdown) <span class="co"># to display the tables interactively in this post. Not really needed for the final solution.</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(openxlsx) <span class="co"># to write the data to the Excel Template.</span></span>
@@ -299,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Read in Gapminder data</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Read in Gapminder data</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>gp <span class="ot">&lt;-</span> gapminder<span class="sc">::</span>gapminder</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co"># Create new region variable</span></span>
@@ -324,9 +321,9 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 </div>
 </div>
 <p>Now that we have the source data available, we must now create the datasets we need that we can write to the Excel template for each region.</p>
-<p>The required table in <a href="#fig-slide2">Figure&nbsp;3</a> shows the top 4 countries (based on 2007 population) and all other countries clubbed into ‘others’ in a given region and then the total population of the region on a yearly basis. This table has to be created for all 4 regions.</p>
+<p>The required table in <a href="#fig-slide2" class="quarto-xref">Figure&nbsp;3</a> shows the top 4 countries (based on 2007 population) and all other countries clubbed into ‘others’ in a given region and then the total population of the region on a yearly basis. This table has to be created for all 4 regions.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>pop_trend <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>pop_trend <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">group_by</span>(region, country, year) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">summarise</span>(<span class="at">pop =</span> <span class="fu">sum</span>(pop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb4-4"><a href="#cb4-4"></a>            <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">%&gt;%</span></span>
@@ -336,7 +333,6 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 <span id="cb4-8"><a href="#cb4-8"></a></span>
 <span id="cb4-9"><a href="#cb4-9"></a><span class="fu">paged_table</span>(pop_trend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["1952"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["1957"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["1962"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["1967"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["1972"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["1977"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["1982"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["1987"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["1992"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["1997"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["2002"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["2007"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"Asia-Pacific","2":"China","3":"556","4":"637","5":"666","6":"755","7":"862","8":"943","9":"1000","10":"1084","11":"1165","12":"1230","13":"1280","14":"1319"},{"1":"Asia-Pacific","2":"India","3":"372","4":"409","5":"454","6":"506","7":"567","8":"634","9":"708","10":"788","11":"872","12":"959","13":"1034","14":"1110"},{"1":"Americas","2":"United States","3":"158","4":"172","5":"187","6":"199","7":"210","8":"220","9":"232","10":"243","11":"257","12":"273","13":"288","14":"301"},{"1":"Asia-Pacific","2":"Indonesia","3":"82","4":"90","5":"99","6":"109","7":"121","8":"137","9":"153","10":"169","11":"185","12":"199","13":"211","14":"224"},{"1":"Americas","2":"Brazil","3":"57","4":"66","5":"76","6":"88","7":"101","8":"114","9":"129","10":"143","11":"156","12":"169","13":"180","14":"190"},{"1":"Asia-Pacific","2":"Pakistan","3":"41","4":"47","5":"53","6":"61","7":"69","8":"78","9":"91","10":"105","11":"120","12":"136","13":"153","14":"169"},{"1":"Asia-Pacific","2":"Bangladesh","3":"47","4":"51","5":"57","6":"63","7":"71","8":"80","9":"93","10":"104","11":"114","12":"123","13":"136","14":"150"},{"1":"Africa","2":"Nigeria","3":"33","4":"37","5":"42","6":"47","7":"54","8":"62","9":"73","10":"82","11":"93","12":"106","13":"120","14":"135"},{"1":"Asia-Pacific","2":"Japan","3":"86","4":"92","5":"96","6":"101","7":"107","8":"114","9":"118","10":"122","11":"124","12":"126","13":"127","14":"127"},{"1":"Americas","2":"Mexico","3":"30","4":"35","5":"41","6":"48","7":"56","8":"64","9":"72","10":"80","11":"88","12":"96","13":"102","14":"109"},{"1":"Asia-Pacific","2":"Philippines","3":"22","4":"26","5":"30","6":"35","7":"41","8":"47","9":"53","10":"60","11":"67","12":"75","13":"83","14":"91"},{"1":"Asia-Pacific","2":"Vietnam","3":"26","4":"29","5":"34","6":"39","7":"45","8":"51","9":"56","10":"63","11":"70","12":"76","13":"81","14":"85"},{"1":"Europe","2":"Germany","3":"69","4":"71","5":"74","6":"76","7":"79","8":"78","9":"78","10":"78","11":"81","12":"82","13":"82","14":"82"},{"1":"Africa","2":"Egypt","3":"22","4":"25","5":"28","6":"32","7":"35","8":"39","9":"46","10":"53","11":"59","12":"66","13":"73","14":"80"},{"1":"Africa","2":"Ethiopia","3":"21","4":"23","5":"25","6":"28","7":"31","8":"35","9":"38","10":"43","11":"52","12":"60","13":"68","14":"77"},{"1":"Europe","2":"Turkey","3":"22","4":"26","5":"30","6":"33","7":"37","8":"42","9":"47","10":"53","11":"58","12":"63","13":"67","14":"71"},{"1":"Asia-Pacific","2":"Iran","3":"17","4":"20","5":"23","6":"27","7":"31","8":"35","9":"43","10":"52","11":"60","12":"63","13":"67","14":"69"},{"1":"Africa","2":"Congo, Dem. Rep.","3":"14","4":"16","5":"17","6":"20","7":"23","8":"26","9":"31","10":"35","11":"42","12":"48","13":"55","14":"65"},{"1":"Asia-Pacific","2":"Thailand","3":"21","4":"25","5":"29","6":"34","7":"39","8":"44","9":"49","10":"53","11":"57","12":"60","13":"63","14":"65"},{"1":"Europe","2":"France","3":"42","4":"44","5":"47","6":"50","7":"52","8":"53","9":"54","10":"56","11":"57","12":"59","13":"60","14":"61"},{"1":"Europe","2":"United Kingdom","3":"50","4":"51","5":"53","6":"55","7":"56","8":"56","9":"56","10":"57","11":"58","12":"59","13":"60","14":"61"},{"1":"Europe","2":"Italy","3":"48","4":"49","5":"51","6":"53","7":"54","8":"56","9":"57","10":"57","11":"57","12":"57","13":"58","14":"58"},{"1":"Asia-Pacific","2":"Korea, Rep.","3":"21","4":"23","5":"26","6":"30","7":"34","8":"36","9":"39","10":"42","11":"44","12":"46","13":"48","14":"49"},{"1":"Asia-Pacific","2":"Myanmar","3":"20","4":"22","5":"24","6":"26","7":"28","8":"32","9":"35","10":"38","11":"41","12":"43","13":"46","14":"48"},{"1":"Africa","2":"South Africa","3":"14","4":"16","5":"18","6":"21","7":"24","8":"27","9":"31","10":"36","11":"40","12":"43","13":"44","14":"44"},{"1":"Americas","2":"Colombia","3":"12","4":"14","5":"17","6":"20","7":"23","8":"25","9":"28","10":"31","11":"34","12":"38","13":"41","14":"44"},{"1":"Africa","2":"Sudan","3":"9","4":"10","5":"11","6":"13","7":"15","8":"17","9":"20","10":"25","11":"28","12":"32","13":"37","14":"42"},{"1":"Americas","2":"Argentina","3":"18","4":"20","5":"21","6":"23","7":"25","8":"27","9":"29","10":"32","11":"34","12":"36","13":"38","14":"40"},{"1":"Europe","2":"Spain","3":"29","4":"30","5":"31","6":"33","7":"35","8":"36","9":"38","10":"39","11":"40","12":"40","13":"40","14":"40"},{"1":"Europe","2":"Poland","3":"26","4":"28","5":"30","6":"32","7":"33","8":"35","9":"36","10":"38","11":"38","12":"39","13":"39","14":"39"},{"1":"Africa","2":"Tanzania","3":"8","4":"9","5":"11","6":"13","7":"15","8":"17","9":"20","10":"23","11":"27","12":"31","13":"35","14":"38"},{"1":"Africa","2":"Kenya","3":"6","4":"7","5":"9","6":"10","7":"12","8":"15","9":"18","10":"21","11":"25","12":"28","13":"31","14":"36"},{"1":"Africa","2":"Morocco","3":"10","4":"11","5":"13","6":"15","7":"17","8":"18","9":"20","10":"23","11":"26","12":"29","13":"31","14":"34"},{"1":"Africa","2":"Algeria","3":"9","4":"10","5":"11","6":"13","7":"15","8":"17","9":"20","10":"23","11":"26","12":"29","13":"31","14":"33"},{"1":"Americas","2":"Canada","3":"15","4":"17","5":"19","6":"21","7":"22","8":"24","9":"25","10":"27","11":"29","12":"30","13":"32","14":"33"},{"1":"Asia-Pacific","2":"Afghanistan","3":"8","4":"9","5":"10","6":"12","7":"13","8":"15","9":"13","10":"14","11":"16","12":"22","13":"25","14":"32"},{"1":"Africa","2":"Uganda","3":"6","4":"7","5":"8","6":"9","7":"10","8":"11","9":"13","10":"15","11":"18","12":"21","13":"25","14":"29"},{"1":"Americas","2":"Peru","3":"8","4":"9","5":"11","6":"12","7":"14","8":"16","9":"18","10":"20","11":"22","12":"25","13":"27","14":"29"},{"1":"Asia-Pacific","2":"Nepal","3":"9","4":"10","5":"10","6":"11","7":"12","8":"14","9":"16","10":"18","11":"20","12":"23","13":"26","14":"29"},{"1":"Asia-Pacific","2":"Saudi Arabia","3":"4","4":"4","5":"5","6":"6","7":"6","8":"8","9":"11","10":"15","11":"17","12":"21","13":"25","14":"28"},{"1":"Asia-Pacific","2":"Iraq","3":"5","4":"6","5":"7","6":"9","7":"10","8":"12","9":"14","10":"17","11":"18","12":"21","13":"24","14":"27"},{"1":"Americas","2":"Venezuela","3":"5","4":"7","5":"8","6":"10","7":"12","8":"14","9":"16","10":"18","11":"20","12":"22","13":"24","14":"26"},{"1":"Asia-Pacific","2":"Malaysia","3":"7","4":"8","5":"9","6":"10","7":"11","8":"13","9":"14","10":"16","11":"18","12":"20","13":"23","14":"25"},{"1":"Africa","2":"Ghana","3":"6","4":"6","5":"7","6":"8","7":"9","8":"11","9":"11","10":"14","11":"16","12":"18","13":"21","14":"23"},{"1":"Asia-Pacific","2":"Korea, Dem. Rep.","3":"9","4":"9","5":"11","6":"13","7":"15","8":"16","9":"18","10":"19","11":"21","12":"22","13":"22","14":"23"},{"1":"Asia-Pacific","2":"Taiwan","3":"9","4":"10","5":"12","6":"14","7":"15","8":"17","9":"19","10":"20","11":"21","12":"22","13":"22","14":"23"},{"1":"Asia-Pacific","2":"Yemen, Rep.","3":"5","4":"5","5":"6","6":"7","7":"7","8":"8","9":"10","10":"11","11":"13","12":"16","13":"19","14":"22"},{"1":"Europe","2":"Romania","3":"17","4":"18","5":"19","6":"19","7":"21","8":"22","9":"22","10":"23","11":"23","12":"23","13":"22","14":"22"},{"1":"Africa","2":"Mozambique","3":"6","4":"7","5":"8","6":"9","7":"10","8":"11","9":"13","10":"13","11":"13","12":"17","13":"18","14":"20"},{"1":"Asia-Pacific","2":"Australia","3":"9","4":"10","5":"11","6":"12","7":"13","8":"14","9":"15","10":"16","11":"17","12":"19","13":"20","14":"20"},{"1":"Asia-Pacific","2":"Sri Lanka","3":"8","4":"9","5":"10","6":"12","7":"13","8":"14","9":"15","10":"16","11":"18","12":"19","13":"20","14":"20"},{"1":"Africa","2":"Madagascar","3":"5","4":"5","5":"6","6":"6","7":"7","8":"8","9":"9","10":"11","11":"12","12":"14","13":"16","14":"19"},{"1":"Asia-Pacific","2":"Syria","3":"4","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"11","11":"13","12":"15","13":"17","14":"19"},{"1":"Africa","2":"Cameroon","3":"5","4":"5","5":"6","6":"6","7":"7","8":"8","9":"9","10":"11","11":"12","12":"14","13":"16","14":"18"},{"1":"Africa","2":"Cote d'Ivoire","3":"3","4":"3","5":"4","6":"5","7":"6","8":"7","9":"9","10":"11","11":"13","12":"15","13":"16","14":"18"},{"1":"Europe","2":"Netherlands","3":"10","4":"11","5":"12","6":"13","7":"13","8":"14","9":"14","10":"15","11":"15","12":"16","13":"16","14":"17"},{"1":"Americas","2":"Chile","3":"6","4":"7","5":"8","6":"9","7":"10","8":"11","9":"11","10":"12","11":"14","12":"15","13":"15","14":"16"},{"1":"Africa","2":"Burkina Faso","3":"4","4":"5","5":"5","6":"5","7":"5","8":"6","9":"7","10":"8","11":"9","12":"10","13":"12","14":"14"},{"1":"Americas","2":"Ecuador","3":"4","4":"4","5":"5","6":"5","7":"6","8":"7","9":"8","10":"10","11":"11","12":"12","13":"13","14":"14"},{"1":"Asia-Pacific","2":"Cambodia","3":"5","4":"5","5":"6","6":"7","7":"7","8":"7","9":"7","10":"8","11":"10","12":"12","13":"13","14":"14"},{"1":"Africa","2":"Malawi","3":"3","4":"3","5":"4","6":"4","7":"5","8":"6","9":"7","10":"8","11":"10","12":"10","13":"12","14":"13"},{"1":"Africa","2":"Niger","3":"3","4":"4","5":"4","6":"5","7":"5","8":"6","9":"6","10":"7","11":"8","12":"10","13":"11","14":"13"},{"1":"Americas","2":"Guatemala","3":"3","4":"4","5":"4","6":"5","7":"5","8":"6","9":"6","10":"7","11":"8","12":"10","13":"11","14":"13"},{"1":"Africa","2":"Angola","3":"4","4":"5","5":"5","6":"5","7":"6","8":"6","9":"7","10":"8","11":"9","12":"10","13":"11","14":"12"},{"1":"Africa","2":"Mali","3":"4","4":"4","5":"5","6":"5","7":"6","8":"6","9":"7","10":"8","11":"8","12":"9","13":"11","14":"12"},{"1":"Africa","2":"Senegal","3":"3","4":"3","5":"3","6":"4","7":"5","8":"5","9":"6","10":"7","11":"8","12":"10","13":"11","14":"12"},{"1":"Africa","2":"Zambia","3":"3","4":"3","5":"3","6":"4","7":"5","8":"5","9":"6","10":"7","11":"8","12":"9","13":"11","14":"12"},{"1":"Africa","2":"Zimbabwe","3":"3","4":"4","5":"4","6":"5","7":"6","8":"7","9":"8","10":"9","11":"11","12":"11","13":"12","14":"12"},{"1":"Americas","2":"Cuba","3":"6","4":"7","5":"7","6":"8","7":"9","8":"10","9":"10","10":"10","11":"11","12":"11","13":"11","14":"11"},{"1":"Europe","2":"Greece","3":"8","4":"8","5":"8","6":"9","7":"9","8":"9","9":"10","10":"10","11":"10","12":"11","13":"11","14":"11"},{"1":"Europe","2":"Portugal","3":"9","4":"9","5":"9","6":"9","7":"9","8":"10","9":"10","10":"10","11":"10","12":"10","13":"10","14":"11"},{"1":"Africa","2":"Chad","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"5","10":"5","11":"6","12":"8","13":"9","14":"10"},{"1":"Africa","2":"Guinea","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"5","10":"6","11":"7","12":"8","13":"9","14":"10"},{"1":"Africa","2":"Tunisia","3":"4","4":"4","5":"4","6":"5","7":"5","8":"6","9":"7","10":"8","11":"9","12":"9","13":"10","14":"10"},{"1":"Europe","2":"Belgium","3":"9","4":"9","5":"9","6":"10","7":"10","8":"10","9":"10","10":"10","11":"10","12":"10","13":"10","14":"10"},{"1":"Europe","2":"Czech Republic","3":"9","4":"10","5":"10","6":"10","7":"10","8":"10","9":"10","10":"10","11":"10","12":"10","13":"10","14":"10"},{"1":"Europe","2":"Hungary","3":"10","4":"10","5":"10","6":"10","7":"10","8":"11","9":"11","10":"11","11":"10","12":"10","13":"10","14":"10"},{"1":"Europe","2":"Serbia","3":"7","4":"7","5":"8","6":"8","7":"8","8":"9","9":"9","10":"9","11":"10","12":"10","13":"10","14":"10"},{"1":"Africa","2":"Rwanda","3":"3","4":"3","5":"3","6":"3","7":"4","8":"5","9":"6","10":"6","11":"7","12":"7","13":"8","14":"9"},{"1":"Africa","2":"Somalia","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"6","10":"7","11":"6","12":"7","13":"8","14":"9"},{"1":"Americas","2":"Bolivia","3":"3","4":"3","5":"4","6":"4","7":"5","8":"5","9":"6","10":"6","11":"7","12":"8","13":"8","14":"9"},{"1":"Americas","2":"Dominican Republic","3":"2","4":"3","5":"3","6":"4","7":"5","8":"5","9":"6","10":"7","11":"7","12":"8","13":"9","14":"9"},{"1":"Americas","2":"Haiti","3":"3","4":"4","5":"4","6":"4","7":"5","8":"5","9":"5","10":"6","11":"6","12":"7","13":"8","14":"9"},{"1":"Europe","2":"Sweden","3":"7","4":"7","5":"8","6":"8","7":"8","8":"8","9":"8","10":"8","11":"9","12":"9","13":"9","14":"9"},{"1":"Africa","2":"Benin","3":"2","4":"2","5":"2","6":"2","7":"3","8":"3","9":"4","10":"4","11":"5","12":"6","13":"7","14":"8"},{"1":"Africa","2":"Burundi","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"5","10":"5","11":"6","12":"6","13":"7","14":"8"},{"1":"Europe","2":"Austria","3":"7","4":"7","5":"7","6":"7","7":"8","8":"8","9":"8","10":"8","11":"8","12":"8","13":"8","14":"8"},{"1":"Europe","2":"Switzerland","3":"5","4":"5","5":"6","6":"6","7":"6","8":"6","9":"6","10":"7","11":"7","12":"7","13":"7","14":"8"},{"1":"Americas","2":"El Salvador","3":"2","4":"2","5":"3","6":"3","7":"4","8":"4","9":"4","10":"5","11":"5","12":"6","13":"6","14":"7"},{"1":"Americas","2":"Honduras","3":"2","4":"2","5":"2","6":"3","7":"3","8":"3","9":"4","10":"4","11":"5","12":"6","13":"7","14":"7"},{"1":"Americas","2":"Paraguay","3":"2","4":"2","5":"2","6":"2","7":"3","8":"3","9":"3","10":"4","11":"4","12":"5","13":"6","14":"7"},{"1":"Asia-Pacific","2":"Hong Kong, China","3":"2","4":"3","5":"3","6":"4","7":"4","8":"5","9":"5","10":"6","11":"6","12":"6","13":"7","14":"7"},{"1":"Europe","2":"Bulgaria","3":"7","4":"8","5":"8","6":"8","7":"9","8":"9","9":"9","10":"9","11":"9","12":"8","13":"8","14":"7"},{"1":"Africa","2":"Libya","3":"1","4":"1","5":"1","6":"2","7":"2","8":"3","9":"3","10":"4","11":"4","12":"5","13":"5","14":"6"},{"1":"Africa","2":"Sierra Leone","3":"2","4":"2","5":"2","6":"3","7":"3","8":"3","9":"3","10":"4","11":"4","12":"5","13":"5","14":"6"},{"1":"Africa","2":"Togo","3":"1","4":"1","5":"2","6":"2","7":"2","8":"2","9":"3","10":"3","11":"4","12":"4","13":"5","14":"6"},{"1":"Americas","2":"Nicaragua","3":"1","4":"1","5":"2","6":"2","7":"2","8":"3","9":"3","10":"3","11":"4","12":"5","13":"5","14":"6"},{"1":"Asia-Pacific","2":"Israel","3":"2","4":"2","5":"2","6":"3","7":"3","8":"3","9":"4","10":"4","11":"5","12":"6","13":"6","14":"6"},{"1":"Asia-Pacific","2":"Jordan","3":"1","4":"1","5":"1","6":"1","7":"2","8":"2","9":"2","10":"3","11":"4","12":"5","13":"5","14":"6"},{"1":"Africa","2":"Eritrea","3":"1","4":"2","5":"2","6":"2","7":"2","8":"3","9":"3","10":"3","11":"4","12":"4","13":"4","14":"5"},{"1":"Asia-Pacific","2":"Singapore","3":"1","4":"1","5":"2","6":"2","7":"2","8":"2","9":"3","10":"3","11":"3","12":"4","13":"4","14":"5"},{"1":"Europe","2":"Bosnia and Herzegovina","3":"3","4":"3","5":"3","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"5"},{"1":"Europe","2":"Denmark","3":"4","4":"4","5":"5","6":"5","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5"},{"1":"Europe","2":"Finland","3":"4","4":"4","5":"4","6":"5","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5"},{"1":"Europe","2":"Norway","3":"3","4":"3","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"5","14":"5"},{"1":"Europe","2":"Slovak Republic","3":"4","4":"4","5":"4","6":"4","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5"},{"1":"Africa","2":"Central African Republic","3":"1","4":"1","5":"2","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"4","13":"4","14":"4"},{"1":"Africa","2":"Congo, Rep.","3":"1","4":"1","5":"1","6":"1","7":"1","8":"2","9":"2","10":"2","11":"2","12":"3","13":"3","14":"4"},{"1":"Americas","2":"Costa Rica","3":"1","4":"1","5":"1","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"4","13":"4","14":"4"},{"1":"Americas","2":"Puerto Rico","3":"2","4":"2","5":"2","6":"3","7":"3","8":"3","9":"3","10":"3","11":"4","12":"4","13":"4","14":"4"},{"1":"Asia-Pacific","2":"Lebanon","3":"1","4":"2","5":"2","6":"2","7":"3","8":"3","9":"3","10":"3","11":"3","12":"3","13":"4","14":"4"},{"1":"Asia-Pacific","2":"New Zealand","3":"2","4":"2","5":"2","6":"3","7":"3","8":"3","9":"3","10":"3","11":"3","12":"4","13":"4","14":"4"},{"1":"Asia-Pacific","2":"West Bank and Gaza","3":"1","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"2","11":"2","12":"3","13":"3","14":"4"},{"1":"Europe","2":"Albania","3":"1","4":"1","5":"2","6":"2","7":"2","8":"3","9":"3","10":"3","11":"3","12":"3","13":"4","14":"4"},{"1":"Europe","2":"Croatia","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4"},{"1":"Europe","2":"Ireland","3":"3","4":"3","5":"3","6":"3","7":"3","8":"3","9":"3","10":"4","11":"4","12":"4","13":"4","14":"4"},{"1":"Africa","2":"Liberia","3":"1","4":"1","5":"1","6":"1","7":"1","8":"2","9":"2","10":"2","11":"2","12":"2","13":"3","14":"3"},{"1":"Africa","2":"Mauritania","3":"1","4":"1","5":"1","6":"1","7":"1","8":"1","9":"2","10":"2","11":"2","12":"2","13":"3","14":"3"},{"1":"Americas","2":"Jamaica","3":"1","4":"2","5":"2","6":"2","7":"2","8":"2","9":"2","10":"2","11":"2","12":"3","13":"3","14":"3"},{"1":"Americas","2":"Panama","3":"1","4":"1","5":"1","6":"1","7":"2","8":"2","9":"2","10":"2","11":"2","12":"3","13":"3","14":"3"},{"1":"Americas","2":"Uruguay","3":"2","4":"2","5":"3","6":"3","7":"3","8":"3","9":"3","10":"3","11":"3","12":"3","13":"3","14":"3"},{"1":"Asia-Pacific","2":"Kuwait","3":"0","4":"0","5":"0","6":"1","7":"1","8":"1","9":"1","10":"2","11":"1","12":"2","13":"2","14":"3"},{"1":"Asia-Pacific","2":"Mongolia","3":"1","4":"1","5":"1","6":"1","7":"1","8":"2","9":"2","10":"2","11":"2","12":"2","13":"3","14":"3"},{"1":"Asia-Pacific","2":"Oman","3":"1","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"2","11":"2","12":"2","13":"3","14":"3"},{"1":"Africa","2":"Botswana","3":"0","4":"0","5":"1","6":"1","7":"1","8":"1","9":"1","10":"1","11":"1","12":"2","13":"2","14":"2"},{"1":"Africa","2":"Gambia","3":"0","4":"0","5":"0","6":"0","7":"1","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2"},{"1":"Africa","2":"Lesotho","3":"1","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"2","11":"2","12":"2","13":"2","14":"2"},{"1":"Africa","2":"Namibia","3":"0","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"1","11":"2","12":"2","13":"2","14":"2"},{"1":"Europe","2":"Slovenia","3":"1","4":"2","5":"2","6":"2","7":"2","8":"2","9":"2","10":"2","11":"2","12":"2","13":"2","14":"2"},{"1":"Africa","2":"Comoros","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0","12":"1","13":"1","14":"1"},{"1":"Africa","2":"Equatorial Guinea","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"1"},{"1":"Africa","2":"Gabon","3":"0","4":"0","5":"0","6":"0","7":"1","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1"},{"1":"Africa","2":"Guinea-Bissau","3":"1","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1"},{"1":"Africa","2":"Mauritius","3":"1","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1"},{"1":"Africa","2":"Reunion","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1"},{"1":"Africa","2":"Swaziland","3":"0","4":"0","5":"0","6":"0","7":"0","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1"},{"1":"Americas","2":"Trinidad and Tobago","3":"1","4":"1","5":"1","6":"1","7":"1","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1"},{"1":"Asia-Pacific","2":"Bahrain","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"1","12":"1","13":"1","14":"1"},{"1":"Europe","2":"Montenegro","3":"0","4":"0","5":"0","6":"1","7":"1","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1"},{"1":"Africa","2":"Djibouti","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0"},{"1":"Africa","2":"Sao Tome and Principe","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0"},{"1":"Europe","2":"Iceland","3":"0","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"0","12":"0","13":"0","14":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -346,14 +342,13 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 </div>
 <p>Now that we have the required columns, let’s plan the row order. We notice that, for each region, we have the top 4 countries (as per 2007) , followed by ‘Others’. Let’s create the <code>top-4</code> dataset.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>top4 <span class="ot">&lt;-</span> pop_trend <span class="sc">%&gt;%</span> </span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>top4 <span class="ot">&lt;-</span> pop_trend <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">slice_max</span>(<span class="st">`</span><span class="at">2007</span><span class="st">`</span>, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb5-5"><a href="#cb5-5"></a></span>
 <span id="cb5-6"><a href="#cb5-6"></a><span class="fu">paged_table</span>(top4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["1952"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["1957"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["1962"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["1967"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["1972"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["1977"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["1982"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["1987"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["1992"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["1997"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["2002"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["2007"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"Africa","2":"Nigeria","3":"33","4":"37","5":"42","6":"47","7":"54","8":"62","9":"73","10":"82","11":"93","12":"106","13":"120","14":"135"},{"1":"Africa","2":"Egypt","3":"22","4":"25","5":"28","6":"32","7":"35","8":"39","9":"46","10":"53","11":"59","12":"66","13":"73","14":"80"},{"1":"Africa","2":"Ethiopia","3":"21","4":"23","5":"25","6":"28","7":"31","8":"35","9":"38","10":"43","11":"52","12":"60","13":"68","14":"77"},{"1":"Africa","2":"Congo, Dem. Rep.","3":"14","4":"16","5":"17","6":"20","7":"23","8":"26","9":"31","10":"35","11":"42","12":"48","13":"55","14":"65"},{"1":"Americas","2":"United States","3":"158","4":"172","5":"187","6":"199","7":"210","8":"220","9":"232","10":"243","11":"257","12":"273","13":"288","14":"301"},{"1":"Americas","2":"Brazil","3":"57","4":"66","5":"76","6":"88","7":"101","8":"114","9":"129","10":"143","11":"156","12":"169","13":"180","14":"190"},{"1":"Americas","2":"Mexico","3":"30","4":"35","5":"41","6":"48","7":"56","8":"64","9":"72","10":"80","11":"88","12":"96","13":"102","14":"109"},{"1":"Americas","2":"Colombia","3":"12","4":"14","5":"17","6":"20","7":"23","8":"25","9":"28","10":"31","11":"34","12":"38","13":"41","14":"44"},{"1":"Asia-Pacific","2":"China","3":"556","4":"637","5":"666","6":"755","7":"862","8":"943","9":"1000","10":"1084","11":"1165","12":"1230","13":"1280","14":"1319"},{"1":"Asia-Pacific","2":"India","3":"372","4":"409","5":"454","6":"506","7":"567","8":"634","9":"708","10":"788","11":"872","12":"959","13":"1034","14":"1110"},{"1":"Asia-Pacific","2":"Indonesia","3":"82","4":"90","5":"99","6":"109","7":"121","8":"137","9":"153","10":"169","11":"185","12":"199","13":"211","14":"224"},{"1":"Asia-Pacific","2":"Pakistan","3":"41","4":"47","5":"53","6":"61","7":"69","8":"78","9":"91","10":"105","11":"120","12":"136","13":"153","14":"169"},{"1":"Europe","2":"Germany","3":"69","4":"71","5":"74","6":"76","7":"79","8":"78","9":"78","10":"78","11":"81","12":"82","13":"82","14":"82"},{"1":"Europe","2":"Turkey","3":"22","4":"26","5":"30","6":"33","7":"37","8":"42","9":"47","10":"53","11":"58","12":"63","13":"67","14":"71"},{"1":"Europe","2":"France","3":"42","4":"44","5":"47","6":"50","7":"52","8":"53","9":"54","10":"56","11":"57","12":"59","13":"60","14":"61"},{"1":"Europe","2":"United Kingdom","3":"50","4":"51","5":"53","6":"55","7":"56","8":"56","9":"56","10":"57","11":"58","12":"59","13":"60","14":"61"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -363,7 +358,7 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 </div>
 <p>To create the <code>others</code> dataset, we exclude all countries that are present in the <code>top-4</code>.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>others <span class="ot">&lt;-</span> pop_trend <span class="sc">%&gt;%</span> </span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>others <span class="ot">&lt;-</span> pop_trend <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span>country <span class="sc">%in%</span> top4<span class="sc">$</span>country) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>country, <span class="at">.fns =</span> sum),</span>
@@ -373,7 +368,6 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 <span id="cb6-8"><a href="#cb6-8"></a></span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="fu">paged_table</span>(others)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["1952"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["1957"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["1962"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["1967"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["1972"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["1977"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["1982"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["1987"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["1992"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["1997"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["2002"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["2007"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"Africa","2":"Others","3":"146","4":"162","5":"183","6":"206","7":"239","8":"270","9":"314","10":"362","11":"409","12":"463","13":"515","14":"570"},{"1":"Americas","2":"Others","3":"88","4":"101","5":"113","6":"127","7":"143","8":"156","9":"167","10":"185","11":"202","12":"224","13":"238","14":"254"},{"1":"Asia-Pacific","2":"Others","3":"354","4":"391","5":"436","6":"493","7":"546","8":"608","9":"672","10":"745","11":"811","12":"882","13":"949","14":"1012"},{"1":"Europe","2":"Others","3":"235","4":"244","5":"257","6":"269","7":"278","8":"289","9":"294","10":"301","11":"303","12":"305","13":"307","14":"310"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -384,14 +378,18 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 <p>While we create the <code>top-4</code> and <code>others</code> datasets separately, we will combine them later at the very last moment before writing them to the Excel template.</p>
 <p>Now that we have the datasets needed for <code>02_chart</code>, let’s proceed to the create <code>02_table</code> . This table gives you the count of countries that fall under various population ranges.</p>
 <div style="text-align:center;">
-<div id="fig-slide22" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/uf3flVN.png" title="02_table" class="img-fluid figure-img" style="width:60.0%"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;4: 02_table on Slide 2</figcaption><p></p>
-</figure>
+<div id="fig-slide22" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-slide22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/uf3flVN.png" title="02_table" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-slide22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: 02_table on Slide 2
+</figcaption></figure>
 </div>
 </div>
 <p>Let’s create <code>02_table</code>. To create this table, we first create a new variable called <code>pop_range</code>.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>pop_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'Less than 500K'</span>,<span class="st">'500K - 1 Million'</span>,</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>pop_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'Less than 500K'</span>,<span class="st">'500K - 1 Million'</span>,</span>
 <span id="cb7-2"><a href="#cb7-2"></a>                <span class="st">'1M - 10 Million'</span>, <span class="st">'10M - 100 Million'</span>,</span>
 <span id="cb7-3"><a href="#cb7-3"></a>                <span class="st">'100M - 1 Billion'</span>, <span class="st">'More than 1 Billion'</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a></span>
@@ -414,7 +412,6 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 <span id="cb7-21"><a href="#cb7-21"></a></span>
 <span id="cb7-22"><a href="#cb7-22"></a><span class="fu">paged_table</span>(pop_groups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Population Category"],"name":[2],"type":["fct"],"align":["left"]},{"label":["# of Countries"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Africa","2":"Less than 500K","3":"2"},{"1":"Africa","2":"500K - 1 Million","3":"3"},{"1":"Africa","2":"1M - 10 Million","3":"21"},{"1":"Africa","2":"10M - 100 Million","3":"25"},{"1":"Africa","2":"100M - 1 Billion","3":"1"},{"1":"Africa","2":"More than 1 Billion","3":"0"},{"1":"Americas","2":"Less than 500K","3":"0"},{"1":"Americas","2":"500K - 1 Million","3":"0"},{"1":"Americas","2":"1M - 10 Million","3":"13"},{"1":"Americas","2":"10M - 100 Million","3":"9"},{"1":"Americas","2":"100M - 1 Billion","3":"3"},{"1":"Americas","2":"More than 1 Billion","3":"0"},{"1":"Asia-Pacific","2":"Less than 500K","3":"0"},{"1":"Asia-Pacific","2":"500K - 1 Million","3":"1"},{"1":"Asia-Pacific","2":"1M - 10 Million","3":"10"},{"1":"Asia-Pacific","2":"10M - 100 Million","3":"18"},{"1":"Asia-Pacific","2":"100M - 1 Billion","3":"4"},{"1":"Asia-Pacific","2":"More than 1 Billion","3":"2"},{"1":"Europe","2":"Less than 500K","3":"1"},{"1":"Europe","2":"500K - 1 Million","3":"1"},{"1":"Europe","2":"1M - 10 Million","3":"14"},{"1":"Europe","2":"10M - 100 Million","3":"14"},{"1":"Europe","2":"100M - 1 Billion","3":"0"},{"1":"Europe","2":"More than 1 Billion","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -425,14 +422,18 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 </section><section id="slide-3" class="level3"><h3 class="anchored" data-anchor-id="slide-3">Slide 3</h3>
 <p>Slide 3 contains 2 strings and one chart. The data for the chart looks as shown below.</p>
 <div style="text-align:center;">
-<div id="fig-slide3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/kDAbook.png" title="Slide 3" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;5: 03_chart table for Slide 3</figcaption><p></p>
-</figure>
+<div id="fig-slide3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-slide3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/kDAbook.png" title="Slide 3" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-slide3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: 03_chart table for Slide 3
+</figcaption></figure>
 </div>
 </div>
 <p>The data for <code>03_chart</code> is the list of top 10 countries in each region as per latest record i.e.&nbsp;2007. Let’s create the <code>top10</code> table.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>top10 <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> </span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>top10 <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">slice_max</span>(pop, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
@@ -443,7 +444,6 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 <span id="cb8-9"><a href="#cb8-9"></a></span>
 <span id="cb8-10"><a href="#cb8-10"></a><span class="fu">paged_table</span>(top10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["population"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Africa","2":"Nigeria","3":"135.0312"},{"1":"Africa","2":"Egypt","3":"80.2645"},{"1":"Africa","2":"Ethiopia","3":"76.5119"},{"1":"Africa","2":"Congo, Dem. Rep.","3":"64.6068"},{"1":"Africa","2":"South Africa","3":"43.9978"},{"1":"Africa","2":"Sudan","3":"42.2929"},{"1":"Africa","2":"Tanzania","3":"38.1396"},{"1":"Africa","2":"Kenya","3":"35.6102"},{"1":"Africa","2":"Morocco","3":"33.7572"},{"1":"Africa","2":"Algeria","3":"33.3332"},{"1":"Americas","2":"United States","3":"301.1399"},{"1":"Americas","2":"Brazil","3":"190.0106"},{"1":"Americas","2":"Mexico","3":"108.7009"},{"1":"Americas","2":"Colombia","3":"44.2276"},{"1":"Americas","2":"Argentina","3":"40.3019"},{"1":"Americas","2":"Canada","3":"33.3901"},{"1":"Americas","2":"Peru","3":"28.6748"},{"1":"Americas","2":"Venezuela","3":"26.0847"},{"1":"Americas","2":"Chile","3":"16.2847"},{"1":"Americas","2":"Ecuador","3":"13.7557"},{"1":"Asia-Pacific","2":"China","3":"1318.6831"},{"1":"Asia-Pacific","2":"India","3":"1110.3963"},{"1":"Asia-Pacific","2":"Indonesia","3":"223.5470"},{"1":"Asia-Pacific","2":"Pakistan","3":"169.2706"},{"1":"Asia-Pacific","2":"Bangladesh","3":"150.4483"},{"1":"Asia-Pacific","2":"Japan","3":"127.4680"},{"1":"Asia-Pacific","2":"Philippines","3":"91.0773"},{"1":"Asia-Pacific","2":"Vietnam","3":"85.2624"},{"1":"Asia-Pacific","2":"Iran","3":"69.4536"},{"1":"Asia-Pacific","2":"Thailand","3":"65.0681"},{"1":"Europe","2":"Germany","3":"82.4010"},{"1":"Europe","2":"Turkey","3":"71.1586"},{"1":"Europe","2":"France","3":"61.0839"},{"1":"Europe","2":"United Kingdom","3":"60.7762"},{"1":"Europe","2":"Italy","3":"58.1477"},{"1":"Europe","2":"Spain","3":"40.4482"},{"1":"Europe","2":"Poland","3":"38.5182"},{"1":"Europe","2":"Romania","3":"22.2761"},{"1":"Europe","2":"Netherlands","3":"16.5706"},{"1":"Europe","2":"Greece","3":"10.7063"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -454,7 +454,7 @@ $ pop     &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 
 </section></section><section id="the-for-loop" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-for-loop">The <code>for</code> loop!</h2>
 <p>We now have to load the Excel template with the data at appropriate cell locations for one region at a time. Since we have about 4 regions, we will create a vector of unique regions to iterate over.</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>unique_regions <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(region) <span class="sc">%&gt;%</span> <span class="fu">pull</span>()</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>unique_regions <span class="ot">&lt;-</span> gp <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(region) <span class="sc">%&gt;%</span> <span class="fu">pull</span>()</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="fu">cat</span>(unique_regions, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Asia-Pacific
@@ -466,7 +466,7 @@ Americas</code></pre>
 <p>As our last step, we will create the <code>for</code> loop that will iterate over <code>unique_regions</code> , filter the datasets for each region, write them to the Excel Template, save the template with temporary name. We save the file with different name to prevent unintentionally corrupting the Excel macro template. Finally, we run the macro in the renamed file.</p>
 <p>The code will look something like this</p>
 <div class="cell">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="cf">for</span> (region <span class="cf">in</span> unique_regions) {</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="cf">for</span> (region <span class="cf">in</span> unique_regions) {</span>
 <span id="cb11-2"><a href="#cb11-2"></a>  </span>
 <span id="cb11-3"><a href="#cb11-3"></a>  <span class="co"># Step 1: filter the data sets</span></span>
 <span id="cb11-4"><a href="#cb11-4"></a>  <span class="co"># Step 2: write the data sets</span></span>
@@ -478,7 +478,7 @@ Americas</code></pre>
 </div>
 <p>Let’s populate the above <code>for</code> loop with the code we need.</p>
 <div class="cell column-body-outset-right">
-<details open=""><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="cf">for</span> (curr_region <span class="cf">in</span> unique_regions) {</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="cf">for</span> (curr_region <span class="cf">in</span> unique_regions) {</span>
 <span id="cb12-2"><a href="#cb12-2"></a>  </span>
 <span id="cb12-3"><a href="#cb12-3"></a>  <span class="co"># Step 1: filter the data sets</span></span>
 <span id="cb12-4"><a href="#cb12-4"></a>  </span>
@@ -547,9 +547,13 @@ Americas</code></pre>
 </div>
 <p>Once the code runs completely, you will see 4 new PowerPoint Presentations in your working folder.</p>
 <div style="text-align:center;">
-<div id="fig-output-files" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/Pe8yyxI.png" title="Output Files" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;6: Output Files</figcaption><p></p>
-</figure>
+<div id="fig-output-files" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-output-files-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/Pe8yyxI.png" title="Output Files" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-output-files-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Output Files
+</figcaption></figure>
 </div>
 </div>
 <p>You can download the full R script from <a href="https://gist.github.com/vkatti/cc95c56e11c1b8985bbd288f353c7386" title="Navigate to Github Gist">here</a>.</p>
@@ -566,9 +570,8 @@ Americas</code></pre>
 </ul>
 
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2021,
-  author = {Vishal Katti},
-  editor = {},
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2021,
+  author = {Katti, Vishal},
   title = {Unholy {Trinity} of {R,} {Excel} {VBA} and {Powerpoint} -
     {Part} 2 of 2},
   date = {2021-12-29},
@@ -577,9 +580,9 @@ Americas</code></pre>
   abstract = {This post demonstrates how to run VBA macros in Excel
     which in turn creates Presentations based off PowerPoint Templates.}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Vishal Katti. 2021. <span>“Unholy Trinity of R, Excel VBA and Powerpoint
-- Part 2 of 2.”</span> December 29, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT2">https://vishalkatti.com/posts/R2VBA2PPT2</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas" role="listitem">
+Katti, Vishal. 2021. <span>“Unholy Trinity of R, Excel VBA and
+Powerpoint - Part 2 of 2.”</span> December 29, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT2">https://vishalkatti.com/posts/R2VBA2PPT2</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -621,6 +624,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -689,13 +719,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -712,7 +744,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   // Switch to dark mode if need be
   if (hasAlternateSentinel()) {
     toggleColorMode(true);
-  } 
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -720,9 +754,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -734,7 +782,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -792,10 +857,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -805,8 +869,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -821,31 +894,286 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></div>   
+    <div class="nav-footer-left">
+<p>Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
 <li class="nav-item compact">

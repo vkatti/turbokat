@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Vishal Katti">
 <meta name="dcterms.date" content="2021-10-19">
@@ -16,7 +16,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -28,6 +28,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../VK Logo.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -48,7 +49,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -57,78 +64,84 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2">
 <meta property="og:description" content="This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.">
-<meta property="og:image" content="https://vishalkatti.com/posts\R2VBA2PPT1\images\R2XL2PPT_logo.png">
-<meta property="og:site-name" content="Vishal Katti">
+<meta property="og:image" content="https://vishalkatti.com/posts/R2VBA2PPT1/images/R2XL2PPT_logo.png">
+<meta property="og:site_name" content="Vishal Katti">
 <meta property="og:image:height" content="619">
 <meta property="og:image:width" content="1500">
 <meta name="twitter:title" content="Katti’s Blog">
 <meta name="twitter:description" content="This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.">
-<meta name="twitter:image" content="https://vishalkatti.com/profile-pic.png">
+<meta name="twitter:image" content="https://vishalkatti.com/posts/R2VBA2PPT1/images/R2XL2PPT_logo.png">
 <meta name="twitter:creator" content="@vishal_katti">
-<meta name="twitter:image-height" content="612">
-<meta name="twitter:image-width" content="612">
+<meta name="twitter:site" content="@vishal_katti">
+<meta name="twitter:image-height" content="619">
+<meta name="twitter:image-width" content="1500">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vishal Katti</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">Blog</a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0">CV</a>
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&amp;dl=0"> 
+<span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/vkatti"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/vishal_katti"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/vishal_katti"> <i class="bi bi-twitter" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@vishalkatti"> <i class="bi bi-mastodon" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/vishalkatti"> <i class="bi bi-linkedin" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
- </a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-<div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
@@ -159,12 +172,13 @@ ul.task-list li input[type="checkbox"] {
         <p class="date">October 19, 2021</p>
       </div>
     </div>
+    
       
     </div>
     
   <div>
     <div class="abstract">
-      <div class="abstract-title">Abstract</div>
+      <div class="block-title">Abstract</div>
       This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.
     </div>
   </div>
@@ -198,27 +212,38 @@ ul.task-list li input[type="checkbox"] {
 <p>Let’s begin.</p>
 <p>Suppose we want to automate the following PowerPoint presentation. It contains 3 slides with a title slide and 2 content slides having graphs and tables created from the <code>gapminder</code> dataset. This <code>.pptx</code> file also has a custom footer.</p>
 <div style="text-align:center;">
-<div id="fig-gapminder" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder World Report" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;1: The Gapminder World Population Report. Note the custom footer!</figcaption><p></p>
-</figure>
+<div id="fig-gapminder" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder World Report" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The Gapminder World Population Report. Note the custom footer!
+</figcaption></figure>
 </div>
 </div>
 <p>We want to create the same presentation with same structure but at a continent-level. <code>gapminder</code> has data for 5 continents and we wish to create 5 presentations by the end of this.</p>
 </section><section id="the-powerpoint-template" class="level2"><h2 class="anchored" data-anchor-id="the-powerpoint-template">The PowerPoint Template</h2>
 <p>In this approach, we start with the PowerPoint presentation file. We will create a template with placeholders and charts with dummy data.</p>
 <div style="text-align:center;">
-<div id="fig-potx" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/NvdILBA.png" title="Save As PowerPoint Template (.potx)" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;2: Save As PowerPoint Template (.potx)</figcaption><p></p>
-</figure>
+<div id="fig-potx" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-potx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/NvdILBA.png" title="Save As PowerPoint Template (.potx)" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-potx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Save As PowerPoint Template (.potx)
+</figcaption></figure>
 </div>
 </div>
-<p>Usually, you would have a copy of the <code>.pptx</code> file you want to automate. Save a copy of it as a <code>PowerPoint Template (.potx)</code>, ideally to your R Project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> folder. In my case, I’ve created a new R Project folder named <code>R2XL2PPT</code> as shown in <a href="#fig-potx">Figure&nbsp;2</a>.</p>
+<p>Usually, you would have a copy of the <code>.pptx</code> file you want to automate. Save a copy of it as a <code>PowerPoint Template (.potx)</code>, ideally to your R Project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> folder. In my case, I’ve created a new R Project folder named <code>R2XL2PPT</code> as shown in <a href="#fig-potx" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <p>Now let us prep the template. If you open the template file by double-click or right-click &gt; New, it would open a fresh <code>.pptx</code> presentation using the template. Right-Click and click Open in the context menu to open the <code>.potx</code> template file for editing.</p>
 <div style="text-align:center;">
-<div id="fig-open" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="https://i.imgur.com/eQokXoX.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: CORRECT: Right-Click &gt; Open</figcaption><p></p>
-</figure>
+<div id="fig-open" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/eQokXoX.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: CORRECT: Right-Click &gt; Open
+</figcaption></figure>
 </div>
 </div>
 <p>Once you have the template open, we will add names to all the text placeholders, tables and graphs we wish to update. To update the placeholder name:</p>
@@ -228,17 +253,21 @@ ul.task-list li input[type="checkbox"] {
 <li>In the Selection Pane, change the name of the selected item.</li>
 </ol>
 <div style="text-align:center;">
-<div id="fig-add-shapes" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/xhA0D3u.png" title="Add shape names from Selection Pane" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;4: Add shape names from Selection Pane</figcaption><p></p>
-</figure>
+<div id="fig-add-shapes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-add-shapes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/xhA0D3u.png" title="Add shape names from Selection Pane" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-add-shapes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Add shape names from Selection Pane
+</figcaption></figure>
 </div>
 </div>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advisory
 </div>
 </div>
@@ -250,19 +279,23 @@ Advisory
 <p>Download the <code>GP_template.potx</code> template <a href="content/GP_template.potx">here</a>.</p>
 </section><section id="the-excel-template" class="level2"><h2 class="anchored" data-anchor-id="the-excel-template">The Excel Template</h2>
 <div style="text-align:center;">
-<div id="fig-mapping" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/A080o1Z.png" title="PowerPoint item to Excel named range mapping" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;5: PowerPoint item to Excel named range mapping</figcaption><p></p>
-</figure>
+<div id="fig-mapping" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/A080o1Z.png" title="PowerPoint item to Excel named range mapping" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: PowerPoint item to Excel named range mapping
+</figcaption></figure>
 </div>
 </div>
-<p>To populate all the named items in the PowerPoint template, we will now create an Excel document which looks identical to the template with respect to the named items. Please see <a href="#fig-mapping">Figure&nbsp;5</a>.</p>
+<p>To populate all the named items in the PowerPoint template, we will now create an Excel document which looks identical to the template with respect to the named items. Please see <a href="#fig-mapping" class="quarto-xref">Figure&nbsp;5</a>.</p>
 <p>For every named item, depending on whether it is a textbox or chart or table, we will create a named range for that item. For example, for item <code>01_title</code> in the PowerPoint template, we create a <code>S1_title</code> named range<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> (which points to cell C3) as a placeholder for it.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Warning
 </div>
 </div>
@@ -272,19 +305,27 @@ Warning
 </div>
 <p>You can set a single Excel cell as named range for each <strong>textbox</strong> in the PowerPoint template. You can copy-paste <strong>tables</strong> from Powerpoint to the Excel template directly. The entire table must be set as a named range.</p>
 <div style="text-align:center;">
-<div id="fig-charts" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/rVsb1a6.png" title="Excel Chart: Right Click > Edit Data" class="img-fluid figure-img" style="width:70.0%"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;6: Excel Chart: Right Click &gt; Edit Data</figcaption><p></p>
-</figure>
+<div id="fig-charts" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-charts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/rVsb1a6.png" title="Excel Chart: Right Click > Edit Data" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-charts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Excel Chart: Right Click &gt; Edit Data
+</figcaption></figure>
 </div>
 </div>
-<p>For charts, right-click the chart in PowerPoint and select <code>Edit Data</code>. See <a href="#fig-charts">Figure&nbsp;6</a>. An excel worksheet is displayed with the underlying data. Copy-paste the entire data into the Excel template.</p>
+<p>For charts, right-click the chart in PowerPoint and select <code>Edit Data</code>. See <a href="#fig-charts" class="quarto-xref">Figure&nbsp;6</a>. An excel worksheet is displayed with the underlying data. Copy-paste the entire data into the Excel template.</p>
 <div style="text-align:center;">
-<div id="fig-xlsm" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><figure class="figure"><img src="https://i.imgur.com/oMdSUvp.png" title="XL2PPT design" class="img-fluid figure-img"></figure><p></p><figcaption class="figure-caption">Figure&nbsp;7: XL2PPT design</figcaption><p></p>
-</figure>
+<div id="fig-xlsm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-xlsm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.imgur.com/oMdSUvp.png" title="XL2PPT design" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xlsm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: XL2PPT design
+</figcaption></figure>
 </div>
 </div>
-<p>For the <code>GP_template.potx</code>, the corresponding excel template <code>XL2PPT.xlsm</code> is shown in <a href="#fig-xlsm">Figure&nbsp;7</a>. Please note that this template does not have the VBA macro yet.</p>
+<p>For the <code>GP_template.potx</code>, the corresponding excel template <code>XL2PPT.xlsm</code> is shown in <a href="#fig-xlsm" class="quarto-xref">Figure&nbsp;7</a>. Please note that this template does not have the VBA macro yet.</p>
 </section><section id="the-vba-macro" class="level2"><h2 class="anchored" data-anchor-id="the-vba-macro">The VBA Macro</h2>
 <p>We want the VBA macro to:</p>
 <ol type="1">
@@ -309,9 +350,8 @@ Warning
 <ol>
 <li id="fn1"><p><strong>What is an R Project?</strong><br><em>https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects</em><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p><strong>What is a Named Range in Excel?</strong> <em>https://support.microsoft.com/en-us/office/define-and-use-names-in-formulas-4d0f13ac-53b7-422e-afd2-abd7ff379c64</em><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2021,
-  author = {Vishal Katti},
-  editor = {},
+</ol></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2021,
+  author = {Katti, Vishal},
   title = {Unholy {Trinity} of {R,} {Excel} {VBA} and {Powerpoint} -
     {Part} 1 of 2},
   date = {2021-10-19},
@@ -321,9 +361,9 @@ Warning
     based off your custom/corporate Presentation/Report and VBA-enabled
     Excel file that would populate the report.}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Vishal Katti. 2021. <span>“Unholy Trinity of R, Excel VBA and Powerpoint
-- Part 1 of 2.”</span> October 19, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT1">https://vishalkatti.com/posts/R2VBA2PPT1</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas" role="listitem">
+Katti, Vishal. 2021. <span>“Unholy Trinity of R, Excel VBA and
+Powerpoint - Part 1 of 2.”</span> October 19, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT1">https://vishalkatti.com/posts/R2VBA2PPT1</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -365,6 +405,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -433,13 +500,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -456,7 +525,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   // Switch to dark mode if need be
   if (hasAlternateSentinel()) {
     toggleColorMode(true);
-  } 
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -464,9 +535,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -478,7 +563,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -536,10 +638,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -549,8 +650,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -565,31 +675,286 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></div>   
+    <div class="nav-footer-left">
+<p>Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
 <li class="nav-item compact">

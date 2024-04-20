@@ -8,6 +8,8 @@ website:
   title: "Vishal Katti"
   site-url: https://vishalkatti.com
   description: "Vishal Katti's Blog"
+  favicon: "VK Logo.png"
+  image: "VK Logo.png"
   navbar:
     search: true
     right:
@@ -44,7 +46,7 @@ website:
         
   twitter-card: 
     title: "Katti's Blog"
-    image: "profile-pic.png"
+    image: "VK Logo.png"
     creator: "@vishal_katti"
     site: "@vishal_katti"
     
