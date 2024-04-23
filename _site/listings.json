@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/courses.html",
+    "items": [
+      "/courses/essential-it-skills-for-everyone/index.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/date-format/index.html",

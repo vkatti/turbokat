@@ -1,0 +1,55 @@
+---
+title: "Essential IT Skills for Everyone"
+subtitle: "Live, Online and Multi-lingual Course"
+abstract: "The most used tools on the planet are not taught in school! This course aims to close that gap." 
+abstract-title: ""
+image: image.png
+categories: [Excel, PowerPoint, Word, AI Tools, Live Course]
+filters:
+  - social-share
+share:
+  permalink: "https://vishalkatti.com/courses/essential-it-skills-for-everyone"
+  description: "Check out this live, online and multilingual interactive course on Excel, PowerPoint and Word.\nLearn the latest features, get tips and tricks on how to use AI Tools, Career Guidance and Bonus Resources worth 💲💲💲"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+---
+
+::: column-screen
+:::
+
+# Learn to effectively use Excel, PowerPoint and Word to zoom past your peers! {.unnumbered .unlisted}
+
+It doesn't matter if you are an under-graduate or working professional. It doesn't matter if you are in an IT or a Non-IT Profession. It doesn't matter if you know nothing about Excel, PowerPoint or Word. By the end of this course, you will understand how to leverage these tools to effectively bump up your productivity, and save hours of precious time for yourself.
+
+❓There are many online courses on Udemy, Coursera etc, which probably cost almost the same or even less than this course. Then why should you take this course❓
+
+| Topic                                   | Other Online Courses                                                       | Essential IT Skills for Everyone                                                                                       |
+|-----------------------------------------|----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| **Mode of Instruction**                 | 💢 Recorded Videos                                                         | ✅ Live and Online                                                                                                     |
+| **Interaction with Instructor**         | 💢 Minimal or None. No scope to get real-time answers to specific problems | ✅ Full Fledged Video Interaction with real-time answers addressing your specific questions                            |
+| **Interaction with other participants** | 💢 Limited or through comments only or self-learning only.                 | ✅ Batch-wise WhatsApp group for collaborative learning and sharing of experiences                                     |
+| **Language of Instruction**             | 💢 Single Language (usually English)                                       | ✅ Multi-lingual (English, Hindi, Marathi and/or Kannada)                                                              |
+| **Course Content**                      | 💢 Fixed and sometimes outdated!                                           | ✅ Latest Features and techniques, syllabus gets updated with every new feature launched for Excel, PowerPoint or Word |
+| **Best Practices**                      | 💢 Minimal or non-existent                                                 | ✅ Special attention to inculcate industry-approved best practices at every step                                       |
+| **Individual Attention**                | 💢 Minimal                                                                 | ✅ Guaranteed Individual attention due to small batch size (20 pax only)                                               |
+| AI Tools                                | 💢 Minimal                                                                 |                                                                                                                        |
+
+💢 Most of these online courses are recorded videos and offer no interactive sessions. There is no scope to ask questions and get specific answers. Some of them are outdated. ✅ This course teaches the latest features and techniques in using Excel, PowerPoint and Word. 💢 Most of these courses, while they cover all topics, don't go into the best practices and efficient workflows. Some of them even teach a few tasks which are actively discouraged by the IT community. ✅ This course is personally curated by the instructor by including the best practices at every step of the way. 💢 Most of them are in English and not everyone understands the accent. ✅ The instructor of this course is fluent in English, Hindi, Kannada and Marathi; therefore, he is able to take questions in any of these languages and answer them on the spot. No other course offers this today.
+
+✅ The idea of this course is to have a small batch size (10 seats only) so that the instructor can provide individual attention to each participant to ensure maximum learning and absolute paisa vasool experience! ✅ After the course is over, for 1 week, the participant can interact 1-on-1 with the instructor over WhatsApp for any R-related help and support. No other course offers this. ✅ Finally, with so many AI tools in the market, this course will teach you how to make best use of AI tools for effective learning and efficient R programming.
+
+This course aims to establish a strong foundation in the R programming language along with the fundamentals of Data Analysis and Reporting best practises. This course will also ignite your brain with ideas about report automation and documentation.
+
+What will you get? 🎓 Expert-Curated Curriculum 🚀 LIVE Webinar with Hands-On Experience with Labs. 💬 Multilingual Interaction (English, Hindi, Marathi, and Kannada) 🌟 Personalized Attention (only 10 seats per batch) 💡 1-on-1 support via WhatsApp during office-hours (T&C Apply) 😎 AI Tools and Bonus Resources
+
+Last Date for Registration: 20th April 2024.\
+Spaces are filling up fast!
+
+Click here (https://rzp.io/l/DAnRwR-A) to register and to secure your spot.
+
+Please share in other groups too. 🙏🏼
