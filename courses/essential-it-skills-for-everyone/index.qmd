@@ -1,8 +1,8 @@
 ---
 title: "Essential IT Skills for Everyone"
-subtitle: "Live, Online and Multi-lingual Course"
+subtitle: "This course is part of the Foundation Courses which aims to establish a solid base foundation for a productive and fulfilling career"
 image: image.png
-categories: [Excel, PowerPoint, Word, AI Tools, Live Course]
+categories: [Foundation, Excel, PowerPoint, Word, AI Tools, Live Course]
 filters:
   - social-share
 share:
@@ -17,60 +17,152 @@ share:
   email: true
 ---
 
-# Learn to effectively use Excel, PowerPoint and Word to zoom past your peers! {.unnumbered .unlisted}
+# Accelerate your career with expertise in Excel, PowerPoint and Word! {.unnumbered .unlisted}
 
-It doesn't matter if you are an under-graduate or working professional.\
-It doesn't matter if you are in an IT or a Non-IT profession.\
-It doesn't matter if you are a businessperson or working professional.\
-It doesn't matter if you know nothing about Excel, PowerPoint or Word.\
+-   It doesn't matter if you are an under-graduate student or a working professional.
+-   It doesn't matter if you are in an IT or a non-IT profession.
+-   It doesn't matter if you are a businessperson or working professional.
+-   It doesn't matter if you know nothing about Excel, PowerPoint or Word.
+
 By the end of this course, you will understand how to leverage these tools to effectively bump up your productivity, and save hours of precious time for yourself.
 
-# But Why these tools?
+# But why these tools?
+
+No matter who you are, it is highly likely that your life was somehow influenced by these tools or by people using these tools.
 
 {{< video https://www.youtube.com/embed/SRIYtBngL_o title="Microsoft Excel : 4 Key Reasons Why Excel is so important at work" >}}
 
 # Why Should You Take This Course?
 
-❓There are many online courses on Udemy, Coursera etc, which probably cost almost the same or even less than this course. Then why should you take this course❓
+❓There are many online courses on Udemy, Coursera, Edureka etc., which are probably priced the same or even less than this course. Then why should you take this course❓
 
-| Topic                                   | Other Online Courses                                                       | Essential IT Skills for Everyone                                                                                       |
+| Topic                                   | Other Online Courses                                                       | Essential IT Skills for Everyone                                                                                        |
 |------------------|----------------------|--------------------------------|
-| **Mode of Instruction**                 | 💢 Recorded Videos                                                         | ✅ Live and Online                                                                                                     |
-| **Interaction with Instructor**         | 💢 Minimal or None. No scope to get real-time answers to specific problems | ✅ Full Fledged Video Interaction with real-time answers addressing your specific questions                            |
-| **Interaction with other participants** | 💢 Limited or through comments only or self-learning only.                 | ✅ Batch-wise WhatsApp group for collaborative learning and sharing of experiences                                     |
-| **Language of Instruction**             | 💢 Single Language (usually English)                                       | ✅ Multi-lingual (English, Hindi, Marathi and/or Kannada)                                                              |
-| **Course Content**                      | 💢 Fixed and sometimes outdated!                                           | ✅ Latest Features and techniques, syllabus gets updated with every new feature launched for Excel, PowerPoint or Word |
-| **Best Practices**                      | 💢 Minimal or non-existent                                                 | ✅ Special attention to inculcate industry-approved best practices at every step                                       |
-| **Individual Attention**                | 💢 Minimal                                                                 | ✅ Guaranteed Individual attention due to small batch size (20 pax only)                                               |
-| **Helpful Add-ins and AI Tools**        | 💢 Minimal                                                                 | ✅ Curated list of Add-Ins and AI Tools for enhanced learning and Productivity                                         |
-| **Career Guidance**                     | 💢 Non Existent                                                            | ✅ Individual advice for all participants                                                                              |
+| **Mode of Instruction**                 | 💢 Recorded Videos                                                         | ✅ Live and Online                                                                                                      |
+| **Interaction with Instructor**         | 💢 Minimal or None. No scope to get real-time answers to specific problems | ✅ Full Fledged Video Interaction with real-time answers addressing your specific questions                             |
+| **Interaction with other participants** | 💢 Limited or through comments only or self-learning only.                 | ✅ Batch-wise WhatsApp group for collaborative learning and sharing of experiences                                      |
+| **Language of Instruction**             | 💢 Single Language (usually English)                                       | ✅ Multi-lingual (English, Hindi, Marathi and/or Kannada)                                                               |
+| **Course Content**                      | 💢 Fixed and sometimes outdated!                                           | ✅ Latest Features and techniques, syllabus gets updated with every new features launched for Excel, PowerPoint or Word |
+| **Best Practices**                      | 💢 Minimal or non-existent                                                 | ✅ Special attention to inculcate industry-approved best practices at every step                                        |
+| **Individual Attention**                | 💢 Minimal                                                                 | ✅ Guaranteed Individual attention due to small batch size (20 pax only)                                                |
+| **Helpful Add-ins and AI Tools**        | 💢 Minimal                                                                 | ✅ Curated list of Add-Ins and AI Tools for enhanced learning and Productivity                                          |
+| **Career Guidance**                     | 💢 Non Existent                                                            | ✅ Individual advice for all participants                                                                               |
 
 This course aims to establish a strong foundation in Excel, PowerPoint and Word along with Industry-certified best practices and helpful AI tools. This course will also ignite your brain with ideas about report automation and documentation.
 
 ::: {style="text-align: center;"}
-<a href="#register" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 16px; cursor: pointer; border-radius: 5px;">Awesome! Sign me up! --\></a>
+<a href="#register" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; border-radius: 5px;">Awesome! Sign me up! --\></a>
 :::
 
 # What will you get?
 
-🎓 Expert-Curated Curriculum
+::: {.callout-note collapse="true" style="border-left-color: #8C52FF;" icon="false"}
+## 🎓 Expert-Curated Curriculum
 
-🚀 LIVE Webinar with Hands-On Experience with Labs.
+The course content has been specially curated by Vishal Katti, who is also the Instructor for this course. The course introduces the most used features and some hidden gems which most people are unaware. The Instructor demonstrates some game-changing feature-combos across Excel, PowerPoint and Word.
 
-💬 Multilingual Interaction (English, Hindi, Marathi, and Kannada)
+**Course Plan**
 
-🌟 Personalized Attention (only 10 seats per batch)
+Day 1
 
-💡 1-on-1 support via WhatsApp during office-hours (T&C Apply)
+-   Introduction to MS Excel
+-   MS Excel Basics (Tables, Charts, Formula, Functions)
 
-😎 AI Tools and Bonus Resources
+Day 2
+
+-   Excel Advanced (Pivot Tables, PowerQuery)
+-   Introduction to Excel VBA (Macro Programming)
+-   Bonus track
+
+Day 3
+
+-   Introduction to Presentations (MS PowerPoint)
+-   MS PowerPoint Basics (Animations, Transitions, 3D Models)
+-   Bonus track
+
+Day 4
+
+-   Introduction to Documents (MS Word)
+-   MS Word Basic (Table of Contents, Insert Tables, Images, Linking, Mail Merge)
+-   Bonus Track
+
+Day 5
+
+-   Answering the question "Where will I use this?"
+
+-   Walk-through of AI Tools for enhanced learning
+
+-   Doubt Clearing and Career Guidance
+:::
+
+::: {.callout-note collapse="true" style="border-left-color: #8C52FF;" icon="false"}
+## 🚀 LIVE Webinar with Hands-On Experience with Labs.
+
+This course is going to be Live, which means you will be able to interact with the Instructor in real-time. No more recorded videos where the presenter doesn't pay attention to you or your chat messages!!
+:::
+
+::: {.callout-note collapse="true" style="border-left-color: #8C52FF;" icon="false"}
+## 💬 Multilingual Interaction
+
+The Instructor is well-versed in English, Hindi, Marathi and Kannada. He also understands Konkani and Punjabi but not enough to respond in the same language. This means that you can ask a question in any of these languages and expect an answer to your specific question immediately.
+:::
+
+::: {.callout-note collapse="true" style="border-left-color: #8C52FF;" icon="false"}
+## 🌟 Personalized Attention
+
+With a small batch size of only 20 participants, the Instructor promises that you get personalized attention guaranteeing an experience worth every penny! For an absolute [paisa-vasool](https://en.wiktionary.org/wiki/paisa_vasool "What does this mean? Click to check in Wikitionary"){target="_blank"} experience, make sure that you come with an open mind, ready to learn and be open to new ideas.
+:::
+
+::: {.callout-note collapse="true" style="border-left-color: #8C52FF;" icon="false"}
+## 😎 AI Tools
+
+A curated list of AI Tools will be demonstrated which will help not only cement your learning but also help you boost your productivity while using Excel, PowerPoint and Word!
+:::
+
+::: {.callout-note collapse="true" style="border-left-color: #8C52FF;" icon="false"}
+## ✨ Bonus Resources
+
+🎓 Certificate of Completion (T&C Apply)
+
+🎯 Guided Workbook for Practicing Excel Functions worth \$500
+
+⚡ Excel Add-in with Time-saving VBA Macros worth \$1000
+
+🤩 50 ready-to-use PowerPoint Templates worth \$200
+
+💲 A Referral Code to earn your money back!!!
+:::
+
+::: {style="text-align: center;"}
+<a href="#register" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; border-radius: 5px;">Great! Let's go already! --\></a>
+:::
 
 # When does this course happen?
 
-This course is conducted in the first full-week of every month.
+This course is conducted in the first full-week of every month.\
+It is a 5-day program from Monday to Friday, from 9:00 PM - 11:00 PM Indian Standard Time (IST)
+
+::: callout-important
+## Terms & Conditions
+
+1.  **Deadline for Registration:**
+    The final date for registration for a batch is 2 days before the commencement of the course.
+2.  **Cancellation Policy:**
+    Should a registrant wish to cancel their registration; they may do so freely until the aforementioned deadline. Any cancellation requests received after this time will incur a penalty of ₹ 500/- up until the commencement of the course.
+3.  **Commencement of Course:**
+    Once the course commences, all registrations become final, and refunds will not be issued under any circumstances.
+4.  **Change of Batch:**
+    This is subject to availability of free slots in other scheduled batches.
+5.  **Punctuality and Attendance:**
+    Participants are expected to adhere to scheduled session times punctually, respecting the time commitments of all involved.
+6.  **Live Course Content:**
+    It is imperative for participants to engage actively during sessions, as the course is conducted live and does not offer recorded content for review.
+:::
 
 # Register Now! {#register}
 
-Click here (https://rzp.io/l/EITS4E) to register and to secure your spot.
 
-Please share in other groups too. 🙏🏼
+::: {style="text-align: center"}
+<a href="https://rzp.io/l/EITS4E" target="_blank" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; text-decoration:none; border-radius: 5px;">CLICK TO REGISTER</a>
+:::
+
