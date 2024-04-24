@@ -7,17 +7,13 @@ filters:
   - social-share
 share:
   permalink: "https://vishalkatti.com/courses/essential-it-skills-for-everyone"
-  description: "Check out this live, online and multilingual interactive course on Excel, PowerPoint and Word.\nLearn the latest features, get tips and tricks on how to use AI Tools, Career Guidance and Bonus Resources worth 💲💲💲"
+  description: "Check out this live, online and multilingual interactive course on Excel, PowerPoint and Word. Learn the latest features, get tips and tricks on how to use AI Tools, Career Guidance and Bonus Resources worth 💲💲💲"
   twitter: true
   facebook: true
   reddit: true
-  stumble: false
-  tumblr: false
   linkedin: true
   email: true
 ---
-
-# Accelerate your career with expertise in Excel, PowerPoint and Word! {.unnumbered .unlisted}
 
 -   It doesn't matter if you are an under-graduate student or a working professional.
 -   It doesn't matter if you are in an IT or a non-IT profession.
@@ -26,15 +22,17 @@ share:
 
 By the end of this course, you will understand how to leverage these tools to effectively bump up your productivity, and save hours of precious time for yourself.
 
-# But why these tools?
+# Accelerate your career with expertise in Excel, PowerPoint and Word! {.unnumbered .unlisted}
 
 No matter who you are, it is highly likely that your life was somehow influenced by these tools or by people using these tools.
 
 {{< video https://www.youtube.com/embed/SRIYtBngL_o title="Microsoft Excel : 4 Key Reasons Why Excel is so important at work" >}}
 
-# Why Should You Take This Course?
+---
 
-❓There are many online courses on Udemy, Coursera, Edureka etc., which are probably priced the same or even less than this course. Then why should you take this course❓
+# How is this course different from others?
+
+There are many online courses on Udemy, Coursera, Edureka etc., which are probably priced the same or even less than this course. Then why should you take this course❓
 
 | Topic                                   | Other Online Courses                                                       | Essential IT Skills for Everyone                                                                                        |
 |------------------|----------------------|--------------------------------|
@@ -51,8 +49,10 @@ No matter who you are, it is highly likely that your life was somehow influenced
 This course aims to establish a strong foundation in Excel, PowerPoint and Word along with Industry-certified best practices and helpful AI tools. This course will also ignite your brain with ideas about report automation and documentation.
 
 ::: {style="text-align: center;"}
-<a href="#register" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; border-radius: 5px;">Awesome! Sign me up! --\></a>
+<a href="#register" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center;text-decoration:none; font-size: 32px; cursor: pointer; border-radius: 5px;display: block; width: 100%;">Awesome! Sign me up! --\></a>
 :::
+
+---
 
 # What will you get?
 
@@ -89,9 +89,7 @@ Day 4
 Day 5
 
 -   Answering the question "Where will I use this?"
-
 -   Walk-through of AI Tools for enhanced learning
-
 -   Doubt Clearing and Career Guidance
 :::
 
@@ -134,35 +132,37 @@ A curated list of AI Tools will be demonstrated which will help not only cement 
 :::
 
 ::: {style="text-align: center;"}
-<a href="#register" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; border-radius: 5px;">Great! Let's go already! --\></a>
+<a href="#register" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center;text-decoration:none; font-size: 32px; cursor: pointer; border-radius: 5px;display: block; width: 100%;">Great! Let's go already! --\></a>
 :::
 
-# When does this course happen?
+---
 
-This course is conducted in the first full-week of every month.\
-It is a 5-day program from Monday to Friday, from 9:00 PM - 11:00 PM Indian Standard Time (IST)
+# Batch Timings
 
-::: callout-important
-## Terms & Conditions
+This course was launched April 1st, 2024 and the inaugural batch saw only 2 participants! However, May 2024 batch sold out!! Registrations are currently open for **June, July and August 2024** batches. It is a 5-day program from **Monday to Friday, from 9:00 PM - 11:00 PM Indian Standard Time (IST)**.
 
-1.  **Deadline for Registration:**
-    The final date for registration for a batch is 2 days before the commencement of the course.
-2.  **Cancellation Policy:**
-    Should a registrant wish to cancel their registration; they may do so freely until the aforementioned deadline. Any cancellation requests received after this time will incur a penalty of ₹ 500/- up until the commencement of the course.
-3.  **Commencement of Course:**
-    Once the course commences, all registrations become final, and refunds will not be issued under any circumstances.
-4.  **Change of Batch:**
-    This is subject to availability of free slots in other scheduled batches.
-5.  **Punctuality and Attendance:**
-    Participants are expected to adhere to scheduled session times punctually, respecting the time commitments of all involved.
-6.  **Live Course Content:**
-    It is imperative for participants to engage actively during sessions, as the course is conducted live and does not offer recorded content for review.
+---
+
+# Terms & Conditions
+
+::: {.callout-note collapse="true" style="border-left-color: #8C52FF;"}
+## Please read this before proceeding
+
+1.  **Deadline for Registration:** The final date for registration for a batch is 2 days before the commencement of the course.
+2.  **Cancellation Policy:** Should a registrant wish to cancel their registration; they may do so freely until the aforementioned deadline. Any cancellation requests received after this time will incur a penalty of ₹ 500/- up until the commencement of the course.
+3.  **Commencement of Course:** Once the course commences, all registrations become final, and refunds will not be issued under any circumstances.
+4.  **Change of Batch:** This is subject to availability of free slots in other scheduled batches.
+5.  **Punctuality and Attendance:** Participants are expected to adhere to scheduled session times punctually, respecting the time commitments of all involved.
+6.  **Live Course Content:** It is imperative for participants to engage actively during sessions, as the course is conducted live and does not offer recorded content for review.
+7.  **Certificate of Completion:** Participants who attend all 5 days and submit the final assignment within 7 days of course completion will be given a Certificate of Completion
 :::
+
+---
 
 # Register Now! {#register}
 
+Before you register, please do read the Terms & Conditions.
 
 ::: {style="text-align: center"}
-<a href="https://rzp.io/l/EITS4E" target="_blank" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; text-decoration:none; border-radius: 5px;">CLICK TO REGISTER</a>
+<a href="https://pages.razorpay.com/EITS4E" target="_blank" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; text-decoration:none; border-radius: 5px;display: block; width: 100%;">CLICK TO REGISTER</a>
 :::
-

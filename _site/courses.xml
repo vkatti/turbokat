@@ -13,9 +13,11 @@
 <url>https://vishalkatti.com/VK Logo.png</url>
 <title>Courses</title>
 <link>https://vishalkatti.com/courses.html</link>
+<height>144</height>
+<width>144</width>
 </image>
 <generator>quarto-1.4.550</generator>
-<lastBuildDate>Wed, 24 Apr 2024 03:44:29 GMT</lastBuildDate>
+<lastBuildDate>Wed, 24 Apr 2024 17:42:29 GMT</lastBuildDate>
 <item>
   <title>Essential IT Skills for Everyone</title>
   <link>https://vishalkatti.com/courses/essential-it-skills-for-everyone/</link>
@@ -25,8 +27,6 @@
 
 
 
-<section id="accelerate-your-career-with-expertise-in-excel-powerpoint-and-word" class="level1 unnumbered unlisted">
-<h1 class="unnumbered unlisted">Accelerate your career with expertise in Excel, PowerPoint and Word!</h1>
 <ul>
 <li>It doesn’t matter if you are an under-graduate student or a working professional.</li>
 <li>It doesn’t matter if you are in an IT or a non-IT profession.</li>
@@ -34,15 +34,15 @@
 <li>It doesn’t matter if you know nothing about Excel, PowerPoint or Word.</li>
 </ul>
 <p>By the end of this course, you will understand how to leverage these tools to effectively bump up your productivity, and save hours of precious time for yourself.</p>
-</section>
-<section id="but-why-these-tools" class="level1">
-<h1>But why these tools?</h1>
+<section id="accelerate-your-career-with-expertise-in-excel-powerpoint-and-word" class="level1 unnumbered unlisted">
+<h1 class="unnumbered unlisted">Accelerate your career with expertise in Excel, PowerPoint and Word!</h1>
 <p>No matter who you are, it is highly likely that your life was somehow influenced by these tools or by people using these tools.</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/SRIYtBngL_o" title="Microsoft Excel : 4 Key Reasons Why Excel is so important at work" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<hr>
 </section>
-<section id="why-should-you-take-this-course" class="level1">
-<h1>Why Should You Take This Course?</h1>
-<p>❓There are many online courses on Udemy, Coursera, Edureka etc., which are probably priced the same or even less than this course. Then why should you take this course❓</p>
+<section id="how-is-this-course-different-from-others" class="level1">
+<h1>How is this course different from others?</h1>
+<p>There are many online courses on Udemy, Coursera, Edureka etc., which are probably priced the same or even less than this course. Then why should you take this course❓</p>
 <table class="table">
 <colgroup>
 <col style="width: 25%">
@@ -108,6 +108,7 @@
 <div style="text-align: center;">
 <p>Awesome! Sign me up! –&gt;</p>
 </div>
+<hr>
 </section>
 <section id="what-will-you-get" class="level1">
 <h1>What will you get?</h1>
@@ -150,9 +151,9 @@
 </ul>
 <p>Day 5</p>
 <ul>
-<li><p>Answering the question “Where will I use this?”</p></li>
-<li><p>Walk-through of AI Tools for enhanced learning</p></li>
-<li><p>Doubt Clearing and Career Guidance</p></li>
+<li>Answering the question “Where will I use this?”</li>
+<li>Walk-through of AI Tools for enhanced learning</li>
+<li>Doubt Clearing and Career Guidance</li>
 </ul>
 </div>
 </div>
@@ -244,20 +245,26 @@
 <div style="text-align: center;">
 <p>Great! Let’s go already! –&gt;</p>
 </div>
+<hr>
 </section>
-<section id="when-does-this-course-happen" class="level1">
-<h1>When does this course happen?</h1>
-<p>This course is conducted in the first full-week of every month.<br>
-It is a 5-day program from Monday to Friday, from 9:00 PM - 11:00 PM Indian Standard Time (IST)</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<section id="batch-timings" class="level1">
+<h1>Batch Timings</h1>
+<p>This course was launched April 1st, 2024 and the inaugural batch saw only 2 participants! However, May 2024 batch sold out!! Registrations are currently open for <strong>June, July and August 2024</strong> batches. It is a 5-day program from <strong>Monday to Friday, from 9:00 PM - 11:00 PM Indian Standard Time (IST)</strong>.</p>
+<hr>
+</section>
+<section id="terms-conditions" class="level1">
+<h1>Terms &amp; Conditions</h1>
+<div class="callout callout-style-default callout-note callout-titled" style="border-left-color: #8C52FF;">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Terms &amp; Conditions
+Please read this before proceeding
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><strong>Deadline for Registration:</strong> The final date for registration for a batch is 2 days before the commencement of the course.</li>
@@ -266,14 +273,18 @@ Terms &amp; Conditions
 <li><strong>Change of Batch:</strong> This is subject to availability of free slots in other scheduled batches.</li>
 <li><strong>Punctuality and Attendance:</strong> Participants are expected to adhere to scheduled session times punctually, respecting the time commitments of all involved.</li>
 <li><strong>Live Course Content:</strong> It is imperative for participants to engage actively during sessions, as the course is conducted live and does not offer recorded content for review.</li>
+<li><strong>Certificate of Completion:</strong> Participants who attend all 5 days and submit the final assignment within 7 days of course completion will be given a Certificate of Completion</li>
 </ol>
 </div>
 </div>
+</div>
+<hr>
 </section>
 <section id="register" class="level1">
 <h1>Register Now!</h1>
+<p>Before you register, please do read the Terms &amp; Conditions.</p>
 <div style="text-align: center">
-<p><a href="https://rzp.io/l/EITS4E" target="_blank" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; text-decoration:none; border-radius: 5px;">CLICK TO REGISTER</a></p>
+<p><a href="https://pages.razorpay.com/EITS4E" target="_blank" style="background-color: #8C52FF; color: white; padding: 15px 30px; text-align: center; font-size: 32px; cursor: pointer; text-decoration:none; border-radius: 5px;display: block; width: 100%;">CLICK TO REGISTER</a></p>
 </div>
 
 
@@ -287,7 +298,7 @@ Terms &amp; Conditions
   <category>AI Tools</category>
   <category>Live Course</category>
   <guid>https://vishalkatti.com/courses/essential-it-skills-for-everyone/</guid>
-  <pubDate>Wed, 24 Apr 2024 03:44:29 GMT</pubDate>
+  <pubDate>Wed, 24 Apr 2024 17:42:29 GMT</pubDate>
   <media:content url="https://vishalkatti.com/courses/essential-it-skills-for-everyone/image.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 </channel>
