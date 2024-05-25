@@ -9,16 +9,22 @@ website:
   site-url: https://vishalkatti.com
   description: "Vishal Katti's Blog"
   favicon: "VK Logo.png"
+
   image: "VK Logo.png"
   navbar:
+    logo: "VK Logo.png"
     search: true
     right:
       - text: "About"
         file: about.qmd
       - text: "Blog"
         file: index.qmd
+      - text: "Courses"
+        href: https://learnwith.vishalkatti.com/
       - text: "CV"
-        href: https://www.dropbox.com/scl/fi/g8wx83vka91lzj0j70k6h/2024-02-01_Vishal_Katti_Resume.pdf?rlkey=r0f7hrzumo9ifk2rc2sy2pcj0&dl=0
+        href: https://www.dropbox.com/scl/fi/9iyw1zr876h1nxh2a1h5u/2024-05-01_Vishal_Katti_Resume.pdf?rlkey=spvl1pqavwsxa5hdnmlk75xhq&dl=0
+      - text: "Book a Call"
+        href: https://calendly.com/vishal-katti
       - icon: github
         href: https://github.com/vkatti
       - icon: twitter
@@ -55,7 +61,6 @@ format:
   html:
     theme: 
       light: litera
-      dark: superhero
     code-link: true
     code-copy: true
     code-fold: show
