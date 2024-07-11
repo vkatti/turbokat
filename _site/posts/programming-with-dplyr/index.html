@@ -147,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://calendly.com/vishal-katti"> 
+    <a class="nav-link" href="https://calendly.com/vishal-katti/1-on-1"> 
 <span class="menu-text">Book a Call</span></a>
   </li>  
   <li class="nav-item compact">
@@ -636,7 +636,7 @@ OR Condition
 </div>
 </div>
 </section><section id="passing-the-new-variable-name-as-character-string-indirect" class="level3"><h3 class="anchored" data-anchor-id="passing-the-new-variable-name-as-character-string-indirect">Passing the new variable name as character string (indirect)</h3>
-<p>Instead of passing the name of the variable as a character string as an argument, we can pass a variable containing the name of the variable. In the below example, the name of the new variable is stored in <code>new_var</code>. Using the new <a href="https://github.com/tidyverse/glue">glue</a> syntax, enabled by the walrus operator <code>:=</code>, we substitute the <code>new_var</code> variable with its value.</p>
+<p>Instead of passing the name of the variable as a character string as an argument, we can pass a variable containing the name of the variable. In the below example, the name of the new variable is stored in <code>new_var</code>. Using the new <a href="https://glue.tidyverse.org/">glue</a> syntax, enabled by the walrus operator <code>:=</code>, we substitute the <code>new_var</code> variable with its value.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>mutate_var <span class="ot">&lt;-</span> <span class="cf">function</span>(df, new_col_var, old_col_var, <span class="at">num =</span> <span class="dv">1</span>) {</span>
 <span id="cb31-2"><a href="#cb31-2"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">.data =</span> df, <span class="st">"{new_col_var}"</span> <span class="sc">:</span><span class="er">=</span> df[[old_col_var]]<span class="sc">/</span>num) <span class="sc">%&gt;%</span> </span>
