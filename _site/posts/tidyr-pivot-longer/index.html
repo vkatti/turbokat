@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.5.56">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Vishal Katti">
 <meta name="dcterms.date" content="2022-07-08">
-<title>Vishal Katti - Pivoting your tables with Tidyr: Part I</title>
+<title>Pivoting your tables with Tidyr: Part I – Vishal Katti</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +32,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script><link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Vishal Katti - Pivoting your tables with Tidyr: Part I">
+<meta property="og:title" content="Pivoting your tables with Tidyr: Part I – Vishal Katti">
 <meta property="og:description" content="This post demonstrates how to use pivot_longer() to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series.">
 <meta property="og:image" content="https://i.imgur.com/0qMbFC1.gif">
 <meta property="og:site_name" content="Vishal Katti">
@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -143,12 +143,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Courses</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/9iyw1zr876h1nxh2a1h5u/2024-05-01_Vishal_Katti_Resume.pdf?rlkey=spvl1pqavwsxa5hdnmlk75xhq&amp;dl=0"> 
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/dyclhmn6bj2v3004axrsz/2024-08-01_Vishal_Katti_Resume.pdf?rlkey=gx9pw6o45s1g5elgma7a1gtse&amp;st=5qk16q3b&amp;dl=0"> 
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://calendly.com/vishal-katti/1-on-1"> 
-<span class="menu-text">Book a Call</span></a>
+<span class="menu-text">Let’s Talk 1-on-1</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
 </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
@@ -249,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="the-wide-one" class="level1"><h1>The wide one</h1>
 <p>Consider the following data table. It has been created from the famous Gapminder dataset. This table shows the average life expectancy in each continent for 2 years. While some of you may say that Gapminder data contains records for a lot more number of years, here we consider just the latest 2 years for ease of explanation and visual purposes.</p>
 <div style="text-align:center;">
-<div id="fig-wide" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-wide" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/sMJDveZ.png" class="img-fluid figure-img">
 </div>
@@ -259,7 +259,7 @@ Figure&nbsp;1: Continent-wise Average Life Expectancy over last 2 years
 </div>
 </div>
 <div style="text-align:center;">
-<div id="fig-wide2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-wide2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-wide2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/kbMDurH.png" class="img-fluid figure-img">
 </div>
@@ -272,7 +272,7 @@ Figure&nbsp;2: The wide one
 </section><section id="the-long-one" class="level1"><h1>The long one</h1>
 <p>The long format of this table would ideally have only <code>year</code>, <code>continent</code> and <code>average_life_expectancy</code> columns and look something like the table below.</p>
 <div style="text-align:center;">
-<div id="fig-long" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-long" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/63PMzJ3.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
@@ -295,7 +295,7 @@ Figure&nbsp;3: The long one
 <span id="cb1-9"><a href="#cb1-9"></a></span>
 <span id="cb1-10"><a href="#cb1-10"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(my_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">year</th>
 <th style="text-align: right;">Africa</th>
@@ -396,7 +396,7 @@ $...</code></pre>
 <span id="cb4-5"><a href="#cb4-5"></a></span>
 <span id="cb4-6"><a href="#cb4-6"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(long_minimal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">year</th>
 <th style="text-align: left;">name</th>
@@ -467,7 +467,7 @@ $...</code></pre>
 <span id="cb5-5"><a href="#cb5-5"></a></span>
 <span id="cb5-6"><a href="#cb5-6"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(my_data_longer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">year</th>
 <th style="text-align: left;">continent</th>
@@ -530,7 +530,7 @@ $...</code></pre>
 </div>
 <p>If you are a visual person like me and wish to see this transformation with explanations, check out this GIF I made using good ol’ Powerpoint.</p>
 <div style="text-align:center;">
-<div id="fig-gif" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gif" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/0qMbFC1.gif" class="img-fluid figure-img">
 </div>
@@ -557,7 +557,7 @@ Figure&nbsp;4: {tidyr} pivot_longer() explained
   author = {Katti, Vishal},
   title = {Pivoting Your Tables with {Tidyr:} {Part} {I}},
   date = {2022-07-08},
-  url = {https://vishalkatti.com/posts/tidyr-pivot-longer},
+  url = {https://vishalkatti.com/posts/tidyr-pivot-longer/},
   langid = {en},
   abstract = {This post demonstrates how to use `pivot\_longer()` to
     convert your wide data to long data. This is part 1 of the Pivoting
@@ -565,7 +565,7 @@ Figure&nbsp;4: {tidyr} pivot_longer() explained
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2022" class="csl-entry quarto-appendix-citeas" role="listitem">
 Katti, Vishal. 2022. <span>“Pivoting Your Tables with Tidyr: Part
-I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-longer">https://vishalkatti.com/posts/tidyr-pivot-longer</a>.
+I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-longer/">https://vishalkatti.com/posts/tidyr-pivot-longer/</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -601,18 +601,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -644,7 +633,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -696,6 +707,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vishalkatti\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -730,7 +759,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

@@ -16,7 +16,7 @@
 <height>144</height>
 <width>144</width>
 </image>
-<generator>quarto-1.4.550</generator>
+<generator>quarto-1.5.56</generator>
 <lastBuildDate>Mon, 19 Feb 2024 18:30:00 GMT</lastBuildDate>
 <item>
   <title>Beyond 01/31/2024</title>
@@ -32,7 +32,7 @@
 <h1>Intro</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://imgs.xkcd.com/comics/iso_8601.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="https://imgs.xkcd.com/comics/iso_8601.png" class="img-fluid figure-img"></p>
 <figcaption>Source: XKCD</figcaption>
 </figure>
 </div>
@@ -43,7 +43,7 @@
 <p>Formats like DD/MM/YYYY and MM/DD/YYYY cause confusion, especially in Orgs. that operate across geographies and multi-national companies (MNC) At a smaller scale, individual gig-workers working with MS Excel files from different clients get confused if the date format is different.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://i.redd.it/5ck7dzvzp3721.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="https://i.redd.it/5ck7dzvzp3721.png" class="img-fluid figure-img"></p>
 <figcaption>Source: Reddit</figcaption>
 </figure>
 </div>
@@ -115,7 +115,7 @@
 <p>Spreadsheet applications like MS Excel store Dates as numbers behind the scenes and display them as per the system’s Locale. An Excel file containing Dates (formatted as proper Dates, not dates stored as Text!!! 😱 ) will change the date format accordingly because the underlying number doesn’t change. However, at one glance, it is not possible to guess if a date-like text is a proper Date or Text. Dates stored as text will not change as per system’s Locale and hence may cause errors in calculations and sorting issues. While the YYYY-MM-DD format will resolve sorting issues (due to its inherent alphabetical order) even if stored as text, calculation errors will still occur if dates are stored as text.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://vishalkatti.com/posts/date-format/excel-dates.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="https://vishalkatti.com/posts/date-format/excel-dates.png" class="img-fluid figure-img"></p>
 <figcaption>Excel stores dates as numbers!! A date 20th Feb 2024 represented by the number 45342 means it is 45342 days since 1st Jan 1900.</figcaption>
 </figure>
 </div>
@@ -150,14 +150,14 @@
   author = {Katti, Vishal},
   title = {Beyond 01/31/2024},
   date = {2024-02-20},
-  url = {https://vishalkatti.com/posts/date-format},
+  url = {https://vishalkatti.com/posts/date-format/},
   langid = {en},
   abstract = {This post talks about the superiority of ISO 8601 Date
     format and why it matters in our day-to-day life.}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2024" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2024. <span>“Beyond 01/31/2024.”</span> February 20,
-2024. <a href="https://vishalkatti.com/posts/date-format">https://vishalkatti.com/posts/date-format</a>.
+2024. <a href="https://vishalkatti.com/posts/date-format/">https://vishalkatti.com/posts/date-format/</a>.
 </div></div></section></div> ]]></description>
   <category>Date</category>
   <category>ISO8601</category>
@@ -189,8 +189,10 @@ Katti, Vishal. 2024. <span>“Beyond 01/31/2024.”</span> February 20,
 background-color: null;
 font-style: inherit;">=</span> [expression <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> item <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> iterable]</span></code></pre></div>
 <p>where</p>
 <ul>
@@ -204,8 +206,10 @@ background-color: null;
 font-style: inherit;">=</span> []</span>
 <span id="cb2-2"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> item <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> iterable:</span>
 <span id="cb2-3">    new_list.append(expression)</span></code></pre></div>
 <p>Let’s understand this with some working code. Suppose I have a list of numbers and I want a list that contains the same numbers multipled by 2 i.e.&nbsp;doubled.</p>
@@ -233,8 +237,10 @@ font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> my_nums]</span>
 <span id="cb3-3"></span>
 <span id="cb3-4"><span class="co" style="color: #5E5E5E;
@@ -245,8 +251,10 @@ background-color: null;
 font-style: inherit;">=</span> []</span>
 <span id="cb3-6"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> my_nums:</span>
 <span id="cb3-7">  doubled_nums_for.append(num<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -300,15 +308,19 @@ font-style: inherit;"># new_list = [expression for item in iterable]</span></spa
 background-color: null;
 font-style: inherit;">=</span> [role <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> role <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> my_dict.keys()]</span>
 <span id="cb5-6">people <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [person <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> person <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> my_dict.values()]</span>
 <span id="cb5-7"></span>
 <span id="cb5-8"><span class="bu" style="color: null;
@@ -332,10 +344,13 @@ font-style: inherit;">print</span>(people)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">=</span> [expression <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> item <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> iterable <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> condition]</span></code></pre></div>
 <p>where</p>
 <ul>
@@ -385,14 +400,18 @@ font-style: inherit;">"Tiny snail embarks on a grand journey, a blade of grass"<
 background-color: null;
 font-style: inherit;">=</span> [sen <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> sen <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> sentence_list <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'whisper'</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> sen]</span>
 <span id="cb8-16"></span>
 <span id="cb8-17"><span class="co" style="color: #5E5E5E;
@@ -403,15 +422,19 @@ background-color: null;
 font-style: inherit;">=</span> []</span>
 <span id="cb8-19"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> sen <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> sentence_list:</span>
 <span id="cb8-20">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'whisper'</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> sen:</span>
 <span id="cb8-21">    filtered_list_for.append(sen)</span>
 <span id="cb8-22"></span>
@@ -488,8 +511,10 @@ font-style: inherit;"># Convert DataFrame to JSON using list comprehension</span
 background-color: null;
 font-style: inherit;">=</span> [row.to_json() <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> index, row <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> df.iterrows()]</span>
 <span id="cb10-13"></span>
 <span id="cb10-14"><span class="co" style="color: #5E5E5E;
@@ -497,8 +522,10 @@ background-color: null;
 font-style: inherit;"># Convert list to JSON and print</span></span>
 <span id="cb10-15"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> json_string <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> json_list:</span>
 <span id="cb10-16">  <span class="bu" style="color: null;
 background-color: null;
@@ -552,12 +579,16 @@ font-style: inherit;">4</span>))</span></code></pre></div>
 background-color: null;
 font-style: inherit;">=</span> [true_expr <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> condition <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> false_expr <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> item <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> iterable] </span></code></pre></div>
 <p>where</p>
 <ul>
@@ -597,14 +628,19 @@ font-style: inherit;"># Filtering Syntax: Calculate mean with only the numbers w
 background-color: null;
 font-style: inherit;">=</span> statistics.mean(num <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> num_list <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>)</span>
@@ -629,18 +665,24 @@ font-style: inherit;"># If-Else Syntax</span></span>
 background-color: null;
 font-style: inherit;">=</span> [num <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> mean <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> num_list]</span>
 <span id="cb13-11"></span>
 <span id="cb13-12"><span class="co" style="color: #5E5E5E;
@@ -650,16 +692,21 @@ font-style: inherit;"># This can also be written as</span></span>
 background-color: null;
 font-style: inherit;">=</span> [mean <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> num <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> num_list]</span>
 <span id="cb13-14"></span>
 <span id="cb13-15"></span>
@@ -671,19 +718,24 @@ background-color: null;
 font-style: inherit;">=</span> []</span>
 <span id="cb13-18"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> num_list:</span>
 <span id="cb13-19">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> num <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
 <span id="cb13-20">    clean_list_for.append(mean)</span>
 <span id="cb13-21">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span>:</span>
 <span id="cb13-22">    clean_list_for.append(num)</span>
 <span id="cb13-23"></span>
@@ -739,12 +791,16 @@ font-style: inherit;"># Nested Syntax</span></span>
 background-color: null;
 font-style: inherit;">=</span> [word <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> sublist <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> words <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> word <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> sublist]</span>
 <span id="cb15-6"></span>
 <span id="cb15-7"><span class="co" style="color: #5E5E5E;
@@ -755,13 +811,17 @@ background-color: null;
 font-style: inherit;">=</span> []</span>
 <span id="cb15-9"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> sublist <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> words:</span>
 <span id="cb15-10">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> word <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> sublist:</span>
 <span id="cb15-11">    flattened_words_for.append(word)</span>
 <span id="cb15-12"></span>
@@ -809,14 +869,14 @@ font-style: inherit;"># Identical to `flattened_words`</span></span></code></pre
   author = {Katti, Vishal},
   title = {Python - {List} {Comprehension}},
   date = {2024-01-06},
-  url = {https://vishalkatti.com/posts/python-list-comprehension},
+  url = {https://vishalkatti.com/posts/python-list-comprehension/},
   langid = {en},
   abstract = {This post demonstrates Python’s List Comprehension
     compared with the `for` loop and its usage.}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2024" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2024. <span>“Python - List Comprehension.”</span> January
-6, 2024. <a href="https://vishalkatti.com/posts/python-list-comprehension">https://vishalkatti.com/posts/python-list-comprehension</a>.
+6, 2024. <a href="https://vishalkatti.com/posts/python-list-comprehension/">https://vishalkatti.com/posts/python-list-comprehension/</a>.
 </div></div></section></div> ]]></description>
   <category>Python</category>
   <category>List</category>
@@ -837,7 +897,7 @@ Katti, Vishal. 2024. <span>“Python - List Comprehension.”</span> January
 </section><section id="the-long-one" class="level1"><h1>The long one</h1>
 <p>Consider the following data table. It has been created from the famous Gapminder dataset. This table shows the average life expectancy in each continent for 2 years. While some of you may say that Gapminder data contains records for a lot more number of years, here we consider just the latest 2 years for ease of explanation and visual purposes. We have added an extra <code>id</code> column for teaching purpose.</p>
 <div style="text-align:center;">
-<div id="fig-long" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-long" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/pV7FveQ.png" title="The Long One" class="img-fluid figure-img" style="width:70.0%">
 </div>
@@ -850,7 +910,7 @@ Figure&nbsp;1: Continent-wise Average Life-expectancy over last 2 years, in Long
 </section><section id="the-wide-one" class="level1"><h1>The wide one</h1>
 <p>The wide format of this table would ideally have only <code>continent</code> and columns having each unique value in the <code>year</code> column as a header. In this case, the wide one would look something like the table below.</p>
 <div style="text-align:center;">
-<div id="fig-wide" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-wide" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/KUS6maA.png" title="The Wide One" class="img-fluid figure-img" style="width:70.0%">
 </div>
@@ -960,7 +1020,7 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">kable</span>(my_data)</span></code></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">id</th>
 <th style="text-align: right;">year</th>
@@ -1136,7 +1196,7 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">kable</span>(wide_minimal)</span></code></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">id</th>
 <th style="text-align: left;">continent</th>
@@ -1237,7 +1297,7 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">kable</span>(my_data_longer)</span></code></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: left;">continent</th>
 <th style="text-align: right;">2002</th>
@@ -1296,7 +1356,7 @@ font-style: inherit;">kable</span>(my_data_longer)</span></code></pre></div>
   author = {Katti, Vishal},
   title = {Pivoting Your Tables with {Tidyr:} {Part} {II}},
   date = {2022-08-29},
-  url = {https://vishalkatti.com/posts/tidyr-pivot-wider},
+  url = {https://vishalkatti.com/posts/tidyr-pivot-wider/},
   langid = {en},
   abstract = {This post demonstrates how to use `pivot\_wider()` to
     convert your long data to wide data. This is part 2 of the Pivoting
@@ -1304,7 +1364,7 @@ font-style: inherit;">kable</span>(my_data_longer)</span></code></pre></div>
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2022" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2022. <span>“Pivoting Your Tables with Tidyr: Part
-II.”</span> August 29, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-wider">https://vishalkatti.com/posts/tidyr-pivot-wider</a>.
+II.”</span> August 29, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-wider/">https://vishalkatti.com/posts/tidyr-pivot-wider/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>functions</category>
@@ -1332,7 +1392,7 @@ II.”</span> August 29, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivo
 </section><section id="the-wide-one" class="level1"><h1>The wide one</h1>
 <p>Consider the following data table. It has been created from the famous Gapminder dataset. This table shows the average life expectancy in each continent for 2 years. While some of you may say that Gapminder data contains records for a lot more number of years, here we consider just the latest 2 years for ease of explanation and visual purposes.</p>
 <div style="text-align:center;">
-<div id="fig-wide" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-wide" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/sMJDveZ.png" class="img-fluid figure-img">
 </div>
@@ -1342,7 +1402,7 @@ Figure&nbsp;1: Continent-wise Average Life Expectancy over last 2 years
 </div>
 </div>
 <div style="text-align:center;">
-<div id="fig-wide2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-wide2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-wide2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/kbMDurH.png" class="img-fluid figure-img">
 </div>
@@ -1355,7 +1415,7 @@ Figure&nbsp;2: The wide one
 </section><section id="the-long-one" class="level1"><h1>The long one</h1>
 <p>The long format of this table would ideally have only <code>year</code>, <code>continent</code> and <code>average_life_expectancy</code> columns and look something like the table below.</p>
 <div style="text-align:center;">
-<div id="fig-long" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-long" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/63PMzJ3.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
@@ -1434,7 +1494,7 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">kable</span>(my_data)</span></code></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">year</th>
 <th style="text-align: right;">Africa</th>
@@ -1571,7 +1631,7 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">kable</span>(long_minimal)</span></code></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">year</th>
 <th style="text-align: left;">name</th>
@@ -1664,7 +1724,7 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">kable</span>(my_data_longer)</span></code></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: right;">year</th>
 <th style="text-align: left;">continent</th>
@@ -1727,7 +1787,7 @@ font-style: inherit;">kable</span>(my_data_longer)</span></code></pre></div>
 </div>
 <p>If you are a visual person like me and wish to see this transformation with explanations, check out this GIF I made using good ol’ Powerpoint.</p>
 <div style="text-align:center;">
-<div id="fig-gif" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gif" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/0qMbFC1.gif" class="img-fluid figure-img">
 </div>
@@ -1754,7 +1814,7 @@ Figure&nbsp;4: {tidyr} pivot_longer() explained
   author = {Katti, Vishal},
   title = {Pivoting Your Tables with {Tidyr:} {Part} {I}},
   date = {2022-07-08},
-  url = {https://vishalkatti.com/posts/tidyr-pivot-longer},
+  url = {https://vishalkatti.com/posts/tidyr-pivot-longer/},
   langid = {en},
   abstract = {This post demonstrates how to use `pivot\_longer()` to
     convert your wide data to long data. This is part 1 of the Pivoting
@@ -1762,7 +1822,7 @@ Figure&nbsp;4: {tidyr} pivot_longer() explained
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2022" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2022. <span>“Pivoting Your Tables with Tidyr: Part
-I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-longer">https://vishalkatti.com/posts/tidyr-pivot-longer</a>.
+I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-longer/">https://vishalkatti.com/posts/tidyr-pivot-longer/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>functions</category>
@@ -1794,6 +1854,7 @@ I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-lo
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, mm, dd) {</span>
 <span id="cb1-2">  </span>
 <span id="cb1-3">  <span class="co" style="color: #5E5E5E;
@@ -1869,6 +1930,7 @@ font-style: inherit;">31</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, mm, dd) {</span>
 <span id="cb6-2">  </span>
 <span id="cb6-3">  <span class="co" style="color: #5E5E5E;
@@ -1876,6 +1938,7 @@ background-color: null;
 font-style: inherit;"># check missing arguments</span></span>
 <span id="cb6-4">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(yyyy)) <span class="fu" style="color: #4758AB;
@@ -1885,6 +1948,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` is required."</span>)</span>
 <span id="cb6-5">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(mm))   <span class="fu" style="color: #4758AB;
@@ -1894,6 +1958,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` is required."</span>)</span>
 <span id="cb6-6">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(dd))   <span class="fu" style="color: #4758AB;
@@ -1943,9 +2008,11 @@ font-style: inherit;">31</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(a, b, c) { </span>
 <span id="cb7-2">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">any</span>(<span class="fu" style="color: #4758AB;
@@ -1992,6 +2059,7 @@ NULL</code></pre>
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">mm =</span> <span class="dv" style="color: #AD0000;
@@ -2007,6 +2075,7 @@ background-color: null;
 font-style: inherit;"># check missing arguments</span></span>
 <span id="cb10-4">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(yyyy))  <span class="fu" style="color: #4758AB;
@@ -2016,6 +2085,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` is required."</span>) </span>
 <span id="cb10-5">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(mm)) <span class="fu" style="color: #4758AB;
@@ -2025,6 +2095,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
 <span id="cb10-6">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(dd)) <span class="fu" style="color: #4758AB;
@@ -2212,6 +2283,7 @@ font-style: inherit;">as.numeric</span>(YearY)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">mm =</span> <span class="dv" style="color: #AD0000;
@@ -2227,6 +2299,7 @@ background-color: null;
 font-style: inherit;"># check missing arguments</span></span>
 <span id="cb25-4">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(yyyy))  <span class="fu" style="color: #4758AB;
@@ -2236,6 +2309,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` is required."</span>) </span>
 <span id="cb25-5">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(mm)) <span class="fu" style="color: #4758AB;
@@ -2245,6 +2319,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
 <span id="cb25-6">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(dd)) <span class="fu" style="color: #4758AB;
@@ -2258,6 +2333,7 @@ background-color: null;
 font-style: inherit;"># Check data types</span></span>
 <span id="cb25-9">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2276,8 +2352,10 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` must be numeric"</span>)</span>
 <span id="cb25-11">  } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">is.character</span>(yyyy) <span class="sc" style="color: #5E5E5E;
@@ -2295,6 +2373,7 @@ font-style: inherit;">"argument `yyyy` must be numeric"</span>)</span>
 <span id="cb25-13">  }</span>
 <span id="cb25-14">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2313,8 +2392,10 @@ background-color: null;
 font-style: inherit;">"argument `mm` must be numeric"</span>)</span>
 <span id="cb25-16">  } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">is.character</span>(mm) <span class="sc" style="color: #5E5E5E;
@@ -2332,6 +2413,7 @@ font-style: inherit;">"argument `mm` must be numeric"</span>)</span>
 <span id="cb25-18">  }</span>
 <span id="cb25-19">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2350,8 +2432,10 @@ background-color: null;
 font-style: inherit;">"argument `dd` must be numeric"</span>)</span>
 <span id="cb25-21">  } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">is.character</span>(dd) <span class="sc" style="color: #5E5E5E;
@@ -2438,9 +2522,11 @@ font-style: inherit;"># This function check if value is number or number-like.</
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x){</span>
 <span id="cb27-3">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2462,8 +2548,10 @@ background-color: null;
 font-style: inherit;">FALSE</span>) </span>
 <span id="cb27-6">  } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">is.character</span>(x) <span class="sc" style="color: #5E5E5E;
@@ -2496,6 +2584,7 @@ font-style: inherit;">TRUE</span>)</span>
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">mm =</span> <span class="dv" style="color: #AD0000;
@@ -2511,6 +2600,7 @@ background-color: null;
 font-style: inherit;"># check missing arguments</span></span>
 <span id="cb28-4">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(yyyy))  <span class="fu" style="color: #4758AB;
@@ -2520,6 +2610,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` is required."</span>) </span>
 <span id="cb28-5">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(mm)) <span class="fu" style="color: #4758AB;
@@ -2529,6 +2620,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
 <span id="cb28-6">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(dd)) <span class="fu" style="color: #4758AB;
@@ -2542,6 +2634,7 @@ background-color: null;
 font-style: inherit;"># Check data types</span></span>
 <span id="cb28-9">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2553,6 +2646,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` must be numeric"</span>)</span>
 <span id="cb28-10">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2564,6 +2658,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` must be numeric"</span>)</span>
 <span id="cb28-11">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2713,6 +2808,7 @@ font-style: inherit;">"Month"</span>, mm)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">mm =</span> <span class="dv" style="color: #AD0000;
@@ -2728,6 +2824,7 @@ background-color: null;
 font-style: inherit;"># check missing arguments</span></span>
 <span id="cb35-4">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(yyyy))  <span class="fu" style="color: #4758AB;
@@ -2737,6 +2834,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` is required."</span>) </span>
 <span id="cb35-5">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(mm)) <span class="fu" style="color: #4758AB;
@@ -2746,6 +2844,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
 <span id="cb35-6">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(dd)) <span class="fu" style="color: #4758AB;
@@ -2759,6 +2858,7 @@ background-color: null;
 font-style: inherit;"># Check argument lengths</span></span>
 <span id="cb35-9">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">length</span>(yyyy)<span class="sc" style="color: #5E5E5E;
@@ -2778,6 +2878,7 @@ background-color: null;
 font-style: inherit;">". Must be only 1."</span>))</span>
 <span id="cb35-10">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">length</span>(mm)<span class="sc" style="color: #5E5E5E;
@@ -2797,6 +2898,7 @@ background-color: null;
 font-style: inherit;">". Must be only 1."</span>))</span>
 <span id="cb35-11">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">length</span>(dd)<span class="sc" style="color: #5E5E5E;
@@ -2820,6 +2922,7 @@ background-color: null;
 font-style: inherit;"># Check data types</span></span>
 <span id="cb35-14">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2831,6 +2934,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` must be numeric"</span>)</span>
 <span id="cb35-15">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2842,6 +2946,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` must be numeric"</span>)</span>
 <span id="cb35-16">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
@@ -2946,6 +3051,7 @@ font-style: inherit;">"2"</span>))</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(a, b, c){</span>
 <span id="cb38-2">  </span>
 <span id="cb38-3">  <span class="co" style="color: #5E5E5E;
@@ -3116,6 +3222,7 @@ font-style: inherit;"># c has length != 1</span></span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(a, b, c){</span>
 <span id="cb42-2">  </span>
 <span id="cb42-3">  <span class="co" style="color: #5E5E5E;
@@ -3302,6 +3409,7 @@ font-style: inherit;"># c has length != 1</span></span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">mm =</span> <span class="dv" style="color: #AD0000;
@@ -3317,6 +3425,7 @@ background-color: null;
 font-style: inherit;"># check missing arguments</span></span>
 <span id="cb46-4">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(yyyy))  <span class="fu" style="color: #4758AB;
@@ -3326,6 +3435,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` is required."</span>) </span>
 <span id="cb46-5">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(mm)) <span class="fu" style="color: #4758AB;
@@ -3335,6 +3445,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
 <span id="cb46-6">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(dd)) <span class="fu" style="color: #4758AB;
@@ -3519,6 +3630,7 @@ font-style: inherit;"># is there a 13th month?</span></span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span>  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(yyyy, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">mm =</span> <span class="dv" style="color: #AD0000;
@@ -3533,6 +3645,7 @@ background-color: null;
 font-style: inherit;"># check missing arguments</span></span>
 <span id="cb53-3">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(yyyy))  <span class="fu" style="color: #4758AB;
@@ -3542,6 +3655,7 @@ background-color: null;
 font-style: inherit;">"argument `yyyy` is required."</span>) </span>
 <span id="cb53-4">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(mm)) <span class="fu" style="color: #4758AB;
@@ -3551,6 +3665,7 @@ background-color: null;
 font-style: inherit;">"argument `mm` is missing. Using default value mm = 1 instead"</span>) </span>
 <span id="cb53-5">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">missing</span>(dd)) <span class="fu" style="color: #4758AB;
@@ -3633,6 +3748,7 @@ background-color: null;
 font-style: inherit;">"%Y-%m-%d"</span>)</span>
 <span id="cb53-17">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">is.na</span>(out)) {</span>
@@ -3710,7 +3826,7 @@ font-style: inherit;"># are there 31 days in February?</span></span></code></pre
   author = {Katti, Vishal},
   title = {Writing {Robust} {R} {Functions}},
   date = {2022-01-18},
-  url = {https://vishalkatti.com/posts/writing-robust-functions},
+  url = {https://vishalkatti.com/posts/writing-robust-functions/},
   langid = {en},
   abstract = {This post demonstrates some techniques to make your R
     user-defined functions unbreakable (well, almost!) by checking if
@@ -3720,7 +3836,7 @@ font-style: inherit;"># are there 31 days in February?</span></span></code></pre
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2022" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2022. <span>“Writing Robust R Functions.”</span> January
-18, 2022. <a href="https://vishalkatti.com/posts/writing-robust-functions">https://vishalkatti.com/posts/writing-robust-functions</a>.
+18, 2022. <a href="https://vishalkatti.com/posts/writing-robust-functions/">https://vishalkatti.com/posts/writing-robust-functions/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>functions</category>
@@ -3737,7 +3853,7 @@ Katti, Vishal. 2022. <span>“Writing Robust R Functions.”</span> January
 <p>In the previous post, we create the <code>.potx</code> template from the <code>.pptx</code> file we wanted to automate and the Excel template with the macro <code>.xlsm</code> that uses the PowerPoint template to create a new <code>.pptx</code> file with given data using VBA.</p>
 <p>The report we want to automate is…</p>
 <div style="text-align:center;">
-<div id="fig-gapminder" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gapminder" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder Report" class="img-fluid figure-img">
 </div>
@@ -3748,7 +3864,7 @@ Figure&nbsp;1: The Gapminder Report : The PowerPoint presentation we want to aut
 </div>
 <p>…and the Excel and PowerPoint template we created are shown in Figure&nbsp;2.</p>
 <div style="text-align:center;">
-<div id="fig-excel-with-macro" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-excel-with-macro" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-excel-with-macro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/tB3QxhJ.png" title="Excel Template with VBA macro" class="img-fluid figure-img">
 </div>
@@ -3767,7 +3883,7 @@ Figure&nbsp;2: Excel Template with VBA macro
 </section><section id="slide-2" class="level3"><h3 class="anchored" data-anchor-id="slide-2">Slide 2</h3>
 <p>The chart on slide 2 needs raw data structured as below. You will notice that at a continent-level, this table needs a minimum of 5 countries. Do we have any continents in the Gapminder data with less than 5 countries? Yes, we have Oceania with only Australia and New Zealand. For ease of use, let us include these countries along with Asian countries in a new <code>Region</code> variable.</p>
 <div style="text-align:center;">
-<div id="fig-slide2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-slide2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-slide2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/KvGxnyt.png" title="02_chart" class="img-fluid figure-img">
 </div>
@@ -4080,7 +4196,7 @@ font-style: inherit;">paged_table</span>(others)</span></code></pre></div>
 <p>While we create the <code>top-4</code> and <code>others</code> datasets separately, we will combine them later at the very last moment before writing them to the Excel template.</p>
 <p>Now that we have the datasets needed for <code>02_chart</code>, let’s proceed to the create <code>02_table</code> . This table gives you the count of countries that fall under various population ranges.</p>
 <div style="text-align:center;">
-<div id="fig-slide22" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-slide22" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-slide22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/uf3flVN.png" title="02_table" class="img-fluid figure-img" style="width:60.0%">
 </div>
@@ -4256,7 +4372,7 @@ font-style: inherit;">paged_table</span>(pop_groups)</span></code></pre></div>
 </section><section id="slide-3" class="level3"><h3 class="anchored" data-anchor-id="slide-3">Slide 3</h3>
 <p>Slide 3 contains 2 strings and one chart. The data for the chart looks as shown below.</p>
 <div style="text-align:center;">
-<div id="fig-slide3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-slide3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-slide3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/kDAbook.png" title="Slide 3" class="img-fluid figure-img">
 </div>
@@ -4388,8 +4504,10 @@ Americas</code></pre>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> (region <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> unique_regions) {</span>
 <span id="cb11-2">  </span>
 <span id="cb11-3">  <span class="co" style="color: #5E5E5E;
@@ -4414,8 +4532,10 @@ font-style: inherit;"># Step 5: run macro</span></span>
 <div class="cell column-body-outset-right">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> (curr_region <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> unique_regions) {</span>
 <span id="cb12-2">  </span>
 <span id="cb12-3">  <span class="co" style="color: #5E5E5E;
@@ -4865,7 +4985,7 @@ font-style: inherit;">2</span>)</span>
 </div>
 <p>Once the code runs completely, you will see 4 new PowerPoint Presentations in your working folder.</p>
 <div style="text-align:center;">
-<div id="fig-output-files" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-output-files" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-output-files-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/Pe8yyxI.png" title="Output Files" class="img-fluid figure-img">
 </div>
@@ -4893,14 +5013,14 @@ Figure&nbsp;6: Output Files
   title = {Unholy {Trinity} of {R,} {Excel} {VBA} and {Powerpoint} -
     {Part} 2 of 2},
   date = {2021-12-29},
-  url = {https://vishalkatti.com/posts/R2VBA2PPT2},
+  url = {https://vishalkatti.com/posts/R2VBA2PPT2/},
   langid = {en},
   abstract = {This post demonstrates how to run VBA macros in Excel
     which in turn creates Presentations based off PowerPoint Templates.}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2021. <span>“Unholy Trinity of R, Excel VBA and
-Powerpoint - Part 2 of 2.”</span> December 29, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT2">https://vishalkatti.com/posts/R2VBA2PPT2</a>.
+Powerpoint - Part 2 of 2.”</span> December 29, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT2/">https://vishalkatti.com/posts/R2VBA2PPT2/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>Excel</category>
@@ -4930,7 +5050,7 @@ Powerpoint - Part 2 of 2.”</span> December 29, 2021. <a href="https://vishalka
 <p>Let’s begin.</p>
 <p>Suppose we want to automate the following PowerPoint presentation. It contains 3 slides with a title slide and 2 content slides having graphs and tables created from the <code>gapminder</code> dataset. This <code>.pptx</code> file also has a custom footer.</p>
 <div style="text-align:center;">
-<div id="fig-gapminder" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gapminder" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder World Report" class="img-fluid figure-img">
 </div>
@@ -4943,7 +5063,7 @@ Figure&nbsp;1: The Gapminder World Population Report. Note the custom footer!
 </section><section id="the-powerpoint-template" class="level2"><h2 class="anchored" data-anchor-id="the-powerpoint-template">The PowerPoint Template</h2>
 <p>In this approach, we start with the PowerPoint presentation file. We will create a template with placeholders and charts with dummy data.</p>
 <div style="text-align:center;">
-<div id="fig-potx" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-potx" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-potx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/NvdILBA.png" title="Save As PowerPoint Template (.potx)" class="img-fluid figure-img">
 </div>
@@ -4955,7 +5075,7 @@ Figure&nbsp;2: Save As PowerPoint Template (.potx)
 <p>Usually, you would have a copy of the <code>.pptx</code> file you want to automate. Save a copy of it as a <code>PowerPoint Template (.potx)</code>, ideally to your R Project<sup>1</sup> folder. In my case, I’ve created a new R Project folder named <code>R2XL2PPT</code> as shown in Figure&nbsp;2.</p>
 <p>Now let us prep the template. If you open the template file by double-click or right-click &gt; New, it would open a fresh <code>.pptx</code> presentation using the template. Right-Click and click Open in the context menu to open the <code>.potx</code> template file for editing.</p>
 <div style="text-align:center;">
-<div id="fig-open" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-open" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/eQokXoX.png" class="img-fluid figure-img">
 </div>
@@ -4971,7 +5091,7 @@ Figure&nbsp;3: CORRECT: Right-Click &gt; Open
 <li>In the Selection Pane, change the name of the selected item.</li>
 </ol>
 <div style="text-align:center;">
-<div id="fig-add-shapes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-add-shapes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-add-shapes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/xhA0D3u.png" title="Add shape names from Selection Pane" class="img-fluid figure-img">
 </div>
@@ -4997,7 +5117,7 @@ Advisory
 <p>Download the <code>GP_template.potx</code> template <a href="content/GP_template.potx">here</a>.</p>
 </section><section id="the-excel-template" class="level2"><h2 class="anchored" data-anchor-id="the-excel-template">The Excel Template</h2>
 <div style="text-align:center;">
-<div id="fig-mapping" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-mapping" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/A080o1Z.png" title="PowerPoint item to Excel named range mapping" class="img-fluid figure-img">
 </div>
@@ -5023,7 +5143,7 @@ Warning
 </div>
 <p>You can set a single Excel cell as named range for each <strong>textbox</strong> in the PowerPoint template. You can copy-paste <strong>tables</strong> from Powerpoint to the Excel template directly. The entire table must be set as a named range.</p>
 <div style="text-align:center;">
-<div id="fig-charts" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-charts" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-charts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/rVsb1a6.png" title="Excel Chart: Right Click > Edit Data" class="img-fluid figure-img" style="width:70.0%">
 </div>
@@ -5034,7 +5154,7 @@ Figure&nbsp;6: Excel Chart: Right Click &gt; Edit Data
 </div>
 <p>For charts, right-click the chart in PowerPoint and select <code>Edit Data</code>. See Figure&nbsp;6. An excel worksheet is displayed with the underlying data. Copy-paste the entire data into the Excel template.</p>
 <div style="text-align:center;">
-<div id="fig-xlsm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-xlsm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-xlsm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/oMdSUvp.png" title="XL2PPT design" class="img-fluid figure-img">
 </div>
@@ -5073,7 +5193,7 @@ Figure&nbsp;7: XL2PPT design
   title = {Unholy {Trinity} of {R,} {Excel} {VBA} and {Powerpoint} -
     {Part} 1 of 2},
   date = {2021-10-19},
-  url = {https://vishalkatti.com/posts/R2VBA2PPT1},
+  url = {https://vishalkatti.com/posts/R2VBA2PPT1/},
   langid = {en},
   abstract = {This post demonstrates how to create a PowerPoint template
     based off your custom/corporate Presentation/Report and VBA-enabled
@@ -5081,7 +5201,7 @@ Figure&nbsp;7: XL2PPT design
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2021. <span>“Unholy Trinity of R, Excel VBA and
-Powerpoint - Part 1 of 2.”</span> October 19, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT1">https://vishalkatti.com/posts/R2VBA2PPT1</a>.
+Powerpoint - Part 1 of 2.”</span> October 19, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT1/">https://vishalkatti.com/posts/R2VBA2PPT1/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>Excel</category>
@@ -6117,6 +6237,7 @@ font-style: inherit;">"center"</span>)</span>
 background-color: null;
 font-style: inherit;">details =</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(index) { <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># index is the row number of current row.</span></span>
@@ -6255,14 +6376,14 @@ font-style: inherit;">"center"</span>)</span>
   author = {Katti, Vishal},
   title = {Interactive {Drill-down} {Tables} Using \{Reactable\}},
   date = {2021-07-27},
-  url = {https://vishalkatti.com/posts/drilldown-with-reactable},
+  url = {https://vishalkatti.com/posts/drilldown-with-reactable/},
   langid = {en},
   abstract = {This post demonstrates how to use the \{reactable\}
     package to create multi-level drill-down tables having hidden rows}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2021. <span>“Interactive Drill-down Tables Using
-{Reactable}.”</span> July 27, 2021. <a href="https://vishalkatti.com/posts/drilldown-with-reactable">https://vishalkatti.com/posts/drilldown-with-reactable</a>.
+{Reactable}.”</span> July 27, 2021. <a href="https://vishalkatti.com/posts/drilldown-with-reactable/">https://vishalkatti.com/posts/drilldown-with-reactable/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>reactable</category>
@@ -6316,6 +6437,7 @@ $ date      &lt;dbl&gt; 2000.000, 2000.083, 2000.167, 2000.250, 2000.333, 2000.4
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, var) {</span>
 <span id="cb3-2">  </span>
 <span id="cb3-3">  <span class="co" style="color: #5E5E5E;
@@ -6380,6 +6502,7 @@ font-style: inherit;">c</span>(sales, volume))      </span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, ...) {</span>
 <span id="cb7-2">  dplyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -6420,6 +6543,7 @@ font-style: inherit;">my_select</span>(txhousing, sales, volume)          </span
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, cols) {</span>
 <span id="cb9-2">  dplyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -6472,6 +6596,7 @@ font-style: inherit;">my_select_char</span>(txhousing, my_cols)</span></code></p
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, cond) {</span>
 <span id="cb11-2">  </span>
 <span id="cb11-3">  <span class="co" style="color: #5E5E5E;
@@ -6586,6 +6711,7 @@ font-style: inherit;">c</span>(A, B)</span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, ...) { </span>
 <span id="cb16-2">  </span>
 <span id="cb16-3">  <span class="co" style="color: #5E5E5E;
@@ -6649,6 +6775,7 @@ x Input `..1` must be a logical vector, not a character.
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, cond) {</span>
 <span id="cb19-2">  </span>
 <span id="cb19-3">  <span class="co" style="color: #5E5E5E;
@@ -6701,6 +6828,7 @@ font-style: inherit;">"sales &gt; 8000"</span>)  </span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, cond) { </span>
 <span id="cb21-2">  </span>
 <span id="cb21-3">  <span class="co" style="color: #5E5E5E;
@@ -6830,6 +6958,7 @@ font-style: inherit;">my_filter_strings</span>(txhousing, my_filter_criteria_wit
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, new_col_raw, old_col_raw, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">num =</span> <span class="dv" style="color: #AD0000;
@@ -6889,6 +7018,7 @@ font-style: inherit;">1E6</span>) </span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, new_col_str, old_col_str, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">num =</span> <span class="dv" style="color: #AD0000;
@@ -6947,12 +7077,13 @@ font-style: inherit;">1E6</span>) </span></code></pre></div>
 </div>
 </div>
 </section><section id="passing-the-new-variable-name-as-character-string-indirect" class="level3"><h3 class="anchored" data-anchor-id="passing-the-new-variable-name-as-character-string-indirect">Passing the new variable name as character string (indirect)</h3>
-<p>Instead of passing the name of the variable as a character string as an argument, we can pass a variable containing the name of the variable. In the below example, the name of the new variable is stored in <code>new_var</code>. Using the new <a href="https://github.com/tidyverse/glue">glue</a> syntax, enabled by the walrus operator <code>:=</code>, we substitute the <code>new_var</code> variable with its value.</p>
+<p>Instead of passing the name of the variable as a character string as an argument, we can pass a variable containing the name of the variable. In the below example, the name of the new variable is stored in <code>new_var</code>. Using the new <a href="https://glue.tidyverse.org/">glue</a> syntax, enabled by the walrus operator <code>:=</code>, we substitute the <code>new_var</code> variable with its value.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1">mutate_var <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, new_col_var, old_col_var, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">num =</span> <span class="dv" style="color: #AD0000;
@@ -7027,6 +7158,7 @@ font-style: inherit;">1E6</span>)  </span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, var) {</span>
 <span id="cb33-2">  </span>
 <span id="cb33-3">  <span class="co" style="color: #5E5E5E;
@@ -7097,6 +7229,7 @@ x `..1` must be size 8602 or 1, not 17204.
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, ...) {</span>
 <span id="cb38-2">  dplyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7149,6 +7282,7 @@ font-style: inherit;">desc</span>(sales))</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, var, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">.desc =</span> <span class="cn" style="color: #8f5902;
@@ -7156,6 +7290,7 @@ background-color: null;
 font-style: inherit;">FALSE</span>) {</span>
 <span id="cb42-2">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (.desc) {</span>
 <span id="cb42-3">    dplyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7172,6 +7307,7 @@ background-color: null;
 font-style: inherit;">head</span>()</span>
 <span id="cb42-4">  } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> {</span>
 <span id="cb42-5">    dplyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7230,6 +7366,7 @@ font-style: inherit;">TRUE</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, var, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">desc =</span> <span class="cn" style="color: #8f5902;
@@ -7237,6 +7374,7 @@ background-color: null;
 font-style: inherit;">FALSE</span>) {</span>
 <span id="cb46-2">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (desc) {</span>
 <span id="cb46-3">    dplyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7253,6 +7391,7 @@ background-color: null;
 font-style: inherit;">head</span>()</span>
 <span id="cb46-4">  } <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span> {</span>
 <span id="cb46-5">    dplyr<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7333,6 +7472,7 @@ font-style: inherit;">TRUE</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, grp) {</span>
 <span id="cb50-2">  df <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7408,6 +7548,7 @@ font-style: inherit;">group_raw</span>(txhousing, month)       </span></code></p
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, ...) {</span>
 <span id="cb54-2">  df <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7483,6 +7624,7 @@ font-style: inherit;">group_raw_multiple</span>(txhousing, year, month)     </sp
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, grp) {</span>
 <span id="cb58-2">  df <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7609,6 +7751,7 @@ font-style: inherit;">group_str</span>(txhousing, yrmon)</span></code></pre></di
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, grp, sumvar) {</span>
 <span id="cb66-2">  df <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -7721,6 +7864,7 @@ font-style: inherit;">select</span>(city, date, sales, volume)</span></code></pr
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, date_col) {</span>
 <span id="cb71-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -7884,6 +8028,7 @@ $ dMonth &lt;chr&gt; "Jan 2000", "Feb 2000", "Mar 2000", "Apr 2000", "May 2000",
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(df, grp_col, sum_col) {</span>
 <span id="cb73-2">  df <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -8072,7 +8217,7 @@ font-style: inherit;">sum_col =</span> volume)</span></code></pre></div>
   title = {Programming with {R} \{Dplyr\} - {As} {I} {Understand}
     {It!!}},
   date = {2021-07-17},
-  url = {https://vishalkatti.com/posts/programming-with-dplyr},
+  url = {https://vishalkatti.com/posts/programming-with-dplyr/},
   langid = {en},
   abstract = {This post demonstrates how to write your own dynamic
     functions using popular `dplyr` verbs like `select()`, `filter()`,
@@ -8080,7 +8225,7 @@ font-style: inherit;">sum_col =</span> volume)</span></code></pre></div>
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas">
 Katti, Vishal. 2021. <span>“Programming with R {Dplyr} - As I Understand
-It!!”</span> July 17, 2021. <a href="https://vishalkatti.com/posts/programming-with-dplyr">https://vishalkatti.com/posts/programming-with-dplyr</a>.
+It!!”</span> July 17, 2021. <a href="https://vishalkatti.com/posts/programming-with-dplyr/">https://vishalkatti.com/posts/programming-with-dplyr/</a>.
 </div></div></section></div> ]]></description>
   <category>R</category>
   <category>dplyr</category>

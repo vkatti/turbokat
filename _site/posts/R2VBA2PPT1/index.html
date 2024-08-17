@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.5.56">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Vishal Katti">
 <meta name="dcterms.date" content="2021-10-19">
-<title>Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2</title>
+<title>Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2 – Vishal Katti</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,7 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script><link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Vishal Katti - Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2">
+<meta property="og:title" content="Unholy Trinity of R, Excel VBA and Powerpoint - Part 1 of 2 – Vishal Katti">
 <meta property="og:description" content="This post demonstrates how to create a PowerPoint template based off your custom/corporate Presentation/Report and VBA-enabled Excel file that would populate the report.">
 <meta property="og:image" content="https://vishalkatti.com/posts/R2VBA2PPT1/images/R2XL2PPT_logo.png">
 <meta property="og:site_name" content="Vishal Katti">
@@ -95,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -113,12 +113,12 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Courses</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/9iyw1zr876h1nxh2a1h5u/2024-05-01_Vishal_Katti_Resume.pdf?rlkey=spvl1pqavwsxa5hdnmlk75xhq&amp;dl=0"> 
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/dyclhmn6bj2v3004axrsz/2024-08-01_Vishal_Katti_Resume.pdf?rlkey=gx9pw6o45s1g5elgma7a1gtse&amp;st=5qk16q3b&amp;dl=0"> 
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://calendly.com/vishal-katti/1-on-1"> 
-<span class="menu-text">Book a Call</span></a>
+<span class="menu-text">Let’s Talk 1-on-1</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
@@ -147,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
 </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
@@ -219,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Let’s begin.</p>
 <p>Suppose we want to automate the following PowerPoint presentation. It contains 3 slides with a title slide and 2 content slides having graphs and tables created from the <code>gapminder</code> dataset. This <code>.pptx</code> file also has a custom footer.</p>
 <div style="text-align:center;">
-<div id="fig-gapminder" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gapminder" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gapminder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/LL6UwWH.gif" title="The Gapminder World Report" class="img-fluid figure-img">
 </div>
@@ -232,7 +232,7 @@ Figure&nbsp;1: The Gapminder World Population Report. Note the custom footer!
 </section><section id="the-powerpoint-template" class="level2"><h2 class="anchored" data-anchor-id="the-powerpoint-template">The PowerPoint Template</h2>
 <p>In this approach, we start with the PowerPoint presentation file. We will create a template with placeholders and charts with dummy data.</p>
 <div style="text-align:center;">
-<div id="fig-potx" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-potx" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-potx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/NvdILBA.png" title="Save As PowerPoint Template (.potx)" class="img-fluid figure-img">
 </div>
@@ -244,7 +244,7 @@ Figure&nbsp;2: Save As PowerPoint Template (.potx)
 <p>Usually, you would have a copy of the <code>.pptx</code> file you want to automate. Save a copy of it as a <code>PowerPoint Template (.potx)</code>, ideally to your R Project<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> folder. In my case, I’ve created a new R Project folder named <code>R2XL2PPT</code> as shown in <a href="#fig-potx" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <p>Now let us prep the template. If you open the template file by double-click or right-click &gt; New, it would open a fresh <code>.pptx</code> presentation using the template. Right-Click and click Open in the context menu to open the <code>.potx</code> template file for editing.</p>
 <div style="text-align:center;">
-<div id="fig-open" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-open" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/eQokXoX.png" class="img-fluid figure-img">
 </div>
@@ -260,7 +260,7 @@ Figure&nbsp;3: CORRECT: Right-Click &gt; Open
 <li>In the Selection Pane, change the name of the selected item.</li>
 </ol>
 <div style="text-align:center;">
-<div id="fig-add-shapes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-add-shapes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-add-shapes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/xhA0D3u.png" title="Add shape names from Selection Pane" class="img-fluid figure-img">
 </div>
@@ -286,7 +286,7 @@ Advisory
 <p>Download the <code>GP_template.potx</code> template <a href="content/GP_template.potx">here</a>.</p>
 </section><section id="the-excel-template" class="level2"><h2 class="anchored" data-anchor-id="the-excel-template">The Excel Template</h2>
 <div style="text-align:center;">
-<div id="fig-mapping" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-mapping" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/A080o1Z.png" title="PowerPoint item to Excel named range mapping" class="img-fluid figure-img">
 </div>
@@ -312,7 +312,7 @@ Warning
 </div>
 <p>You can set a single Excel cell as named range for each <strong>textbox</strong> in the PowerPoint template. You can copy-paste <strong>tables</strong> from Powerpoint to the Excel template directly. The entire table must be set as a named range.</p>
 <div style="text-align:center;">
-<div id="fig-charts" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-charts" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-charts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/rVsb1a6.png" title="Excel Chart: Right Click > Edit Data" class="img-fluid figure-img" style="width:70.0%">
 </div>
@@ -323,7 +323,7 @@ Figure&nbsp;6: Excel Chart: Right Click &gt; Edit Data
 </div>
 <p>For charts, right-click the chart in PowerPoint and select <code>Edit Data</code>. See <a href="#fig-charts" class="quarto-xref">Figure&nbsp;6</a>. An excel worksheet is displayed with the underlying data. Copy-paste the entire data into the Excel template.</p>
 <div style="text-align:center;">
-<div id="fig-xlsm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-xlsm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-xlsm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://i.imgur.com/oMdSUvp.png" title="XL2PPT design" class="img-fluid figure-img">
 </div>
@@ -362,7 +362,7 @@ Figure&nbsp;7: XL2PPT design
   title = {Unholy {Trinity} of {R,} {Excel} {VBA} and {Powerpoint} -
     {Part} 1 of 2},
   date = {2021-10-19},
-  url = {https://vishalkatti.com/posts/R2VBA2PPT1},
+  url = {https://vishalkatti.com/posts/R2VBA2PPT1/},
   langid = {en},
   abstract = {This post demonstrates how to create a PowerPoint template
     based off your custom/corporate Presentation/Report and VBA-enabled
@@ -370,7 +370,7 @@ Figure&nbsp;7: XL2PPT design
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2021" class="csl-entry quarto-appendix-citeas" role="listitem">
 Katti, Vishal. 2021. <span>“Unholy Trinity of R, Excel VBA and
-Powerpoint - Part 1 of 2.”</span> October 19, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT1">https://vishalkatti.com/posts/R2VBA2PPT1</a>.
+Powerpoint - Part 1 of 2.”</span> October 19, 2021. <a href="https://vishalkatti.com/posts/R2VBA2PPT1/">https://vishalkatti.com/posts/R2VBA2PPT1/</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -406,18 +406,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -449,7 +438,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -501,6 +512,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vishalkatti\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -535,7 +564,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

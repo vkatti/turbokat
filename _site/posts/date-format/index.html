@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Vishal Katti">
 <meta name="dcterms.date" content="2024-02-20">
 
-<title>Vishal Katti - Beyond 01/31/2024</title>
+<title>Beyond 01/31/2024 – Vishal Katti</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -76,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Vishal Katti - Beyond 01/31/2024">
+<meta property="og:title" content="Beyond 01/31/2024 – Vishal Katti">
 <meta property="og:description" content="This post talks about the superiority of ISO 8601 Date format and why it matters in our day-to-day life.">
 <meta property="og:image" content="https://vishalkatti.com/posts/date-format/choose-choice.gif">
 <meta property="og:site_name" content="Vishal Katti">
@@ -103,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -121,12 +121,12 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Courses</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://www.dropbox.com/scl/fi/9iyw1zr876h1nxh2a1h5u/2024-05-01_Vishal_Katti_Resume.pdf?rlkey=spvl1pqavwsxa5hdnmlk75xhq&amp;dl=0"> 
+    <a class="nav-link" href="https://www.dropbox.com/scl/fi/dyclhmn6bj2v3004axrsz/2024-08-01_Vishal_Katti_Resume.pdf?rlkey=gx9pw6o45s1g5elgma7a1gtse&amp;st=5qk16q3b&amp;dl=0"> 
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://calendly.com/vishal-katti/1-on-1"> 
-<span class="menu-text">Book a Call</span></a>
+<span class="menu-text">Let’s Talk 1-on-1</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/vkatti"> <i class="bi bi-github" role="img">
@@ -155,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -233,7 +233,7 @@ ul.task-list li input[type="checkbox"] {
 <h1>Intro</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://imgs.xkcd.com/comics/iso_8601.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="https://imgs.xkcd.com/comics/iso_8601.png" class="img-fluid figure-img"></p>
 <figcaption>Source: XKCD</figcaption>
 </figure>
 </div>
@@ -244,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Formats like DD/MM/YYYY and MM/DD/YYYY cause confusion, especially in Orgs. that operate across geographies and multi-national companies (MNC) At a smaller scale, individual gig-workers working with MS Excel files from different clients get confused if the date format is different.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://i.redd.it/5ck7dzvzp3721.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="https://i.redd.it/5ck7dzvzp3721.png" class="img-fluid figure-img"></p>
 <figcaption>Source: Reddit</figcaption>
 </figure>
 </div>
@@ -316,7 +316,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Spreadsheet applications like MS Excel store Dates as numbers behind the scenes and display them as per the system’s Locale. An Excel file containing Dates (formatted as proper Dates, not dates stored as Text!!! 😱 ) will change the date format accordingly because the underlying number doesn’t change. However, at one glance, it is not possible to guess if a date-like text is a proper Date or Text. Dates stored as text will not change as per system’s Locale and hence may cause errors in calculations and sorting issues. While the YYYY-MM-DD format will resolve sorting issues (due to its inherent alphabetical order) even if stored as text, calculation errors will still occur if dates are stored as text.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="excel-dates.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="excel-dates.png" class="img-fluid figure-img"></p>
 <figcaption>Excel stores dates as numbers!! A date 20th Feb 2024 represented by the number 45342 means it is 45342 days since 1st Jan 1900.</figcaption>
 </figure>
 </div>
@@ -351,14 +351,14 @@ ul.task-list li input[type="checkbox"] {
   author = {Katti, Vishal},
   title = {Beyond 01/31/2024},
   date = {2024-02-20},
-  url = {https://vishalkatti.com/posts/date-format},
+  url = {https://vishalkatti.com/posts/date-format/},
   langid = {en},
   abstract = {This post talks about the superiority of ISO 8601 Date
     format and why it matters in our day-to-day life.}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 Katti, Vishal. 2024. <span>“Beyond 01/31/2024.”</span> February 20,
-2024. <a href="https://vishalkatti.com/posts/date-format">https://vishalkatti.com/posts/date-format</a>.
+2024. <a href="https://vishalkatti.com/posts/date-format/">https://vishalkatti.com/posts/date-format/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -395,18 +395,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -438,7 +427,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -490,6 +501,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vishalkatti\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -524,7 +553,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
