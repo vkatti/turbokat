@@ -19,9 +19,12 @@ about:
       href: https://github.com/vkatti
 ---
 
-Vishal Katti resides in Bengaluru, India with his wife and 5yo daughter, but constantly longs for the sun and sands of Goa 🌞🏖️🌴 where he spent most of his childhood.
+Vishal Katti resides in Bengaluru, India with his wife and 8yo daughter, but constantly longs for the sun and sands of Goa 🌞🏖️🌴 where he spent most of his childhood.
 
 ## Education
+
+**Jain (Deemed-to-be University)** *Bengaluru, India*\
+Master of Business Administration in Business Intelligence & Analytics \| Jan 2023 - Dec 2024
 
 **Dr. B. R. Ambedkar National Institute of Technology (NIT)** *Jalandhar, Punjab, India*\
 Bachelor of Technology in Instrumentation & Control Engineering \| Aug 2005 - Apr 2010\
@@ -31,11 +34,17 @@ H.S.S.C. in Physics, Chemistry and Mathematics \| Jun 2003 - Apr 2005
 
 ## Work
 
-**LTIMindtree Ltd.** *Bengaluru, India*  
-Associate Principal - Data Sciences \| Sep 2021 to Present
+**LTIMindtree Ltd.** *Bengaluru, India*
+Associate Principal - Data Sciences \| Apr 2023 to Present\
+Business Data Analyst \| Sep 2021 - Mar 2023
 
-**ExxonMobil Services & Technology Pvt. Ltd.** *Bengaluru, India*  
-Business Analytics Advisor \| Jun 2018 - Aug 2021
+**ExxonMobil Services & Technology Pvt. Ltd.** *Bengaluru, India*
+Business Analytics Advisor \| Oct 2020 - Aug 2021\
+Data Analyst \| Jun 2018 - Oct 2020
 
-**Tata Consultancy Services** *Mumbai, India*  
-Functional Consultant/Data Analyst \| Sep 2010 - Jun 2018
+**Tata Consultancy Services** *Mumbai & Bengaluru, India*
+Senior Business Data Analyst \| Mar 2017 - Jun 2018\
+Business Data Analyst \| Jul 2016 - Feb 2017\
+Lead Business Analyst \| Oct 2014 - Jun 2016\
+Functional Consultant/Analyst \| Feb 2012 - Sep 2014\
+Business Analyst \| Sep 2010 - Jan 2012
