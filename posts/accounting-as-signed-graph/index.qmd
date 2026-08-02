@@ -1,0 +1,156 @@
+---
+title: "Accounting is Just a Signed Graph"
+subtitle: "Double-entry bookkeeping without the debit/credit jargon, for engineers."
+abstract: "This post rants a little about how the words 'debit' and 'credit' confuse more people than they help, and then rebuilds double-entry bookkeeping from scratch as a simple, signed graph of accounts that any engineer can reason about."
+author: Vishal Katti
+date: 2026-08-02
+image: ledger-balance.png
+categories: [Finance, Graph, Money]
+citation: true
+license: "CC BY"
+filters:
+  - social-share
+share:
+  permalink: "https://vishalkatti.com/posts/accounting-as-signed-graph"
+  description: "Check out this article on understanding double-entry bookkeeping without the debit/credit jargon"
+  twitter: true
+  facebook: true
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+---
+
+# Intro
+
+Your bank sends you a text: "Your account has been debited by ₹2,000." Quick, is that good news or bad news?
+
+If you paused even a fraction of a second, you're not bad at finance, the word is bad at its job. "Debited" here means money *left* your account, which sounds bad, but "debit" in double-entry bookkeeping doesn't mean increase or decrease at all. It means "left side of the ledger." Whether the left side is good or bad news depends entirely on which kind of account you're looking at, and that little sign-flip trick is precisely what makes debit/credit so confusing to non-accountants.
+
+I've watched this alienate a lot of smart people, especially engineers, who get a half-semester crash course in double-entry as part of some "Fundamentals of Management" elective and walk away memorizing rules like "assets increase on debit, liabilities increase on credit" instead of understanding *why*. Commerce students drill this till it becomes muscle memory. Everyone else just quietly avoids ever touching their own books.
+
+Here's the thing though: double-entry bookkeeping itself is not confusing. It's a genuinely elegant idea, older than calculus, and once you strip away "debit" and "credit," it looks a lot like something every engineer already knows how to reason about: **a conservation law enforced on a graph of accounts.** or if i may be bold, **The Law of Conservation of ~~Mass~~ Money**
+
+# What "Debit" and "Credit" Actually Mean
+
+::: callout-note
+## Definition: T-account
+Historically, ledgers were drawn as a capital "T" for each account, amounts written on the left were called **debits**, amounts written on the right were called **credits**. That's the entire etymology. There is no inherent "increase" or "decrease" baked into either word.
+
+![Source: Baremetrics](https://baremetrics.com/hs-fs/hubfs/Imported_Blog_Media/image1-2.jpg?width=864&height=462&name=image1-2.jpg){fig-align="center"}
+:::
+
+Whether a debit increases or decreases an account depends on what *type* of account it is:
+
+| Account Type | Debit means | Credit means |
+|---|---|---|
+| Asset (cash, bank, inventory) | increase | decrease |
+| Liability (loans, credit card owed) | decrease | increase |
+| Equity | decrease | increase |
+| Expense | increase | decrease |
+| Income | decrease | increase |
+
+Notice the pattern flips depending on which row you're on. This is precisely why "your account was debited" is bad news for *you* (an asset decreasing) but the bank's internal books record the exact same event as a **credit** decreasing their liability (they owed you that money, now they owe you less). Same transaction, opposite words, on two different books. No wonder this trips people up.
+
+# Rebuilding It Without the Two Words
+
+Let's throw out "debit" and "credit" entirely and rebuild double-entry from first principles, the way an engineer would.
+
+## The Naive Approach: One Balance to Track
+
+Suppose you just want to track "how much money do I have." The naive approach is a single running balance.
+
+$$
+\begin{aligned}
+\text{balance}_0 &= 10{,}000 && \text{opening balance in your wallet} \\
+\text{balance}_1 &= \text{balance}_0 + 5{,}000 = 15{,}000 && \text{you get paid} \\
+\text{balance}_2 &= \text{balance}_1 - 3{,}000 = 12{,}000 && \text{you pay rent}
+\end{aligned}
+$$
+
+This works fine, right up until you have more than one place money can live. Cash in your wallet, money in your bank account, money owed on a credit card, money a friend owes you. The moment there's more than one "bucket," a single number stops telling you anything useful. Where did the ₹3000 for rent actually go? Which bucket shrank? Which one grew?
+
+## The Fix: Every Transaction Touches Two Buckets
+
+The core insight of double-entry bookkeeping is deceptively simple: **money never just appears or disappears, it moves *from* one account *to* another.** So instead of tracking one number, we track every transaction as a *pair* of accounts, and a signed amount.
+
+| date | from | to | amount | description |
+|---|---|---|---|---|
+| 2026-08-01 | Opening Equity | Bank | 10000 | Opening balance |
+| 2026-08-01 | Employer | Bank | 5000 | Salary |
+| 2026-08-02 | Bank | Rent Expense | 3000 | August rent |
+| 2026-08-05 | Bank | Friend Owes Me | 1000 | Lent to Rahul |
+
+Every row says the same thing: "this much money moved from this account, to that account." No debits, no credits, just a direction and a magnitude, exactly like a signed edge in a graph.
+
+Drawn out, our four transactions look exactly like what they are, a directed graph, with accounts as nodes and transactions as signed edges.
+
+```{mermaid}
+%%| label: fig-ledger-graph
+%%| fig-cap: "The ledger as a graph: accounts are nodes, transactions are signed, directed edges."
+graph LR
+  OE["Opening Equity"] -->|"+10000"| B["Bank"]
+  E["Employer"] -->|"+5000"| B
+  B -->|"-3000"| R["Rent Expense"]
+  B -->|"-1000"| F["Friend Owes Me"]
+```
+
+::: callout-tip
+## The one rule that replaces debit/credit entirely
+For every transaction: **subtract the amount from `from`, add the amount to `to`.** That's it. That single rule replaces the entire debit/credit sign-flip table above.
+:::
+
+## Computing Balances
+
+To get each account's balance, we just aggregate the outflows and inflows. For any account $a$, its balance is simply everything that flowed *in* minus everything that flowed *out*:
+
+$$
+\text{balance}(a) = \sum_{\text{to} \,=\, a} \text{amount} \;-\; \sum_{\text{from} \,=\, a} \text{amount}
+$$
+
+Applying that to our four transactions gives:
+
+| account | balance |
+|---|---|
+| Bank | 11,000 |
+| Opening Equity | −10,000 |
+| Rent Expense | 3,000 |
+| Friend Owes Me | 1,000 |
+| Employer | −5,000 |
+
+Look at that, no jargon required. `Bank` nets out to 11,000 (received 10,000 opening + 5,000 salary, paid out 3,000 rent and 1,000 lent to a friend). `Rent Expense` shows 3,000. `Friend Owes Me` shows 1,000, an asset representing money you're owed. Every number is intuitively signed: positive means "this bucket grew," negative means "this bucket shrank." No context-dependent flipping required.
+
+## The Invariant Every Engineer Will Recognize
+
+Here's the part that should feel familiar: because every transaction moves the *same* amount out of one account and into another, the ledger as a whole always nets to zero. This is just conservation of mass, applied to money.
+
+$$
+\sum_{a \,\in\, \text{accounts}} \text{balance}(a) = 11{,}000 - 10{,}000 + 3{,}000 + 1{,}000 - 5{,}000 = 0
+$$
+
+This is, in disguise, the accounting equation **Assets = Liabilities + Equity**, usually taught as a rule to memorize. But it isn't a rule you need to memorize at all, it's a *consequence* of the fact that money only ever moves between accounts, never created or destroyed by a transaction. If your ledger ever fails this check, you have a bug, literally an unbalanced entry, the exact same way a conservation-law assertion failing tells you a physics simulation has a bug:
+
+$$
+\sum_{a \,\in\, \text{accounts}} \text{balance}(a) \;\stackrel{!}{=}\; 0
+$$
+
+# Where "Debit" and "Credit" Sneak Back In
+
+I'm not arguing the words should be abolished, accountants have used this vocabulary for over 500 years[^pacioli] and it's not going anywhere in professional practice. But for someone learning the *concept*, "debit" and "credit" are an unnecessary layer of indirection between you and a genuinely simple idea: signed flows between accounts that must always net to zero.
+
+If you're an engineer trying to build a mental model of double-entry bookkeeping, or building software that needs one (a ledger, a wallet system, an internal billing engine), skip the T-accounts and the memorized sign table. Model it as a graph: nodes are accounts, edges are transactions, each edge has a signed amount, and the whole graph must always sum to zero. Tools like `ledger-cli` and `beancount` are built on almost exactly this model internally, which is probably why engineers who've had to read their source or docs tend to find double-entry bookkeeping far less mysterious than the rest of us.
+
+# Conclusion
+
+"Debit" and "credit" aren't wrong, they're just bad UX for a genuinely elegant idea. Double-entry bookkeeping is a conservation law: every transaction is a signed edge between two accounts, and the whole system must always balance to zero. Once you see it that way, you don't need a table of sign-flip rules, you just need to ask "where did this money come from, and where did it go," and the arithmetic takes care of itself. Happy Ledgering!
+
+# References
+
+- [Wikipedia - Double-entry bookkeeping system](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system)
+- [Wikipedia - Debits and credits](https://en.wikipedia.org/wiki/Debits_and_credits)
+- [beancount - a double-entry bookkeeping language](https://beancount.github.io/)
+- [ledger-cli - command-line double-entry accounting](https://www.ledger-cli.org/)
+- [Baremetrics - T-account illustration](https://baremetrics.com/hs-fs/hubfs/Imported_Blog_Media/image1-2.jpg?width=864&height=462&name=image1-2.jpg)
+
+[^pacioli]: Luca Pacioli, an Italian Franciscan friar, formally described the double-entry method in 1494 in *Summa de Arithmetica*, which is why he's often called the "Father of Accounting."

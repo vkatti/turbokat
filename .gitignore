@@ -5,4 +5,8 @@
 
 /.quarto/
 
+**  /*.quarto_ipynb
+CLAUDE.md
+CLAUDE.html
+
 **/*.quarto_ipynb

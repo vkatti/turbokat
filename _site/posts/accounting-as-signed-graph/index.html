@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.26">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Vishal Katti">
-<meta name="dcterms.date" content="2022-07-08">
-<title>Pivoting your tables with Tidyr: Part I – Vishal Katti</title>
+<meta name="dcterms.date" content="2026-08-02">
+
+<title>Accounting is Just a Signed Graph – Vishal Katti</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,42 +22,8 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
+
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
@@ -78,7 +47,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -104,25 +74,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Pivoting your tables with Tidyr: Part I – Vishal Katti">
-<meta property="og:description" content="This post demonstrates how to use pivot_longer() to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series.">
-<meta property="og:image" content="https://i.imgur.com/0qMbFC1.gif">
+}</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Accounting is Just a Signed Graph – Vishal Katti">
+<meta property="og:description" content="This post rants a little about how the words ‘debit’ and ‘credit’ confuse more people than they help, and then rebuilds double-entry bookkeeping from scratch as a simple, signed graph of accounts that any engineer can reason about.">
+<meta property="og:image" content="https://vishalkatti.com/posts/accounting-as-signed-graph/ledger-balance.png">
 <meta property="og:site_name" content="Vishal Katti">
 <meta name="twitter:title" content="Katti’s Blog">
-<meta name="twitter:description" content="This post demonstrates how to use pivot_longer() to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series.">
-<meta name="twitter:image" content="https://i.imgur.com/0qMbFC1.gif">
+<meta name="twitter:description" content="This post rants a little about how the words ‘debit’ and ‘credit’ confuse more people than they help, and then rebuilds double-entry bookkeeping from scratch as a simple, signed graph of accounts that any engineer can reason about.">
+<meta name="twitter:image" content="https://vishalkatti.com/posts/accounting-as-signed-graph/ledger-balance.png">
 <meta name="twitter:creator" content="@vishal_katti">
 <meta name="twitter:site" content="@vishal_katti">
 <meta name="twitter:card" content="summary_large_image">
 </head>
+
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../VK Logo.png" alt="" class="navbar-logo light-content"><img src="../../VK Logo.png" alt="" class="navbar-logo dark-content"></a>
+    <img src="../../VK Logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../VK Logo.png" alt="" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Vishal Katti</span>
     </a>
@@ -133,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -179,19 +189,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Pivoting your tables with Tidyr: Part I</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
-            <p class="subtitle lead">Converting “wide” to “long” format</p>
+      <h1 class="title">Accounting is Just a Signed Graph</h1>
+            <p class="subtitle lead">Double-entry bookkeeping without the debit/credit jargon, for engineers.</p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">R</div>
-                <div class="quarto-category">functions</div>
-                <div class="quarto-category">tidyr</div>
-                <div class="quarto-category">pivot</div>
+                <div class="quarto-category">Finance</div>
+                <div class="quarto-category">Graph</div>
+                <div class="quarto-category">Money</div>
               </div>
                   </div>
   </div>
@@ -209,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 8, 2022</p>
+        <p class="date">August 2, 2026</p>
       </div>
     </div>
     
@@ -219,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div>
     <div class="abstract">
       <div class="block-title">Abstract</div>
-      This post demonstrates how to use <code>pivot_longer()</code> to convert your wide data to long data. This is part 1 of the Pivoting your tables with Tidyr series.
+      This post rants a little about how the words ‘debit’ and ‘credit’ confuse more people than they help, and then rebuilds double-entry bookkeeping from scratch as a simple, signed graph of accounts that any engineer can reason about.
     </div>
   </div>
   
@@ -227,349 +240,290 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
-  <li><a href="#the-wide-one" id="toc-the-wide-one" class="nav-link" data-scroll-target="#the-wide-one">The wide one</a></li>
-  <li><a href="#the-long-one" id="toc-the-long-one" class="nav-link" data-scroll-target="#the-long-one">The long one</a></li>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
+  <li><a href="#what-debit-and-credit-actually-mean" id="toc-what-debit-and-credit-actually-mean" class="nav-link" data-scroll-target="#what-debit-and-credit-actually-mean">What “Debit” and “Credit” Actually Mean</a></li>
+  <li><a href="#rebuilding-it-without-the-two-words" id="toc-rebuilding-it-without-the-two-words" class="nav-link" data-scroll-target="#rebuilding-it-without-the-two-words">Rebuilding It Without the Two Words</a>
+  <ul class="collapse">
+  <li><a href="#the-naive-approach-one-balance-to-track" id="toc-the-naive-approach-one-balance-to-track" class="nav-link" data-scroll-target="#the-naive-approach-one-balance-to-track">The Naive Approach: One Balance to Track</a></li>
+  <li><a href="#the-fix-every-transaction-touches-two-buckets" id="toc-the-fix-every-transaction-touches-two-buckets" class="nav-link" data-scroll-target="#the-fix-every-transaction-touches-two-buckets">The Fix: Every Transaction Touches Two Buckets</a></li>
+  <li><a href="#computing-balances" id="toc-computing-balances" class="nav-link" data-scroll-target="#computing-balances">Computing Balances</a></li>
+  <li><a href="#the-invariant-every-engineer-will-recognize" id="toc-the-invariant-every-engineer-will-recognize" class="nav-link" data-scroll-target="#the-invariant-every-engineer-will-recognize">The Invariant Every Engineer Will Recognize</a></li>
+  </ul></li>
+  <li><a href="#where-debit-and-credit-sneak-back-in" id="toc-where-debit-and-credit-sneak-back-in" class="nav-link" data-scroll-target="#where-debit-and-credit-sneak-back-in">Where “Debit” and “Credit” Sneak Back In</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul></nav>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="intro" class="level1"><h1>Intro</h1>
-<p>One of the primary data manipulation operations is pivoting your tabular data from “wide” format to “long” format and vice-versa.</p>
-<p>The idea is to make your tabular data “tidy” i.e.</p>
-<ul>
-<li>Every column is a variable.</li>
-<li>Every row is an observation.</li>
-<li>Every cell is a single value.</li>
-</ul>
-<p>In other words, every column contains just one type of information, every row in the table is a snapshot or a version of the information your table captures and every cell contains just one piece of information.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>While the wide format is more human-readable, the long format is preferred and is desirable for data and plotting operations using R, Python or other data processing programming languages. The {tidyr} R package has functions that allow you to transform your tabular data between the two formats.</p>
-<p>In this post, we will see how to convert a wide dataframe to long format using the <em>pivot_longer()</em> function from {tidyr} package.</p>
-</section><section id="the-wide-one" class="level1"><h1>The wide one</h1>
-<p>Consider the following data table. It has been created from the famous Gapminder dataset. This table shows the average life expectancy in each continent for 2 years. While some of you may say that Gapminder data contains records for a lot more number of years, here we consider just the latest 2 years for ease of explanation and visual purposes.</p>
-<div style="text-align:center;">
-<div id="fig-wide" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://i.imgur.com/sMJDveZ.png" class="img-fluid figure-img">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>Your bank sends you a text: “Your account has been debited by ₹2,000.” Quick, is that good news or bad news?</p>
+<p>If you paused even a fraction of a second, you’re not bad at finance, the word is bad at its job. “Debited” here means money <em>left</em> your account, which sounds bad, but “debit” in double-entry bookkeeping doesn’t mean increase or decrease at all. It means “left side of the ledger.” Whether the left side is good or bad news depends entirely on which kind of account you’re looking at, and that little sign-flip trick is precisely what makes debit/credit so confusing to non-accountants.</p>
+<p>I’ve watched this alienate a lot of smart people, especially engineers, who get a half-semester crash course in double-entry as part of some “Fundamentals of Management” elective and walk away memorizing rules like “assets increase on debit, liabilities increase on credit” instead of understanding <em>why</em>. Commerce students drill this till it becomes muscle memory. Everyone else just quietly avoids ever touching their own books.</p>
+<p>Here’s the thing though: double-entry bookkeeping itself is not confusing. It’s a genuinely elegant idea, older than calculus, and once you strip away “debit” and “credit,” it looks a lot like something every engineer already knows how to reason about: <strong>a conservation law enforced on a graph of accounts.</strong> or if i may be bold, <strong>The Law of Conservation of <del>Mass</del> Money</strong></p>
+</section>
+<section id="what-debit-and-credit-actually-mean" class="level1">
+<h1>What “Debit” and “Credit” Actually Mean</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Continent-wise Average Life Expectancy over last 2 years
-</figcaption></figure>
-</div>
-</div>
-<div style="text-align:center;">
-<div id="fig-wide2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-wide2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://i.imgur.com/kbMDurH.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wide2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: The wide one
-</figcaption></figure>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition: T-account
 </div>
 </div>
-<p><code>my_data</code> is in the wide format as we have continent names in column headers and average life expectancy values in each of those columns. To convert this tibble to the long format, we need to pull together the continent names in one column and their corresponding values into another column. See <a href="#fig-wide2" class="quarto-xref">Figure&nbsp;2</a></p>
-</section><section id="the-long-one" class="level1"><h1>The long one</h1>
-<p>The long format of this table would ideally have only <code>year</code>, <code>continent</code> and <code>average_life_expectancy</code> columns and look something like the table below.</p>
-<div style="text-align:center;">
-<div id="fig-long" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://i.imgur.com/63PMzJ3.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: The long one
-</figcaption></figure>
+<div class="callout-body-container callout-body">
+<p>Historically, ledgers were drawn as a capital “T” for each account, amounts written on the left were called <strong>debits</strong>, amounts written on the right were called <strong>credits</strong>. That’s the entire etymology. There is no inherent “increase” or “decrease” baked into either word.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://baremetrics.com/hs-fs/hubfs/Imported_Blog_Media/image1-2.jpg?width=864&amp;height=462&amp;name=image1-2.jpg" class="img-fluid figure-img"></p>
+<figcaption>Source: Baremetrics</figcaption>
+</figure>
 </div>
 </div>
-<p>The long format has repeated values of the column that are not gathered/collected. In this case, the <code>year</code> column gets its values repeated for each row.</p>
-<p>Let’s recreate the above transformation in R. First, we create the <code>my_data</code> table.</p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="at">year     =</span> <span class="fu">c</span>(<span class="dv">2002</span>L, <span class="dv">2007</span>L), </span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="at">Africa   =</span> <span class="fu">c</span>(<span class="fl">53.33</span>, <span class="fl">54.81</span>), </span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="at">Americas =</span> <span class="fu">c</span>(<span class="fl">72.42</span>, <span class="fl">73.61</span>), </span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="at">Asia     =</span> <span class="fu">c</span>(<span class="fl">69.23</span>, <span class="fl">70.73</span>), </span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="at">Europe   =</span> <span class="fu">c</span>(<span class="fl">76.70</span>, <span class="fl">77.65</span>), </span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="at">Oceania  =</span> <span class="fu">c</span>(<span class="fl">79.74</span>, <span class="fl">80.72</span>)</span>
-<span id="cb1-8"><a href="#cb1-8"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(my_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead><tr class="header">
-<th style="text-align: right;">year</th>
-<th style="text-align: right;">Africa</th>
-<th style="text-align: right;">Americas</th>
-<th style="text-align: right;">Asia</th>
-<th style="text-align: right;">Europe</th>
-<th style="text-align: right;">Oceania</th>
-</tr></thead>
+</div>
+<p>Whether a debit increases or decreases an account depends on what <em>type</em> of account it is:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Account Type</th>
+<th>Debit means</th>
+<th>Credit means</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: right;">53.33</td>
-<td style="text-align: right;">72.42</td>
-<td style="text-align: right;">69.23</td>
-<td style="text-align: right;">76.70</td>
-<td style="text-align: right;">79.74</td>
+<td>Asset (cash, bank, inventory)</td>
+<td>increase</td>
+<td>decrease</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2007</td>
-<td style="text-align: right;">54.81</td>
-<td style="text-align: right;">73.61</td>
-<td style="text-align: right;">70.73</td>
-<td style="text-align: right;">77.65</td>
-<td style="text-align: right;">80.72</td>
+<td>Liability (loans, credit card owed)</td>
+<td>decrease</td>
+<td>increase</td>
+</tr>
+<tr class="odd">
+<td>Equity</td>
+<td>decrease</td>
+<td>increase</td>
+</tr>
+<tr class="even">
+<td>Expense</td>
+<td>increase</td>
+<td>decrease</td>
+</tr>
+<tr class="odd">
+<td>Income</td>
+<td>decrease</td>
+<td>increase</td>
 </tr>
 </tbody>
 </table>
+<p>Notice the pattern flips depending on which row you’re on. This is precisely why “your account was debited” is bad news for <em>you</em> (an asset decreasing) but the bank’s internal books record the exact same event as a <strong>credit</strong> decreasing their liability (they owed you that money, now they owe you less). Same transaction, opposite words, on two different books. No wonder this trips people up.</p>
+</section>
+<section id="rebuilding-it-without-the-two-words" class="level1">
+<h1>Rebuilding It Without the Two Words</h1>
+<p>Let’s throw out “debit” and “credit” entirely and rebuild double-entry from first principles, the way an engineer would.</p>
+<section id="the-naive-approach-one-balance-to-track" class="level2">
+<h2 class="anchored" data-anchor-id="the-naive-approach-one-balance-to-track">The Naive Approach: One Balance to Track</h2>
+<p>Suppose you just want to track “how much money do I have.” The naive approach is a single running balance.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{balance}_0 &amp;= 10{,}000 &amp;&amp; \text{opening balance in your wallet} \\
+\text{balance}_1 &amp;= \text{balance}_0 + 5{,}000 = 15{,}000 &amp;&amp; \text{you get paid} \\
+\text{balance}_2 &amp;= \text{balance}_1 - 3{,}000 = 12{,}000 &amp;&amp; \text{you pay rent}
+\end{aligned}
+\]</span></p>
+<p>This works fine, right up until you have more than one place money can live. Cash in your wallet, money in your bank account, money owed on a credit card, money a friend owes you. The moment there’s more than one “bucket,” a single number stops telling you anything useful. Where did the ₹3000 for rent actually go? Which bucket shrank? Which one grew?</p>
+</section>
+<section id="the-fix-every-transaction-touches-two-buckets" class="level2">
+<h2 class="anchored" data-anchor-id="the-fix-every-transaction-touches-two-buckets">The Fix: Every Transaction Touches Two Buckets</h2>
+<p>The core insight of double-entry bookkeeping is deceptively simple: <strong>money never just appears or disappears, it moves <em>from</em> one account <em>to</em> another.</strong> So instead of tracking one number, we track every transaction as a <em>pair</em> of accounts, and a signed amount.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>date</th>
+<th>from</th>
+<th>to</th>
+<th>amount</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2026-08-01</td>
+<td>Opening Equity</td>
+<td>Bank</td>
+<td>10000</td>
+<td>Opening balance</td>
+</tr>
+<tr class="even">
+<td>2026-08-01</td>
+<td>Employer</td>
+<td>Bank</td>
+<td>5000</td>
+<td>Salary</td>
+</tr>
+<tr class="odd">
+<td>2026-08-02</td>
+<td>Bank</td>
+<td>Rent Expense</td>
+<td>3000</td>
+<td>August rent</td>
+</tr>
+<tr class="even">
+<td>2026-08-05</td>
+<td>Bank</td>
+<td>Friend Owes Me</td>
+<td>1000</td>
+<td>Lent to Rahul</td>
+</tr>
+</tbody>
+</table>
+<p>Every row says the same thing: “this much money moved from this account, to that account.” No debits, no credits, just a direction and a magnitude, exactly like a signed edge in a graph.</p>
+<p>Drawn out, our four transactions look exactly like what they are, a directed graph, with accounts as nodes and transactions as signed edges.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-ledger-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ledger-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-ledger-graph">graph LR
+  OE["Opening Equity"] --&gt;|"+10000"| B["Bank"]
+  E["Employer"] --&gt;|"+5000"| B
+  B --&gt;|"-3000"| R["Rent Expense"]
+  B --&gt;|"-1000"| F["Friend Owes Me"]
+</pre>
 </div>
 </div>
-<p>To convert this table into long format, we use the <em>pivot_longer()</em> function from {tidyr} R package. Let us see how to use this function.</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ledger-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The ledger as a graph: accounts are nodes, transactions are signed, directed edges.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+<span class="screen-reader-only">Tip</span>The one rule that replaces debit/credit entirely
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use `formals` to view all the formal arguments of a function and their default values. `formals` returns a named list.</p>
+<p>For every transaction: <strong>subtract the amount from <code>from</code>, add the amount to <code>to</code>.</strong> That’s it. That single rule replaces the entire debit/credit sign-flip table above.</p>
 </div>
 </div>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(tidyr, <span class="at">quietly =</span> <span class="cn">TRUE</span>, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">formals</span>(pivot_longer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>$data
-
-
-$cols
-
-
-$names_to
-[1] "name"
-
-$names_prefix
-NULL
-
-$names_sep
-NULL
-
-$names_pattern
-NULL
-
-$names_ptypes
-NULL
-
-$names_transform
-NULL
-
-$names_repair
-[1] "check_unique"
-
-$values_to
-[1] "value"
-
-$values_drop_na
-[1] FALSE
-
-$values_ptypes
-NULL
-
-$values_transform
-NULL
-
-$...</code></pre>
-</div>
-</div>
-<p>The result of <code>formals(pivot_longer)</code> tells us that the minimum information needed to use this function is to provide values to the <code>data</code> and <code>cols</code> arguments as all other arguments have default values and hence, are optional.</p>
-<p>Using only the minimum arguments with <code>pivot_longer()</code>, we get a long formatted tibble with the columns <code>year</code>, <code>name</code> and <code>value</code>.</p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>long_minimal <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb4-2"><a href="#cb4-2"></a>                        <span class="at">data      =</span> my_data,</span>
-<span id="cb4-3"><a href="#cb4-3"></a>                        <span class="at">cols      =</span> <span class="fu">c</span>(<span class="st">"Africa"</span>, <span class="st">"Americas"</span>, <span class="st">"Asia"</span>, <span class="st">"Europe"</span>, <span class="st">"Oceania"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>                        )</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(long_minimal)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead><tr class="header">
-<th style="text-align: right;">year</th>
-<th style="text-align: left;">name</th>
-<th style="text-align: right;">value</th>
-</tr></thead>
+</section>
+<section id="computing-balances" class="level2">
+<h2 class="anchored" data-anchor-id="computing-balances">Computing Balances</h2>
+<p>To get each account’s balance, we just aggregate the outflows and inflows. For any account <span class="math inline">\(a\)</span>, its balance is simply everything that flowed <em>in</em> minus everything that flowed <em>out</em>:</p>
+<p><span class="math display">\[
+\text{balance}(a) = \sum_{\text{to} \,=\, a} \text{amount} \;-\; \sum_{\text{from} \,=\, a} \text{amount}
+\]</span></p>
+<p>Applying that to our four transactions gives:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>account</th>
+<th>balance</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Africa</td>
-<td style="text-align: right;">53.33</td>
+<td>Bank</td>
+<td>11,000</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Americas</td>
-<td style="text-align: right;">72.42</td>
+<td>Opening Equity</td>
+<td>−10,000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Asia</td>
-<td style="text-align: right;">69.23</td>
+<td>Rent Expense</td>
+<td>3,000</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Europe</td>
-<td style="text-align: right;">76.70</td>
+<td>Friend Owes Me</td>
+<td>1,000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Oceania</td>
-<td style="text-align: right;">79.74</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Africa</td>
-<td style="text-align: right;">54.81</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Americas</td>
-<td style="text-align: right;">73.61</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Asia</td>
-<td style="text-align: right;">70.73</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Europe</td>
-<td style="text-align: right;">77.65</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Oceania</td>
-<td style="text-align: right;">80.72</td>
+<td>Employer</td>
+<td>−5,000</td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<p>Notice that the continent names and their corresponding average life expectancy values appear in columns named <code>name</code> and <code>value</code>. These are the default column names. We can change these column names by providing our own names to the arguments <code>names_to</code> and <code>values_to</code>.</p>
-<p>Since the <code>year</code> column is the only one that remains as is, we can rewrite the above <code>pivot_longer</code> statement as below</p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>my_data_longer <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="at">data      =</span> my_data,</span>
-<span id="cb5-2"><a href="#cb5-2"></a>                               <span class="at">cols      =</span> <span class="sc">!</span>year,</span>
-<span id="cb5-3"><a href="#cb5-3"></a>                               <span class="at">names_to  =</span> <span class="st">"continent"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4"></a>                               <span class="at">values_to =</span> <span class="st">"average_life_expectancy"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a></span>
-<span id="cb5-6"><a href="#cb5-6"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(my_data_longer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details><div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead><tr class="header">
-<th style="text-align: right;">year</th>
-<th style="text-align: left;">continent</th>
-<th style="text-align: right;">average_life_expectancy</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Africa</td>
-<td style="text-align: right;">53.33</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Americas</td>
-<td style="text-align: right;">72.42</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Asia</td>
-<td style="text-align: right;">69.23</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Europe</td>
-<td style="text-align: right;">76.70</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Oceania</td>
-<td style="text-align: right;">79.74</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Africa</td>
-<td style="text-align: right;">54.81</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Americas</td>
-<td style="text-align: right;">73.61</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Asia</td>
-<td style="text-align: right;">70.73</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Europe</td>
-<td style="text-align: right;">77.65</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Oceania</td>
-<td style="text-align: right;">80.72</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>If you are a visual person like me and wish to see this transformation with explanations, check out this GIF I made using good ol’ Powerpoint.</p>
-<div style="text-align:center;">
-<div id="fig-gif" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://i.imgur.com/0qMbFC1.gif" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: {tidyr} pivot_longer() explained
-</figcaption></figure>
-</div>
-</div>
-</section><section id="conclusion" class="level1"><h1>Conclusion</h1>
-<p><code>pivot_longer()</code> is the successor for the great <code>gather()</code> function and has many advantages over the latter. <code>pivot_longer()</code> repeats all the values in the columns that are not included in the <code>cols</code> argument. Therefore, if your dataframe/tibble had a primary key prior to the transformation, the primary key of your transformed “longer” dataframe is your old primary key + the new column created by <code>names_to</code>. This function has many other arguments that allow some truly great transformations. Mastering this function (and its wide counterpart) is a great skill upgrade while massaging your data to make it “tidy”.</p>
-<p>Happy Gathering!</p>
-</section><section id="references" class="level1"><h1>References</h1>
+<p>Look at that, no jargon required. <code>Bank</code> nets out to 11,000 (received 10,000 opening + 5,000 salary, paid out 3,000 rent and 1,000 lent to a friend). <code>Rent Expense</code> shows 3,000. <code>Friend Owes Me</code> shows 1,000, an asset representing money you’re owed. Every number is intuitively signed: positive means “this bucket grew,” negative means “this bucket shrank.” No context-dependent flipping required.</p>
+</section>
+<section id="the-invariant-every-engineer-will-recognize" class="level2">
+<h2 class="anchored" data-anchor-id="the-invariant-every-engineer-will-recognize">The Invariant Every Engineer Will Recognize</h2>
+<p>Here’s the part that should feel familiar: because every transaction moves the <em>same</em> amount out of one account and into another, the ledger as a whole always nets to zero. This is just conservation of mass, applied to money.</p>
+<p><span class="math display">\[
+\sum_{a \,\in\, \text{accounts}} \text{balance}(a) = 11{,}000 - 10{,}000 + 3{,}000 + 1{,}000 - 5{,}000 = 0
+\]</span></p>
+<p>This is, in disguise, the accounting equation <strong>Assets = Liabilities + Equity</strong>, usually taught as a rule to memorize. But it isn’t a rule you need to memorize at all, it’s a <em>consequence</em> of the fact that money only ever moves between accounts, never created or destroyed by a transaction. If your ledger ever fails this check, you have a bug, literally an unbalanced entry, the exact same way a conservation-law assertion failing tells you a physics simulation has a bug:</p>
+<p><span class="math display">\[
+\sum_{a \,\in\, \text{accounts}} \text{balance}(a) \;\stackrel{!}{=}\; 0
+\]</span></p>
+</section>
+</section>
+<section id="where-debit-and-credit-sneak-back-in" class="level1">
+<h1>Where “Debit” and “Credit” Sneak Back In</h1>
+<p>I’m not arguing the words should be abolished, accountants have used this vocabulary for over 500 years<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and it’s not going anywhere in professional practice. But for someone learning the <em>concept</em>, “debit” and “credit” are an unnecessary layer of indirection between you and a genuinely simple idea: signed flows between accounts that must always net to zero.</p>
+<p>If you’re an engineer trying to build a mental model of double-entry bookkeeping, or building software that needs one (a ledger, a wallet system, an internal billing engine), skip the T-accounts and the memorized sign table. Model it as a graph: nodes are accounts, edges are transactions, each edge has a signed amount, and the whole graph must always sum to zero. Tools like <code>ledger-cli</code> and <code>beancount</code> are built on almost exactly this model internally, which is probably why engineers who’ve had to read their source or docs tend to find double-entry bookkeeping far less mysterious than the rest of us.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>“Debit” and “credit” aren’t wrong, they’re just bad UX for a genuinely elegant idea. Double-entry bookkeeping is a conservation law: every transaction is a signed edge between two accounts, and the whole system must always balance to zero. Once you see it that way, you don’t need a table of sign-flip rules, you just need to ask “where did this money come from, and where did it go,” and the arithmetic takes care of itself. Happy Ledgering!</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 <ul>
-<li>Hadley Wickham and Maximilian Girlich (2022). tidyr: Tidy Messy Data. R package version 1.2.0. <a href="https://CRAN.R-project.org/package=tidyr" class="uri">https://CRAN.R-project.org/package=tidyr</a>
-</li>
-<li>Yihui Xie (2022). knitr: A General-Purpose Package for Dynamic Report Generation in R. R package version 1.39.</li>
+<li><a href="https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system">Wikipedia - Double-entry bookkeeping system</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Debits_and_credits">Wikipedia - Debits and credits</a></li>
+<li><a href="https://beancount.github.io/">beancount - a double-entry bookkeeping language</a></li>
+<li><a href="https://www.ledger-cli.org/">ledger-cli - command-line double-entry accounting</a></li>
+<li><a href="https://baremetrics.com/hs-fs/hubfs/Imported_Blog_Media/image1-2.jpg?width=864&amp;height=462&amp;name=image1-2.jpg">Baremetrics - T-account illustration</a></li>
 </ul>
 
 
-</section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
 <ol>
-<li id="fn1"><p><strong>Long vs.&nbsp;Wide Data: What’s the Difference?</strong> https://www.statology.org/long-vs-wide-data/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2022,
+<li id="fn1"><p>Luca Pacioli, an Italian Franciscan friar, formally described the double-entry method in 1494 in <em>Summa de Arithmetica</em>, which is why he’s often called the “Father of Accounting.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{katti2026,
   author = {Katti, Vishal},
-  title = {Pivoting Your Tables with {Tidyr:} {Part} {I}},
-  date = {2022-07-08},
-  url = {https://vishalkatti.com/posts/tidyr-pivot-longer/},
+  title = {Accounting Is {Just} a {Signed} {Graph}},
+  date = {2026-08-02},
+  url = {https://vishalkatti.com/posts/accounting-as-signed-graph/},
   langid = {en},
-  abstract = {This post demonstrates how to use `pivot\_longer()` to
-    convert your wide data to long data. This is part 1 of the Pivoting
-    your tables with Tidyr series.}
+  abstract = {This post rants a little about how the words “debit” and
+    “credit” confuse more people than they help, and then rebuilds
+    double-entry bookkeeping from scratch as a simple, signed graph of
+    accounts that any engineer can reason about.}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2022" class="csl-entry quarto-appendix-citeas" role="listitem">
-Katti, Vishal. 2022. <span>“Pivoting Your Tables with Tidyr: Part
-I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-longer/">https://vishalkatti.com/posts/tidyr-pivot-longer/</a>.
-</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-katti2026" class="csl-entry quarto-appendix-citeas" role="listitem">
+Katti, Vishal. 2026. <span>“Accounting Is Just a Signed Graph.”</span>
+August 2, 2026. <a href="https://vishalkatti.com/posts/accounting-as-signed-graph/">https://vishalkatti.com/posts/accounting-as-signed-graph/</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1019,10 +973,12 @@ I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-lo
       }
     }
   });
-  </script><script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+  </script>
+<script src="https://utteranc.es/client.js" repo="vkatti/turbokat" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
 <p>Vishal Katti <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2024<br>made with 💖, <i class="fa-brands fa-r-project" aria-hidden="true"></i> and <a href="https://quarto.org">Quarto</a></p>
 </div>   
@@ -1031,7 +987,7 @@ I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-lo
     </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-<li class="nav-item compact">
+    <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/vkatti">
       <i class="bi bi-github" role="img">
 </i> 
@@ -1056,11 +1012,11 @@ I.”</span> July 8, 2022. <a href="https://vishalkatti.com/posts/tidyr-pivot-lo
     </a>
   </li>  
 </ul>
-</div>
+    </div>
   </div>
-</footer><div class="page-columns page-rows-contents page-layout-article"><div class="social-share">
-<a href="https://twitter.com/share?url=https://vishalkatti.com/posts/tidyr-pivot-longer&amp;text=Check%20out%20this%20article%20on%20reshaping%20data.frames%20using%20{tidyr}%20in%20R" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://vishalkatti.com/posts/tidyr-pivot-longer&amp;title=Check%20out%20this%20article%20on%20reshaping%20data.frames%20using%20{tidyr}%20in%20R" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Check%20out%20this%20article%20on%20reshaping%20data.frames%20using%20{tidyr}%20in%20R&amp;body=Check%20out%20this%20link:https://vishalkatti.com/posts/tidyr-pivot-longer" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://vishalkatti.com/posts/tidyr-pivot-longer" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="https://reddit.com/submit?url=https://vishalkatti.com/posts/tidyr-pivot-longer&amp;title=Check%20out%20this%20article%20on%20reshaping%20data.frames%20using%20{tidyr}%20in%20R" target="_blank" class="reddit">   <i class="fa-brands fa-reddit-alien fa-fw fa-lg"></i></a>
-</div></div>
+</footer>
+<div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://vishalkatti.com/posts/accounting-as-signed-graph&amp;text=Check out this article on understanding double-entry bookkeeping without the debit/credit jargon" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://vishalkatti.com/posts/accounting-as-signed-graph&amp;title=Check out this article on understanding double-entry bookkeeping without the debit/credit jargon" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Check out this article on understanding double-entry bookkeeping without the debit/credit jargon&amp;body=Check out this link:https://vishalkatti.com/posts/accounting-as-signed-graph" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://vishalkatti.com/posts/accounting-as-signed-graph" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="https://reddit.com/submit?url=https://vishalkatti.com/posts/accounting-as-signed-graph&amp;title=Check out this article on understanding double-entry bookkeeping without the debit/credit jargon" target="_blank" class="reddit">   <i class="fa-brands fa-reddit-alien fa-fw fa-lg"></i></a></div></div>
+
 
 
 
