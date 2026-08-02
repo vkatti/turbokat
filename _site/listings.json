@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/accounting-as-signed-graph/index.html",
       "/posts/date-format/index.html",
       "/posts/python-list-comprehension/index.html",
       "/posts/tidyr-pivot-wider/index.html",
