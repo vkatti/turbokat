@@ -4,7 +4,7 @@ subtitle: "Double-entry bookkeeping without the debit/credit jargon, for enginee
 abstract: "This post rants a little about how the words 'debit' and 'credit' confuse more people than they help, and then rebuilds double-entry bookkeeping from scratch as a simple, signed graph of accounts that any engineer can reason about."
 author: Vishal Katti
 date: 2026-08-02
-image: ledger-balance.png
+image: accounting_as_graph.png
 categories: [Finance, Graph, Money]
 citation: true
 license: "CC BY"
