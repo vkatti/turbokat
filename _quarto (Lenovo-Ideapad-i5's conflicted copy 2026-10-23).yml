@@ -1,0 +1,80 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "posts/**/*.qmd"
+  preview:
+    port: 4200
+    browser: true
+
+website:
+  title: "Vishal Katti"
+  site-url: https://vishalkatti.com
+  description: "Vishal Katti's Blog"
+  favicon: "VK Logo.png"
+
+  image: "VK Logo.png"
+  navbar:
+    logo: "VK Logo.png"
+    search: true
+    right:
+      - text: "About"
+        file: about.qmd
+      - text: "Blog"
+        file: index.qmd
+      - text: "Courses"
+        href: https://learnwith.vishalkatti.com/
+      - text: "CV"
+        href: https://www.dropbox.com/scl/fi/dyclhmn6bj2v3004axrsz/2024-08-01_Vishal_Katti_Resume.pdf?rlkey=gx9pw6o45s1g5elgma7a1gtse&st=5qk16q3b&dl=0
+      - text: "Let's Talk 1-on-1"
+        href: https://calendly.com/vishal-katti/1-on-1
+      - icon: github
+        href: https://github.com/vkatti
+      - icon: twitter
+        href: https://twitter.com/vishal_katti
+      - icon: mastodon
+        href: https://fosstodon.org/@vishalkatti
+      - icon: linkedin
+        href: https://www.linkedin.com/in/vishalkatti
+      - icon: rss
+        file: index.xml
+  comments: 
+    utterances:
+      repo: vkatti/turbokat
+  page-footer: 
+    left: Vishal Katti {{< fa regular copyright >}} 2024<br>made with 💖, {{< fa brands r-project >}} and [Quarto](https://quarto.org)
+    right: 
+      - icon: github
+        href: https://github.com/vkatti
+      - icon: twitter 
+        href: https://twitter.com/vishal_katti
+      - icon: mastodon
+        href: https://fosstodon.org/@vishalkatti
+      - icon: linkedin
+        href: https://www.linkedin.com/in/vishalkatti
+        
+  twitter-card: 
+    title: "Katti's Blog"
+    image: "VK Logo.png"
+    creator: "@vishal_katti"
+    site: "@vishal_katti"
+    
+  open-graph: true
+format:
+  html:
+    theme: 
+      light: litera
+    code-link: true
+    code-copy: true
+    code-fold: show
+    code-tools: 
+      toggle: true
+      source: false
+    code-line-numbers: true
+    toc: true
+    highlight-style: arrow
+    css: styles.css
+    mainfont: Candara
+
+
+
