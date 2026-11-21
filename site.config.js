@@ -15,7 +15,6 @@ export default {
     { text: 'Blog', href: '/blog/' },
     { text: 'About', href: '/about/' },
   ],
-  cv: 'https://www.dropbox.com/scl/fi/dyclhmn6bj2v3004axrsz/2024-08-01_Vishal_Katti_Resume.pdf?rlkey=gx9pw6o45s1g5elgma7a1gtse&st=5qk16q3b&dl=0',
 
   social: [
     { name: 'GitHub', icon: 'github', href: 'https://github.com/vkatti' },
