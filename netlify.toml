@@ -1,4 +1,7 @@
 [build]
+  # Repo root. Overrides the old "_site" base directory still set in the
+  # Netlify UI from the Quarto days (that folder no longer exists).
+  base = "/"
   command = "npm run build"
   publish = "dist"
 
